@@ -7,9 +7,10 @@
 
 "Harmonia" is my capstone assessed portfolio project, developed as part of the Code Institute Full Stack Software Developer Bootcamp. 
 This project showcases my skills in HTML5, CSS3, Bootstrap and Python with augmented AI to create a responsive, accessible website to -
- 1. promoting chemical free gardening and services available locally.
+ 1. Promoting chemical free gardening and services available locally.
  2. A blog containing tips aimed at both amateur and professional to foster better practices and behaviours. 
   The name Harmonia is actually co-pilot inspired.
+ 3. Booking Services offered complete with costings 
 
 The temporary live project can be found here: <a href="https://pio-o-connell.github.io/Individual/">Harmonia</a>
 

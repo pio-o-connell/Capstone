@@ -48,33 +48,33 @@ The temporary live project can be found here: <a href="https://pio-o-connell.git
 
     1. Authentication & Profiles
        - As a SuperUser, I want to manage users, services, and bookings efficiently.
-       - As a SuperUser, I can edit my profile so thatI can keep my data up to date
-       - As a SuperUser, I can moderate my blogs and comment Sso that I can ensure content relevant and appropriate
-       - As a User, I can log in so that so I can securely edit blogs/comments
-       - As a User, I can register so that so I can securely edit blogs/comments
+       - As a SuperUser, SuperUser, I can edit profiles so that I can keep user information up to date
+       - As a SuperUser, I can moderate blogs and comment ensuring content both relevant and appropriate
+       - As a User, As a User, I can succesfully log in so that so I can securely edit blogs/comments
+       - As a Guest, I can register so that so I can securely edit contribute blogs/comments
 
     2. Blog Management
-        - As a User, I can create blog for myself so that I can add to knowledge pool
-        - As a User, I can read blog for myself so that I can read my personal work
-        - As a User, I can update  blog for myself so that I can edit my personal work
-        - As a User, I can delete  blog for myself so that I can edit my personal work
+        - Registered User can create blogs adding to gardening knowledge pool
+        - Guest can read all blogs 
+        - Registered User can update their blogs
+        - Registered User can delete their blogs
 
 
     3. Comment Management
-        - As a User, I can create comment for myself so that I can add to knowledge pool
-        - As a User, I can read comment for myself so that I can read my personal work
-        - As a User, I can update comment for myself so that I can edit my personal work
-        - As a User, I can delete comment for myself so that I can edit my personal work
+        - Visiting guest can create comment adding to blog's knowledge pool
+        - Visiting guest can read comment 
+        - Returning visiting guest or registered User can update their comments
+        - Returning visiting guest or registered User can delete their comments
 
 
-    4. Shopping Cart Management
-        -
-        - Booking Confirmation When the user confirms, the selections are saved as a Shopping Cart.
-        - Booking Confirmation As a guest users I can create bookings without an account.Information is stored from cookies or session data.
+    4. Shopping Cart / Booking creation
+        - Visiting guest can create shopping cart persisted in stored cookies or session data. 
+        - Visiting guest can create Booking to complete transaction . Information retrieved from stored cookies or session data.
+        - Registered user can create shopping cart 
+        - Registered user can create Booking to complete transaction . Information retrieved from Shopping Cart
 
     5. Booking Management
-        - As a guest users I can confirm  bookings without an account.Information is retrieved from cookies or session data.
-        - As a users I can confirm bookings.Information is retrieved from Shopping Cart.
+        - As a SuperUser,  I can approve bookings. Information retrieved from Bookings.
 
 
 

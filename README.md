@@ -37,8 +37,8 @@ The temporary live project can be found here: <a href="https://pio-o-connell.git
 <details>
     <summary>Project Board
     </summary>
-    <img src="assets/documentation/images/testing/Color-contrast/Colorcontrastcc.jpg" alt="Colour contrast results" style="width:60%;">
-    [Click to view live responsiveness](https://ui.dev/amiresponsive?url=https://pio-o-connell.github.io/Individual/index.html)  
+    <a href="https://github.com/users/pio-o-connell/projects/9">GitHub Project Board</a>
+
 </details>
 
 
@@ -84,11 +84,18 @@ The temporary live project can be found here: <a href="https://pio-o-connell.git
 
 ### Wireframes
 <details>
-    <summary>Project Board
+    <summary> Mobile pages logged in
     </summary>
-    <img src="assets/documentation/images/testing/Color-contrast/Colorcontrastcc.jpg" alt="Colour contrast results" style="width:60%;">
-    [Click to view live responsiveness](https://ui.dev/amiresponsive?url=https://pio-o-connell.github.io/Individual/index.html)  
+    <img src="documentation/images/Balsamiq/Images/mobile-loggedin-all.png" alt="mobile pages" style="width:60%;">
 </details>
+
+<details>
+    <summary> Mobile pages logged out
+    </summary>
+    <img src="documentation/images/Balsamiq/Images/mobile-loggedOut-all.png" alt="mobile pages" style="width:60%;">
+</details>
+
+
 
 ### Colour Scheme
 

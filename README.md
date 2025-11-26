@@ -83,11 +83,11 @@ The temporary live project can be found here: <a href="https://pio-o-connell.git
 </details>
 
 ### Wireframes
-<details>
-    <summary> Mobile pages logged in
-    </summary>
-    <img src="documentation/images/Balsamiq/Images/mobile-loggedin-all.png" alt="mobile pages" style="width:60%;">
-</details>
+ <details>
+   <summary> Mobile pages logged in
+   </summary>
+  <img src="documentation/images/Balsamiq/Images/mobile-loggedin-all.png" alt="mobile pages"  style="width:60%;">
+ </details>
 
 <details>
     <summary> Mobile pages logged out
@@ -95,7 +95,47 @@ The temporary live project can be found here: <a href="https://pio-o-connell.git
     <img src="documentation/images/Balsamiq/Images/mobile-loggedOut-all.png" alt="mobile pages" style="width:60%;">
 </details>
 
+<details>
+    <summary> XL and Large Home Page
+    </summary>
+    <img src="documentation/images/Balsamiq/Images/HomePage-XL-large.png" alt="mobile pages" style="width:60%;">
+</details>
 
+<details>
+    <summary> XL and Large Blog Page
+    </summary>
+    <img src="documentation/images/Balsamiq/Images/BlogPage-XL-large.png" alt="mobile pages" style="width:60%;">
+</details>
+
+<details>
+    <summary> XL and Large Comments Page
+    </summary>
+    <img src="documentation/images/Balsamiq/Images/CommentPage-XL-Large.png" alt="mobile pages" style="width:60%;">
+</details>
+
+<details>
+    <summary> XL Services Page
+    </summary>
+    <img src="documentation/images/Balsamiq/Images/XL-Services.png" alt="mobile pages" style="width:60%;">
+</details>
+
+<details>
+    <summary> Large Services Page
+    </summary>
+    <img src="documentation/images/Balsamiq/Images/Large-Services.png" alt="mobile pages" style="width:60%;">
+</details>
+
+<details>
+    <summary> Large and XL Booking Page
+    </summary>
+    <img src="documentation/images/Balsamiq/Images/XL-large-Booking.png" alt="mobile pages" style="width:60%;">
+</details>
+
+<details>
+    <summary> Large and XL Registration Page
+    </summary>
+    <img src="documentation/images/Balsamiq/Images/XL-large-Registration.png" alt="mobile pages" style="width:60%;">
+</details>
 
 ### Colour Scheme
 

@@ -15,12 +15,11 @@
             <a href="{% url 'login' %}">Login</a> |
             <a href="{% url 'register' %}">Register</a>
         {% endif %}
+        <!-- <a href="{% url 'post_detail' post.id %}" class="btn btn-primary">Read More</a> -->
+
     </nav>
 
-    {% block content %}
-    
-    
-    
-    {% endblock %}
+
+    {% block content %}{% endblock %}
 </body>
 </html>

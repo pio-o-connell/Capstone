@@ -1,9 +1,49 @@
-{% extends "base.html" %}
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Beautiful outdoor spaces | Home{% endblock %}
 
 {% block content %}
-<h1>Welcome to Capstone</h1>
+<div id="carouselExample" class="carousel slide carousel-fade custom-carousel" data-bs-ride="carousel"
+    data-bs-interval="6000">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static 'core/images/winters/squoosh/Winters-back.jpg' %}" class="d-block w-100"
+                alt="Back garden image in co. cork ">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'core/images/winters/squoosh/winters-2.jpg' %}" class="d-block w-100"
+                alt="Back garden image number 2 in co. cork ">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'core/images/winters/squoosh/winters-3.jpg' %}" class="d-block w-100"
+                alt="Back garden image number 3 in co. cork ">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'core/images/winters/squoosh/winters-4.jpg' %}" class="d-block w-100"
+                alt="Back garden image number 4 in co. cork ">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'core/images/winters/squoosh/winters-5.jpg' %}" class="d-block carousel-image"
+                alt="Back garden image number 5 in co. cork ">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'core/images/winters/squoosh/winters-6.jpg' %}" class="d-block w-100"
+                alt="Back garden image number 6 in co. cork ">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
 
-<a href="{% url 'blog_home' %}">Blog</a>
+<!-- Your reasons/benefits section here -->
+<section id="reasons">
+    <!-- content -->
+</section>
 
-<p>Your site intro goes here.</p>
 {% endblock %}

@@ -1,7 +1,10 @@
-{% extends "base.html" %}
+{% extends "core/base.html" %}
 {% load static %}
 
+{% block title %}Login | Beautiful Outdoor Spaces{% endblock %}
+
 {% block content %}
+
 <div class="container mt-5" style="max-width: 450px;">
     <h2 class="mb-4 text-center">Login</h2>
 
@@ -25,4 +28,5 @@
         Don't have an account? <a href="{% url 'register' %}">Register here</a>
     </p>
 </div>
+
 {% endblock %}

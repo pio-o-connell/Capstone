@@ -20,9 +20,14 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', include('core.urls')),           # Homepage + contact
-    path('services/', include('services.urls')),  # Services app
-    path('blog/', include('blog.urls')),      # Blog + comments
-    path('booking/', include('booking.urls')),    # Booking app
-    path('accounts/', include('accounts.urls')),  # Login/Register 
+    # All accounts-related URLs (login, logout, register, password reset)
+    path('accounts/', include('accounts.urls')),  
+
+    # Homepage + contact
+    path('', include('core.urls')),           
+
+    # Other apps
+    path('services/', include('services.urls')),  
+    path('blog/', include('blog.urls')),      
+    path('booking/', include('booking.urls')),    
 ]

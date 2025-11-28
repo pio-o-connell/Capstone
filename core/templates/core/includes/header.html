@@ -9,8 +9,10 @@
     <nav>
         <ul id="menu">
             <li><a href="{% url 'home' %}" class="active">Home</a></li>
-            <li><a href="{% url 'services_home' %}">Services</a></li>
-            <li><a href="{% url 'blog_home' %}" class="CTA contact-button" id="call">Blog</a></li>
+            <!-- <li><a href="{% url 'services_home' %}">Services</a></li>
+            <li><a href="{% url 'blog_home' %}" class="CTA contact-button" id="call">Blog</a></li> -->
+             <li><a href="{% url 'blog_home' %}">Blog</a></li>
+            <li><a href="{% url 'services_home' %}" class="CTA contact-button" id="call">Services</a></li>
             <li><a href="{% url 'booking_home' %}">Bookings</a></li>
 
             {% if user.is_authenticated %}

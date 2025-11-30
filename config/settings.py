@@ -25,13 +25,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 import os
 
-if os.path.isfile('env.py'):
-    import env
+# Load local env.py if present (developer convenience). Keep using os.path.isfile.
+if os.path.isfile("env.py"):
+    try:
+        import env  # optional local overrides (defines SECRET_KEY, etc.)
+    except Exception:
+        # If env.py exists but fails to import, continue with environment variables
+        pass
+    DEBUG = True
+else:
+    DEBUG = False
 
+# Secret key should come from env or environment variable in production
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
-DEBUG = True
+
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -55,11 +64,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'core',
-    'services',
     'blog',
-    'booking',
+    'bookings',
+    'services',
     'accounts',
+    'users',
+    'cart',
 ]
+
+# -------------------------------
+# Custom user model
+# -------------------------------
+AUTH_USER_MODEL = 'users.CustomUser'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

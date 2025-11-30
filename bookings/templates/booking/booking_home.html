@@ -1,0 +1,142 @@
+<!-- can you modify file booking_home.html in booking\templates\booking to include base.html and headers and footers please
+
+{% extends "core/base.html" %}
+
+{% block title %}Bookings | Beautiful Outdoor Spaces{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Welcome to Capstone</h1>
+    <p>Your site intro goes here.</p>
+</div>
+{% endblock %} -->
+
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Services | Beautiful Outdoor Spaces{% endblock %}
+
+{% block content %}
+
+<section id="services" class="container section my-5">
+
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 class="display-6">Services</h1>
+        </div>
+
+        <!-- CARD ONE -->
+        <article id="card-one" class="col-12 col-md-6 col-xl-3">
+            <div class="card">
+                <img src="{% static 'services/images/cards/grass/grass4.jpg' %}"
+                     class="card-img-top"
+                     alt="Man cutting lawn">
+                <div class="card-body">
+                    <h3 class="card-title sub-heading-color">Lawn</h3>
+                    <p class="card-text">
+                        Every two weeks<br><br>
+                        <label for="lawns">Lawn Size:</label>
+                        <select name="lawns" id="lawns">
+                            <option value="small">Small Lawn</option>
+                            <option value="medium">Medium Lawn</option>
+                            <option value="large">Large Lawn</option>
+                        </select>
+                        <br><br>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <button>Book your callout</button>
+                    <p class="mb-0"><a href="https://www.youtube.com/watch?v=P6lwyRmOk30"
+                                       target="_blank" rel="noopener">Watch Video</a></p>
+                </div>
+            </div>
+        </article>
+
+        <!-- CARD TWO -->
+        <article id="card-two" class="col-12 col-md-6 col-xl-3">
+            <div class="card">
+                <img src="{% static 'services/images/cards/hedging/hedge2.jpg' %}"
+                     class="card-img-top"
+                     alt="Man cutting a hedge">
+                <div class="card-body">
+                    <h3 class="card-title sub-heading-color">Hedging</h3>
+                    <p class="card-text">
+                        Spring and/or Autumn<br><br>
+                        <label for="hedges">Hedge size:</label>
+                        <select name="hedges" id="hedges">
+                            <option value="small">Small Hedge</option>
+                            <option value="medium">Medium Hedge</option>
+                            <option value="large">Large Hedge</option>
+                        </select>
+                        <br><br>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <button>Book your callout</button>
+                    <p><a href="https://www.youtube.com/watch?v=7y4T6yv5L1k" target="_blank"
+                          rel="noopener">Watch Video</a></p>
+                </div>
+            </div>
+        </article>
+
+        <!-- CARD THREE -->
+        <article id="card-three" class="col-12 col-md-6 col-xl-3">
+            <div class="card">
+                <img src="{% static 'services/images/cards/aerator/aerator1.jpg' %}"
+                     class="card-img-top"
+                     alt="Man scarifying a lawn">
+                <div class="card-body">
+                    <h3 class="card-title sub-heading-color">Scarifying</h3>
+                    <p class="card-text">
+                        During growing season<br><br>
+                        <label for="scarify">Scarify size:</label>
+                        <select name="scarify" id="scarify">
+                            <option value="small">Small Scarify</option>
+                            <option value="medium">Medium Scarify</option>
+                            <option value="large">Large Scarify</option>
+                        </select>
+                        <br><br>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <button>Book your callout</button>
+                    <p><a href="https://www.youtube.com/watch?v=P6lwyRmOk30"
+                          target="_blank" rel="noopener">Watch Video</a></p>
+                </div>
+            </div>
+        </article>
+
+        <!-- CARD FOUR -->
+        <article id="card-four" class="col-12 col-md-6 col-xl-3">
+            <div class="card">
+                <img src="{% static 'services/images/cards/drains/drains.png' %}"
+                     class="card-img-top"
+                     alt="Cleaning house gutters">
+                <div class="card-body">
+                    <h3 class="card-title sub-heading-color">Shoots & Drains</h3>
+                    <p class="card-text">
+                        Spring/Autumn<br><br>
+                        <label for="house">House size:</label>
+                        <select name="house" id="house">
+                            <option value="small">Small</option>
+                            <option value="medium">Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                        <br><br>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <button>Book your callout</button>
+                    <p><a href="https://www.youtube.com/watch?v=P6lwyRmOk30"
+                          target="_blank" rel="noopener">Watch Video</a></p>
+                </div>
+            </div>
+        </article>
+
+        <!-- Continue adding cards EXACTLY the same way... -->
+
+    </div>
+
+</section>
+
+{% endblock %}

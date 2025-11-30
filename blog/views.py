@@ -1,30 +1,18 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Comment
-from .forms import CommentForm
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from .models import Post
 
-def blog_home(request):
-    posts = Post.objects.all().order_by('-created_at')
-    return render(request, 'blog/blogs.html', {'posts': posts})
+def post_list(request):
+    posts = Post.objects.filter(status='published')
+    return render(request, 'blog/post_list.html', {'posts': posts})
 
 @login_required
-def post_detail(request, post_id):
-    post = get_object_or_404(Post, id=post_id)
-    comments = post.comments.all().order_by('-created_at')
-    
+def create_post(request):
+    if not request.user.is_blogger:
+        return redirect('post_list')
     if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.author = request.user
-            comment.save()
-            return redirect('post_detail', post_id=post.id)
-    else:
-        form = CommentForm()
-    
-    return render(request, 'blog/post_detail.html', {
-        'post': post,
-        'comments': comments,
-        'form': form
-    })
+        title = request.POST['title']
+        content = request.POST['content']
+        Post.objects.create(author=request.user, title=title, content=content, status='draft')
+        return redirect('post_list')
+    return render(request, 'blog/create_post.html')

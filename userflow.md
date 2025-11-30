@@ -1,0 +1,255 @@
+
+# FULL SYSTEM WORKFLOW DIAGRAM (FINAL VERSION)
+
+                                   ┌───────────────┐
+                                   │     Admin     │
+                                   │  - Approve    │
+                                   │    Bookings   │
+                                   │  - Approve    │
+                                   │    Comments   │
+                                   │  - Approve    │
+                                   │    Blogger Req│
+                                   └───────┬───────┘
+                                           │
+            ┌───────────────┬──────────────┴───────────────┬───────────────┐
+            │               │                              │               │
+            ▼               ▼                              ▼               ▼
+     ┌───────────────┐  ┌───────────────┐          ┌───────────────┐  ┌─────────────────┐
+     │    Guest      │  │ Registered    │          │    Blogger     │  │ CustomUser/Admin │
+     │  (Unauth)     │  │ Customer/User │          │   (Approved)   │  │  - Full Access   │
+     │ - View blogs  │  │ - View blogs  │          │ - Customer perms│ │  - Approve all   │
+     │ - Comment     │  │ - Comment     │          │ - Create posts  │ │    content       │
+     │ - Add to cart │  │ - Add to cart │          │ - Edit posts    │ └─────────────────┘
+     │   (session)   │  │   (CartItem)  │          │                 │
+     └───────┬───────┘  └───────┬───────┘          └───────┬───────┘
+             │                  │                            │
+             │                  ▼                            │
+             │        ┌────────────────────┐                 │
+             │        │ Login / Register   │                 │
+             │        │ - User logs in     │                 │
+             │        │ - Auto-migrate     │                 │
+             └──────▶ │   session cart →   │ ◀───────────────┘
+                      │   CartItem         │
+                      └─────────┬──────────┘
+                                ▼
+                        ┌───────────────┐
+                        │ Confirm Cart   │
+                        │ - Convert      │
+                        │   Cart →       │
+                        │   Booking      │
+                        │ - status=pending│
+                        └───────┬────────┘
+                                ▼
+                        ┌───────────────┐
+                        │ Booking Table │
+                        │ - All bookings │
+                        │ - status       │
+                        └───────┬───────┘
+                                │
+              ┌─────────────────┼───────────────────┐
+              ▼                 ▼                   ▼
+     ┌───────────────┐  ┌───────────────┐  ┌───────────────┐
+     │ Pending       │  │ Approved       │ │ Rejected       │
+     │ Bookings      │  │ Bookings       │ │ Bookings       │
+     └───────────────┘  └───────────────┘  └───────────────┘
+
+
+
+
+
+
+
+## User Stories
+
+<details>
+    <summary>Flow Explanation :
+    </summary>
+ 
+
+    1. Guest Flow (Unauthenticated)
+
+       - Can view blogs
+
+       - Can comment (comment.approved=False until admin approves)
+
+       - Can add services to session cart
+
+       - Session cart saved under request.session['cart']
+
+    2. Registered User Flow
+
+       - Can view blogs, comment
+
+       - Adds services to CartItem (database)
+
+       - On checkout → cart converts into Booking(status='pending')
+
+       - On login → any existing session cart auto-migrates into their CartItem list
+
+    3. Blogger Flow
+
+       - A normal user requests blogger status
+
+       - Admin approves
+
+       - User becomes is_blogger=True
+
+       - Gains permissions:
+
+            Create blog posts
+
+            Edit their own posts
+
+            Still keeps customer abilities (book services, comment)
+
+    4. Admin / CustomUser Flow
+
+       - Can approve:
+
+            Bookings
+
+            Comments
+
+            Blogger requests
+
+       - Can reject bookings
+
+       - Can promote/demote bloggers
+
+       - Full management access
+</details>
+
+<details>
+    <summary>Database & Status Logic:
+    </summary>
+
+    1. CartItem Table
+
+    - Stores items for authenticated users
+
+    - ForeignKey to user
+
+    - Deleted when converted into a booking
+
+    2. Session Cart (Guests)
+
+    - Stored as JSON list in session
+
+    - Migrated at login → CartItem
+
+    3. Booking Table
+
+       - Fields: user | guest data | service | status
+
+       - Possible statuses:
+
+           pending
+
+           approved
+
+           rejected
+
+       - Comment Table
+
+           Fields: post, user/session, content
+
+           approved=False by default
+
+           Admin approves
+</details>
+
+<details>
+    <summary> Key Advantages of This Architecture
+    </summary>
+
+
+    1. Full user progression: guest → registered → blogger → admin
+
+    2. Session-to-user cart migration
+
+    3. Centralized admin approval for:
+
+       - bookings
+
+       - comments
+
+       - blogger access
+
+    4. Clean separation of apps:
+
+          - cart/
+
+          - bookings/
+
+          - users/
+
+          - blog/
+
+    5. Scales well and matches real-world e-commerce + blogging workflow
+</details>
+
+<details>
+    <summary>Files changed:
+    </summary>
+
+
+## Files changed:
+    git commit -m "check \userflow document for changes"
+            [newbranch 08fbc8a] check \userflow document for changes
+    68 files changed, 1320 insertions(+), 138 deletions(-)
+
+        create mode 100644 accounts/forms.py
+        create mode 100644 blog/migrations/0002_remove_comment_author_comment_approved_comment_email_and_more.py
+        create mode 100644 blog/migrations/0003_post_author_post_status_alter_comment_content_and_more.py
+        create mode 100644 blog/templates/blog/create_post.html
+        create mode 100644 blog/templates/blog/post_list.html
+        delete mode 100644 booking/models.py
+        delete mode 100644 booking/templates/booking/booking_home.html
+        delete mode 100644 booking/urls.py
+        delete mode 100644 booking/views.py
+        rename {booking => bookings}/__init__.py (100%)
+        create mode 100644 bookings/admin.py
+        create mode 100644 bookings/apps.py
+        create mode 100644 bookings/migrations/0001_initial.py
+        create mode 100644 bookings/migrations/0002_initial.py
+        rename {booking => bookings}/migrations/__init__.py (100%)
+        create mode 100644 bookings/models.py
+        create mode 100644 bookings/signals.py
+        create mode 100644 bookings/templates/booking/booking_home.html
+        create mode 100644 bookings/templates/booking/cart.html
+        create mode 100644 bookings/templates/booking/guest_cart.html
+        rename {booking => bookings}/templates/booking/old-booking_home.html (100%)
+        create mode 100644 bookings/templates/booking/services_home.html
+        rename {booking => bookings}/tests.py (100%)
+        create mode 100644 bookings/urls.py
+        create mode 100644 bookings/utils.py
+        create mode 100644 bookings/views.py
+        create mode 100644 cart/__init__.py
+        rename {booking => cart}/admin.py (100%)
+        rename {booking => cart}/apps.py (63%)
+        create mode 100644 cart/migrations/0001_initial.py
+        create mode 100644 cart/migrations/0002_initial.py
+        create mode 100644 cart/migrations/__init__.py
+        create mode 100644 cart/models.py
+        create mode 100644 cart/templates/cart/booking_pending.html
+        create mode 100644 cart/templates/cart/cart.html
+        create mode 100644 cart/templates/cart/guest_cart.html
+        create mode 100644 cart/tests.py
+        create mode 100644 cart/views.py
+        create mode 100644 core/templates/core/services.html
+        create mode 100644 scripts/fetch_services.py
+        create mode 100644 scripts/inspect_users.py
+        create mode 100644 scripts/resolve_root.py
+        create mode 100644 scripts/test_register.py
+        create mode 100644 userflow.txt
+        create mode 100644 users/__init__.py
+        create mode 100644 users/admin.py
+        create mode 100644 users/apps.py
+        create mode 100644 users/migrations/0001_initial.py
+        create mode 100644 users/migrations/__init__.py
+        create mode 100644 users/models.py
+        create mode 100644 users/signals.py
+        create mode 100644 users/tests.py
+        create mode 100644 users/views.py
+
+</details>

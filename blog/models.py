@@ -1,23 +1,23 @@
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import CustomUser
 
 class Post(models.Model):
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+    ]
+    author = models.ForeignKey(CustomUser, null=True, blank=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=200)
     content = models.TextField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     created_at = models.DateTimeField(auto_now_add=True)
-
-    @property
-    def excerpt(self):
-        return self.content[:100]  # simple excerpt
-
-    def __str__(self):
-        return self.title
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField()
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    content = models.TextField(null=True, blank=True)
+    approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'{self.author.username} - {self.content[:20]}'
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    session_id = models.CharField(max_length=40, null=True, blank=True)

@@ -55,11 +55,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'core',
-    'services',
     'blog',
-    'booking',
+    'bookings',
     'accounts',
+    'users',
+    'cart',
 ]
+
+# -------------------------------
+# Custom user model
+# -------------------------------
+AUTH_USER_MODEL = 'users.CustomUser'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

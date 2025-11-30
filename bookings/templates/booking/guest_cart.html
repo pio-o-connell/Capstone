@@ -1,0 +1,14 @@
+<h2>Guest Cart</h2>
+{% if cart %}
+<ul>
+    {% for item in cart %}
+        <li>{{ item.service_name }} - {{ item.date }}</li>
+    {% endfor %}
+</ul>
+<form method="post" action="{% url 'confirm_guest_booking' %}">
+    {% csrf_token %}
+    <button type="submit">Confirm Booking</button>
+</form>
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %}

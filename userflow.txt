@@ -1,0 +1,117 @@
+Full Workflow Diagram
+                               ┌───────────────┐
+                               │     Admin     │
+                               │ - Approve     │
+                               │   Bookings    │
+                               │ - Approve     │
+                               │   Comments    │
+                               │ - Approve     │
+                               │   Blogger Req │
+                               └───────┬───────┘
+                                       │
+        ┌───────────────┬──────────────┴───────────────┬───────────────┐
+        │               │                              │               │
+        ▼               ▼                              ▼               ▼
+ ┌───────────────┐  ┌───────────────┐          ┌───────────────┐  ┌───────────────┐
+ │    Guest      │  │ Registered    │          │    Blogger    │  │ CustomUser/Admin│
+ │ (Unauth)      │  │ Customer/User │          │ (Approved)   │  │ - Full Access  │
+ │ - View blogs  │  │ - View blogs  │          │ - All Customer│  │ - Approve all  │
+ │ - Comment     │  │ - Comment     │          │   permissions │  │   content      │
+ │ - Add to cart │  │ - Add to cart │          │ - Create/Edit │  │               │
+ │   (session)   │  │   (CartItem)  │          │   posts       │  └───────────────┘
+ └───────┬───────┘  └───────┬───────┘          └───────┬───────┘
+         │                  │                            │
+         │                  │                            │
+         ▼                  ▼                            │
+ ┌────────────────┐   ┌───────────────┐                  │
+ │ Session Cart   │   │ CartItem      │                  │
+ │ - Guest adds   │   │ - Registered  │                  │
+ │   services     │   │   user adds   │                  │
+ └───────┬────────┘   └───────┬───────┘                  │
+         │                    │                            │
+         │                    ▼                            │
+         │           ┌────────────────────┐               │
+         │           │ Login/Register     │               │
+         │           │ - User logs in    │               │
+         │           │ - Trigger cart    │               │
+         │           │   migration       │               │
+         └──────────▶│   (session → CartItem)│──────────▶│
+                     └────────────┬───────┘               │
+                                  ▼                       │
+                          ┌───────────────┐               │
+                          │ Confirm Cart  │
+                          │ - Move Cart   │
+                          │   → Booking   │
+                          │ - status=pending │
+                          └───────┬───────┘
+                                  ▼
+                          ┌───────────────┐
+                          │ Booking Table │
+                          │ - Bookings    │
+                          │ - status      │
+                          └───────┬───────┘
+                                  │
+           ┌──────────────────────┼───────────────────────┐
+           ▼                      ▼                       ▼
+    ┌───────────────┐     ┌───────────────┐       ┌───────────────┐
+    │ Pending       │     │ Approved      │       │ Rejected      │
+    │ Bookings      │     │ Bookings      │       │ Bookings      │
+    └───────────────┘     └───────────────┘       └───────────────┘
+
+Flow Explanation
+
+Guest Flow
+
+Adds services to session cart
+
+Comments are stored with session_id and approved=False
+
+Can view blogs
+
+Registered User Flow
+
+Adds services to CartItem
+
+Can confirm cart → Booking with status=pending
+
+Logs in → session cart migrates to CartItem automatically
+
+Blogger Flow
+
+Can request to become a blogger → admin approves → gains is_blogger=True
+
+Can create/edit blog posts
+
+Retains customer permissions (book services, comment)
+
+Admin Flow
+
+Approves bookings, comments, blogger requests
+
+Can reject or cancel bookings
+
+Can promote users to Blogger group
+
+Database & Status
+
+CartItem stores current items
+
+Booking table stores pending/approved/rejected bookings
+
+Comments track approved flag, IP, and session
+
+Key Benefits of This Diagram
+
+Shows all roles and flows in one place
+
+Visualizes guest → registered migration
+
+Captures booking approval workflow
+
+Shows Blogger request and post creation
+
+Makes admin approval points clear
+
+If you want, I can now create a colored graphical version of this diagram with arrows and icons that you can use in your documentation or presentations.
+
+Do you want me to generate that image?

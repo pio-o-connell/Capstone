@@ -11,3 +11,8 @@ def contact(request):
     Contact page view.
     """
     return render(request, 'core/contact.html')
+
+
+def services_home(request):
+    """Render the services landing page."""
+    return render(request, 'core/services.html')

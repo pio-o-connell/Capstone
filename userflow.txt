@@ -1,117 +1,176 @@
-Full Workflow Diagram
+FULL SYSTEM WORKFLOW DIAGRAM (FINAL VERSION)
                                ┌───────────────┐
                                │     Admin     │
-                               │ - Approve     │
-                               │   Bookings    │
-                               │ - Approve     │
-                               │   Comments    │
-                               │ - Approve     │
-                               │   Blogger Req │
+                               │  - Approve    │
+                               │    Bookings   │
+                               │  - Approve    │
+                               │    Comments   │
+                               │  - Approve    │
+                               │    Blogger Req│
                                └───────┬───────┘
                                        │
         ┌───────────────┬──────────────┴───────────────┬───────────────┐
         │               │                              │               │
         ▼               ▼                              ▼               ▼
- ┌───────────────┐  ┌───────────────┐          ┌───────────────┐  ┌───────────────┐
- │    Guest      │  │ Registered    │          │    Blogger    │  │ CustomUser/Admin│
- │ (Unauth)      │  │ Customer/User │          │ (Approved)   │  │ - Full Access  │
- │ - View blogs  │  │ - View blogs  │          │ - All Customer│  │ - Approve all  │
- │ - Comment     │  │ - Comment     │          │   permissions │  │   content      │
- │ - Add to cart │  │ - Add to cart │          │ - Create/Edit │  │               │
- │   (session)   │  │   (CartItem)  │          │   posts       │  └───────────────┘
+ ┌───────────────┐  ┌───────────────┐          ┌───────────────┐  ┌─────────────────┐
+ │    Guest      │  │ Registered    │          │    Blogger     │  │ CustomUser/Admin │
+ │ (Unauth)      │  │ Customer/User │          │  (Approved)    │  │  - Full Access   │
+ │ - View blogs  │  │ - View blogs  │          │ - Customer perms│  │  - Approve all   │
+ │ - Comment     │  │ - Comment     │          │ - Create posts  │  │    content       │
+ │ - Add to cart │  │ - Add to cart │          │ - Edit posts    │  └─────────────────┘
+ │   (session)   │  │   (CartItem)  │          │                 │
  └───────┬───────┘  └───────┬───────┘          └───────┬───────┘
          │                  │                            │
-         │                  │                            │
-         ▼                  ▼                            │
- ┌────────────────┐   ┌───────────────┐                  │
- │ Session Cart   │   │ CartItem      │                  │
- │ - Guest adds   │   │ - Registered  │                  │
- │   services     │   │   user adds   │                  │
- └───────┬────────┘   └───────┬───────┘                  │
-         │                    │                            │
-         │                    ▼                            │
-         │           ┌────────────────────┐               │
-         │           │ Login/Register     │               │
-         │           │ - User logs in    │               │
-         │           │ - Trigger cart    │               │
-         │           │   migration       │               │
-         └──────────▶│   (session → CartItem)│──────────▶│
-                     └────────────┬───────┘               │
-                                  ▼                       │
-                          ┌───────────────┐               │
-                          │ Confirm Cart  │
-                          │ - Move Cart   │
-                          │   → Booking   │
-                          │ - status=pending │
-                          └───────┬───────┘
-                                  ▼
-                          ┌───────────────┐
-                          │ Booking Table │
-                          │ - Bookings    │
-                          │ - status      │
-                          └───────┬───────┘
-                                  │
-           ┌──────────────────────┼───────────────────────┐
-           ▼                      ▼                       ▼
-    ┌───────────────┐     ┌───────────────┐       ┌───────────────┐
-    │ Pending       │     │ Approved      │       │ Rejected      │
-    │ Bookings      │     │ Bookings      │       │ Bookings      │
-    └───────────────┘     └───────────────┘       └───────────────┘
+         │                  ▼                            │
+         │        ┌────────────────────┐                 │
+         │        │ Login / Register   │                 │
+         │        │ - User logs in     │                 │
+         │        │ - Auto-migrate     │                 │
+         └──────▶ │   session cart →   │ ◀───────────────┘
+                  │   CartItem         │
+                  └─────────┬──────────┘
+                            ▼
+                    ┌───────────────┐
+                    │ Confirm Cart  │
+                    │ - Convert     │
+                    │   Cart →      │
+                    │   Booking     │
+                    │ - status=pending│
+                    └───────┬───────┘
+                            ▼
+                    ┌───────────────┐
+                    │ Booking Table │
+                    │ - All bookings │
+                    │ - status       │
+                    └───────┬───────┘
+                            │
+          ┌─────────────────┼───────────────────┐
+          ▼                 ▼                   ▼
+ ┌───────────────┐  ┌───────────────┐  ┌───────────────┐
+ │ Pending       │  │ Approved      │  │ Rejected      │
+ │ Bookings      │  │ Bookings      │  │ Bookings      │
+ └───────────────┘  └───────────────┘  └───────────────┘
 
-Flow Explanation
+### User Stories
 
-Guest Flow
+ Flow Explanation :
 
-Adds services to session cart
+        Guest Flow (Unauthenticated)
 
-Comments are stored with session_id and approved=False
+                Can view blogs
 
-Can view blogs
+                Can comment (comment.approved=False until admin approves)
 
-Registered User Flow
+                Can add services to session cart
 
-Adds services to CartItem
+                Session cart saved under request.session['cart']
 
-Can confirm cart → Booking with status=pending
+        Registered User Flow
 
-Logs in → session cart migrates to CartItem automatically
+                Can view blogs, comment
 
-Blogger Flow
+                Adds services to CartItem (database)
 
-Can request to become a blogger → admin approves → gains is_blogger=True
+                On checkout → cart converts into Booking(status='pending')
 
-Can create/edit blog posts
+                On login → any existing session cart auto-migrates into their CartItem list
 
-Retains customer permissions (book services, comment)
+        Blogger Flow
 
-Admin Flow
+                A normal user requests blogger status
 
-Approves bookings, comments, blogger requests
+                Admin approves
 
-Can reject or cancel bookings
+                User becomes is_blogger=True
 
-Can promote users to Blogger group
+                Gains permissions:
 
-Database & Status
+                        Create blog posts
 
-CartItem stores current items
+                        Edit their own posts
 
-Booking table stores pending/approved/rejected bookings
+                        Still keeps customer abilities (book services, comment)
 
-Comments track approved flag, IP, and session
+        Admin / CustomUser Flow
 
-Key Benefits of This Diagram
+                Can approve:
 
-Shows all roles and flows in one place
+                        Bookings
 
-Visualizes guest → registered migration
+                        Comments
 
-Captures booking approval workflow
+                        Blogger requests
 
-Shows Blogger request and post creation
+                Can reject bookings
 
-Makes admin approval points clear
+                Can promote/demote bloggers
 
+                Full management access
+
+
+Database & Status Logic:
+
+        CartItem Table
+
+                Stores items for authenticated users
+
+                ForeignKey to user
+
+                Deleted when converted into a booking
+
+        Session Cart (Guests)
+
+                Stored as JSON list in session
+
+                Migrated at login → CartItem
+
+        Booking Table
+
+                Fields: user | guest data | service | status
+
+                Possible statuses:
+
+                        pending
+
+                        approved
+
+                        rejected
+
+                Comment Table
+
+                        Fields: post, user/session, content
+
+                        approved=False by default
+
+                        Admin approves
+
+
+
+✅ Key Advantages of This Architecture
+
+        Full user progression: guest → registered → blogger → admin
+
+        Session-to-user cart migration
+
+        Centralized admin approval for:
+
+                bookings
+
+                comments
+
+                blogger access
+
+        Clean separation of apps:
+
+                cart/
+
+                bookings/
+
+                users/
+
+                blog/
+
+        Scales well and matches real-world e-commerce + blogging workflow
 
 Files changed:
  git commit -m "check \userflow document for changes"

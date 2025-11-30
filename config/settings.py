@@ -25,13 +25,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 import os
 
-if os.path.isfile('env.py'):
+if os.path.isFile("env.py")
     import env
+    DEBUG=True
+else:
+    DEBUG=False
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
-DEBUG = True
+
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -57,6 +60,7 @@ INSTALLED_APPS = [
     'core',
     'blog',
     'bookings',
+    'services',
     'accounts',
     'users',
     'cart',

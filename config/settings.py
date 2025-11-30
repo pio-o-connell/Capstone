@@ -25,12 +25,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 import os
 
-if os.path.isFile("env.py")
-    import env
-    DEBUG=True
+# Load local env.py if present (developer convenience). Keep using os.path.isfile.
+if os.path.isfile("env.py"):
+    try:
+        import env  # optional local overrides (defines SECRET_KEY, etc.)
+    except Exception:
+        # If env.py exists but fails to import, continue with environment variables
+        pass
+    DEBUG = True
 else:
-    DEBUG=False
+    DEBUG = False
 
+# Secret key should come from env or environment variable in production
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 

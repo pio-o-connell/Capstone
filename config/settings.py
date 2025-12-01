@@ -62,7 +62,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
 
+    # Apps
+    'users.apps.UsersConfig',
     'core',
     'blog',
     'bookings',
@@ -70,6 +74,7 @@ INSTALLED_APPS = [
     'accounts',
     'users',
     'cart',
+    
 ]
 
 # -------------------------------
@@ -160,3 +165,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

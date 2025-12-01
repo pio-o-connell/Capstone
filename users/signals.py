@@ -1,7 +1,7 @@
 
-
 # users/signals.py
-from django.contrib.auth.signals import user_logged_in,post_save
+from django.contrib.auth.signals import user_logged_in
+from django.db.models.signals import post_save
 from django.dispatch import receiver
 from bookings.utils import migrate_guest_cart_to_user
 from .models import CustomUser, CustomerProfile, BloggerProfile, BloggerRequest

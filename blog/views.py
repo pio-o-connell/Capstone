@@ -7,7 +7,7 @@ from users.models import BloggerRequest
 from .models import Post
 
 def post_list(request):
-    posts = Post.objects.filter(status='published').order_by('-created_at')
+    posts = Post.objects.filter(status='published').order_by('-created_on')
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 @login_required

@@ -6,7 +6,7 @@
 
 <div class="container mt-5">
     <h1>{{ post.title }}</h1>
-    <small class="text-muted">Published on {{ post.created_at|date:"F j, Y" }}</small>
+    <small class="text-muted">Published on {{ post.created_on|date:"F j, Y" }}</small>
     <hr>
     <div>{{ post.content|linebreaks }}</div>
 

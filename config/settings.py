@@ -66,16 +66,15 @@ INSTALLED_APPS = [
     'cloudinary_storage',
 
     # Apps
-    'users.apps.UsersConfig',
+    'users.apps.UsersConfig',  # keep this
     'core',
     'blog',
     'bookings',
     'services',
     'accounts',
-    'users',
     'cart',
-    
 ]
+
 
 # -------------------------------
 # Custom user model

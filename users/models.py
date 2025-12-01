@@ -1,6 +1,9 @@
+
 # users/models.py
 from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
+from cloudinary.models import CloudinaryField
+from django_summernote.fields import SummernoteTextField
 
 class CustomUser(AbstractUser):
     is_customer = models.BooleanField(default=True)
@@ -15,18 +18,31 @@ class CustomUser(AbstractUser):
 
 class CustomerProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    avatar = CloudinaryField('image', blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True)
     address = models.TextField(blank=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"CustomerProfile for {self.user.username}"
 
 
 class BloggerProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    bio = models.TextField(blank=True)
-    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+    about = SummernoteTextField(blank=True, null=True)
+    avatar = CloudinaryField('image', blank=True, null=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    last_updated = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"BloggerProfile for {self.user.username}"
 
 class BloggerRequest(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    reason = models.TextField()
+    reason = SummernoteTextField()
     approved = models.BooleanField(default=False)
-    requested_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Blogger request by {self.user.username}"

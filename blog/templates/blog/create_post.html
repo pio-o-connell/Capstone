@@ -1,11 +1,24 @@
-<h2>Create Blog Post</h2>
-<form method="post">
-    {% csrf_token %}
-    <label>Title:</label><br>
-    <input type="text" name="title"><br><br>
-    
-    <label>Content:</label><br>
-    <textarea name="content" rows="6" cols="50"></textarea><br><br>
-    
-    <button type="submit">Publish</button>
-</form>
+
+{% if user.is_authenticated and user.is_blogger %}
+
+    <h2>Create Blog Post</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label>Title:</label><br>
+        <input type="text" name="title"><br><br>
+        
+        <label>Content:</label><br>
+        <textarea name="content" rows="6" cols="50"></textarea><br><br>
+        
+        <button type="submit">Publish</button>
+    </form>
+
+{% endif %}
+
+
+<!-- from django.http import HttpResponseForbidden
+
+def create_post(request):
+    if not request.user.is_authenticated or not request.user.is_blogger:
+        return HttpResponseForbidden("You are not allowed to create posts.")
+    ... -->

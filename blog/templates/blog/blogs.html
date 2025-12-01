@@ -18,7 +18,7 @@
                                 {{ post.excerpt|default:post.content|truncatewords:30 }}
                             </p>
                             <small class="text-muted">
-                                Published on {{ post.created_at|date:"F j, Y" }}
+                                Published on {{ post.created_on|date:"F j, Y" }}
                             </small>
                         </div>
                         <div class="card-footer bg-transparent border-top-0">

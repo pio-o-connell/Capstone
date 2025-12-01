@@ -1,3 +1,6 @@
+
+# \admin.py
+
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser, CustomerProfile, BloggerProfile, BloggerRequest
@@ -13,7 +16,13 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ('is_blogger', 'is_customer', 'is_staff', 'is_active')
     actions = [make_bloggers]
 
+# BloggerRequest admin
+class BloggerRequestAdmin(admin.ModelAdmin):
+    list_display = ('user', 'approved', 'created_at')
+    list_filter = ('approved',)
+    search_fields = ('user__username', 'user__email')
+
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(CustomerProfile)
 admin.site.register(BloggerProfile)
-admin.site.register(BloggerRequest)
+admin.site.register(BloggerRequest, BloggerRequestAdmin)

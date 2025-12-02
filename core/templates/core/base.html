@@ -53,6 +53,37 @@
     <!-- Header offset script: sets --header-height to prevent content hiding under fixed header -->
     <script src="{% static 'core/js/header-offset.js' %}"></script>
 
+    <!-- Site session ID for anonymous users (stored in localStorage).
+         - Creates `localStorage.site_session` as JSON: {id, created_at}
+         - Only created when there is no session present AND the user is anonymous.
+         - Exposes `window.siteSession` and `window.siteSessionId` for other scripts (booking forms).
+    -->
+    <script>
+    (function(){
+        var storageKey = 'site_session';
+        function makeId(){
+            try{ if(window.crypto && crypto.randomUUID) return crypto.randomUUID(); }catch(e){}
+            return 's-' + Math.random().toString(36).slice(2,12);
+        }
+        function nowISO(){ return new Date().toISOString(); }
+
+        var isAuthenticated = {{ user.is_authenticated|yesno:"true,false" }};
+
+        var sess = null;
+        try{ sess = JSON.parse(localStorage.getItem(storageKey) || 'null'); }catch(e){ sess = null; }
+
+        if(!sess && !isAuthenticated){
+            sess = { id: makeId(), created_at: nowISO() };
+            try{ localStorage.setItem(storageKey, JSON.stringify(sess)); }catch(e){}
+        }
+
+        // Expose to other scripts. If no session (e.g. logged-in user), these will be null.
+        window.siteSession = sess;
+        window.siteSessionId = sess ? sess.id : null;
+        window.getSiteSession = function(){ return window.siteSession || null; };
+    })();
+    </script>
+
     {% block extra_js %}{% endblock %}
 
 </body>

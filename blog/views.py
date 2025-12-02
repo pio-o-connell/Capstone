@@ -6,10 +6,27 @@ from django.http import HttpResponseForbidden
 from users.models import BloggerRequest
 from .models import Post
 from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def post_list(request):
-    posts = Post.objects.filter(status='published').order_by('-created_on')
-    return render(request, 'blog/post_list.html', {'posts': posts})
+    """Render the list of published posts with pagination (6 per page)."""
+    post_qs = Post.objects.filter(status='published').order_by('-created_on')
+    paginator = Paginator(post_qs, 6)
+    page_number = request.GET.get('page', 1)
+    try:
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+
+    posts = page_obj.object_list
+    context = {
+        'posts': posts,
+        'page_obj': page_obj,
+        'is_paginated': page_obj.has_other_pages(),
+    }
+    return render(request, 'blog/post_list.html', context)
 
 
 def post_detail(request, slug):

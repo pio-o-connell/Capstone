@@ -35,9 +35,9 @@
                 <div class="image-wrapper">
                     {% comment %}Treat Cloudinary 'placeholder' public_id as missing image{% endcomment %}
                     {% if post.featured_image and 'placeholder' not in post.featured_image.url %}
-                        <img src="{{ post.featured_image.url }}" class="card-img-top" alt="{{ post.title }}" loading="lazy" data-default-src='{% static "core/images/users/default.jpg" %}' onerror="this.onerror=null;this.src=this.dataset.defaultSrc;">
+                        <img src="{{ post.featured_image.url }}" class="card-img-top" alt="{{ post.title }}" loading="lazy" data-default-src="{% static 'core/images/users/default.jpg' %}" onerror="this.onerror=null;this.src=this.dataset.defaultSrc;">
                     {% else %}
-                        <img src="{% static "core/images/users/default.jpg" %}" class="card-img-top" alt="{{ post.title }}" loading="lazy">
+                        <img src="{% static 'core/images/users/default.jpg' %}" class="card-img-top" alt="{{ post.title }}" loading="lazy">
                     {% endif %}
                     <div class="image-overlay">
                         <p class="mb-0">Author: {{ post.author.get_full_name|default:post.author.username }}</p>

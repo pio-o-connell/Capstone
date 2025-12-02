@@ -42,7 +42,7 @@ class BloggerRequest(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     reason = SummernoteTextField()
     approved = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return f"Blogger request by {self.user.username}"

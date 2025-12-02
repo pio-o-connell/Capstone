@@ -1,0 +1,392 @@
+{
+  "DB-scripts\\blogger.jpg": {
+    "public_id": "capstone/DB-scripts_blogger",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764632664/capstone/DB-scripts_blogger.png",
+    "version": 1764632664
+  },
+  "DB-scripts\\business.jpg": {
+    "public_id": "capstone/DB-scripts_business",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764632668/capstone/DB-scripts_business.png",
+    "version": 1764632668
+  },
+  "DB-scripts\\google.jpeg": {
+    "public_id": "capstone/DB-scripts_google",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764632669/capstone/DB-scripts_google.jpg",
+    "version": 1764632669
+  },
+  "DB-scripts\\on-computer.jpg": {
+    "public_id": "capstone/DB-scripts_on-computer",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764632670/capstone/DB-scripts_on-computer.jpg",
+    "version": 1764632670
+  },
+  "DB-scripts\\profile2.jpg": {
+    "public_id": "capstone/DB-scripts_profile2",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764632670/capstone/DB-scripts_profile2.jpg",
+    "version": 1764632670
+  },
+  "DB-scripts\\sysAdmin.png": {
+    "public_id": "capstone/DB-scripts_sysAdmin",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764632674/capstone/DB-scripts_sysAdmin.png",
+    "version": 1764632674
+  },
+  "DB-scripts\\visiting.jpg": {
+    "public_id": "capstone/DB-scripts_visiting",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764632677/capstone/DB-scripts_visiting.png",
+    "version": 1764632677
+  },
+  "core\\static\\core\\images\\favicon_io\\android-chrome-192x192.png": {
+    "public_id": "capstone/core_static_core_images_favicon_io_android-chrome-192x192",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633321/capstone/core_static_core_images_favicon_io_android-chrome-192x192.png",
+    "version": 1764633321
+  },
+  "core\\static\\core\\images\\favicon_io\\android-chrome-512x512.png": {
+    "public_id": "capstone/core_static_core_images_favicon_io_android-chrome-512x512",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633322/capstone/core_static_core_images_favicon_io_android-chrome-512x512.png",
+    "version": 1764633322
+  },
+  "core\\static\\core\\images\\favicon_io\\apple-touch-icon.png": {
+    "public_id": "capstone/core_static_core_images_favicon_io_apple-touch-icon",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633322/capstone/core_static_core_images_favicon_io_apple-touch-icon.png",
+    "version": 1764633322
+  },
+  "core\\static\\core\\images\\favicon_io\\favicon-16x16.png": {
+    "public_id": "capstone/core_static_core_images_favicon_io_favicon-16x16",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633323/capstone/core_static_core_images_favicon_io_favicon-16x16.png",
+    "version": 1764633323
+  },
+  "core\\static\\core\\images\\favicon_io\\favicon-32x32.png": {
+    "public_id": "capstone/core_static_core_images_favicon_io_favicon-32x32",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633323/capstone/core_static_core_images_favicon_io_favicon-32x32.png",
+    "version": 1764633323
+  },
+  "core\\static\\core\\images\\logo\\logo-250x100.png": {
+    "public_id": "capstone/core_static_core_images_logo_logo-250x100",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633325/capstone/core_static_core_images_logo_logo-250x100.png",
+    "version": 1764633325
+  },
+  "core\\static\\core\\images\\logo\\logo.png": {
+    "public_id": "capstone/core_static_core_images_logo_logo",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633326/capstone/core_static_core_images_logo_logo.png",
+    "version": 1764633326
+  },
+  "core\\static\\core\\images\\winters\\squoosh\\winters-10.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_squoosh_winters-10",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633327/capstone/core_static_core_images_winters_squoosh_winters-10.jpg",
+    "version": 1764633327
+  },
+  "core\\static\\core\\images\\winters\\squoosh\\winters-11.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_squoosh_winters-11",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633328/capstone/core_static_core_images_winters_squoosh_winters-11.jpg",
+    "version": 1764633328
+  },
+  "core\\static\\core\\images\\winters\\squoosh\\winters-2.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_squoosh_winters-2",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633329/capstone/core_static_core_images_winters_squoosh_winters-2.jpg",
+    "version": 1764633329
+  },
+  "core\\static\\core\\images\\winters\\squoosh\\winters-3.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_squoosh_winters-3",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633330/capstone/core_static_core_images_winters_squoosh_winters-3.jpg",
+    "version": 1764633330
+  },
+  "core\\static\\core\\images\\winters\\squoosh\\winters-4.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_squoosh_winters-4",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633331/capstone/core_static_core_images_winters_squoosh_winters-4.jpg",
+    "version": 1764633331
+  },
+  "core\\static\\core\\images\\winters\\squoosh\\winters-5.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_squoosh_winters-5",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633333/capstone/core_static_core_images_winters_squoosh_winters-5.jpg",
+    "version": 1764633333
+  },
+  "core\\static\\core\\images\\winters\\squoosh\\winters-6.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_squoosh_winters-6",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633334/capstone/core_static_core_images_winters_squoosh_winters-6.jpg",
+    "version": 1764633334
+  },
+  "core\\static\\core\\images\\winters\\squoosh\\winters-7.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_squoosh_winters-7",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633335/capstone/core_static_core_images_winters_squoosh_winters-7.jpg",
+    "version": 1764633335
+  },
+  "core\\static\\core\\images\\winters\\squoosh\\winters-8.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_squoosh_winters-8",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633336/capstone/core_static_core_images_winters_squoosh_winters-8.jpg",
+    "version": 1764633336
+  },
+  "core\\static\\core\\images\\winters\\squoosh\\winters-9.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_squoosh_winters-9",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633337/capstone/core_static_core_images_winters_squoosh_winters-9.jpg",
+    "version": 1764633337
+  },
+  "core\\static\\core\\images\\winters\\squoosh\\Winters-back.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_squoosh_Winters-back",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633338/capstone/core_static_core_images_winters_squoosh_Winters-back.jpg",
+    "version": 1764633338
+  },
+  "core\\static\\core\\images\\winters\\winters-10.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_winters-10",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633340/capstone/core_static_core_images_winters_winters-10.jpg",
+    "version": 1764633340
+  },
+  "core\\static\\core\\images\\winters\\winters-11.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_winters-11",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633341/capstone/core_static_core_images_winters_winters-11.jpg",
+    "version": 1764633341
+  },
+  "core\\static\\core\\images\\winters\\winters-2.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_winters-2",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633343/capstone/core_static_core_images_winters_winters-2.jpg",
+    "version": 1764633343
+  },
+  "core\\static\\core\\images\\winters\\winters-3.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_winters-3",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633344/capstone/core_static_core_images_winters_winters-3.jpg",
+    "version": 1764633344
+  },
+  "core\\static\\core\\images\\winters\\winters-4.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_winters-4",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633346/capstone/core_static_core_images_winters_winters-4.jpg",
+    "version": 1764633346
+  },
+  "core\\static\\core\\images\\winters\\winters-5.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_winters-5",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633347/capstone/core_static_core_images_winters_winters-5.jpg",
+    "version": 1764633347
+  },
+  "core\\static\\core\\images\\winters\\winters-6.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_winters-6",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633349/capstone/core_static_core_images_winters_winters-6.jpg",
+    "version": 1764633349
+  },
+  "core\\static\\core\\images\\winters\\winters-7.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_winters-7",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633350/capstone/core_static_core_images_winters_winters-7.jpg",
+    "version": 1764633350
+  },
+  "core\\static\\core\\images\\winters\\winters-8.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_winters-8",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633352/capstone/core_static_core_images_winters_winters-8.jpg",
+    "version": 1764633352
+  },
+  "core\\static\\core\\images\\winters\\winters-9.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_winters-9",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633354/capstone/core_static_core_images_winters_winters-9.jpg",
+    "version": 1764633354
+  },
+  "core\\static\\core\\images\\winters\\Winters-back.jpg": {
+    "public_id": "capstone/core_static_core_images_winters_Winters-back",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633356/capstone/core_static_core_images_winters_Winters-back.jpg",
+    "version": 1764633356
+  },
+  "documentation\\images\\Balsamiq\\Images\\BlogPage-XL-large.png": {
+    "public_id": "capstone/documentation_images_Balsamiq_Images_BlogPage-XL-large",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633357/capstone/documentation_images_Balsamiq_Images_BlogPage-XL-large.png",
+    "version": 1764633357
+  },
+  "documentation\\images\\Balsamiq\\Images\\CommentPage-XL-Large.png": {
+    "public_id": "capstone/documentation_images_Balsamiq_Images_CommentPage-XL-Large",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633358/capstone/documentation_images_Balsamiq_Images_CommentPage-XL-Large.png",
+    "version": 1764633358
+  },
+  "documentation\\images\\Balsamiq\\Images\\HomePage-XL-large.png": {
+    "public_id": "capstone/documentation_images_Balsamiq_Images_HomePage-XL-large",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633359/capstone/documentation_images_Balsamiq_Images_HomePage-XL-large.png",
+    "version": 1764633359
+  },
+  "documentation\\images\\Balsamiq\\Images\\Large-Services.png": {
+    "public_id": "capstone/documentation_images_Balsamiq_Images_Large-Services",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633360/capstone/documentation_images_Balsamiq_Images_Large-Services.png",
+    "version": 1764633360
+  },
+  "documentation\\images\\Balsamiq\\Images\\mobile-loggedin-all.png": {
+    "public_id": "capstone/documentation_images_Balsamiq_Images_mobile-loggedin-all",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633361/capstone/documentation_images_Balsamiq_Images_mobile-loggedin-all.png",
+    "version": 1764633361
+  },
+  "documentation\\images\\Balsamiq\\Images\\mobile-loggedOut-all.png": {
+    "public_id": "capstone/documentation_images_Balsamiq_Images_mobile-loggedOut-all",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633363/capstone/documentation_images_Balsamiq_Images_mobile-loggedOut-all.png",
+    "version": 1764633363
+  },
+  "documentation\\images\\Balsamiq\\Images\\XL-large-Booking.png": {
+    "public_id": "capstone/documentation_images_Balsamiq_Images_XL-large-Booking",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633364/capstone/documentation_images_Balsamiq_Images_XL-large-Booking.png",
+    "version": 1764633364
+  },
+  "documentation\\images\\Balsamiq\\Images\\XL-large-Registration.png": {
+    "public_id": "capstone/documentation_images_Balsamiq_Images_XL-large-Registration",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633365/capstone/documentation_images_Balsamiq_Images_XL-large-Registration.png",
+    "version": 1764633365
+  },
+  "documentation\\images\\Balsamiq\\Images\\XL-Services.png": {
+    "public_id": "capstone/documentation_images_Balsamiq_Images_XL-Services",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633366/capstone/documentation_images_Balsamiq_Images_XL-Services.png",
+    "version": 1764633366
+  },
+  "documentation\\images\\databaseImage.png": {
+    "public_id": "capstone/documentation_images_databaseImage",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633367/capstone/documentation_images_databaseImage.png",
+    "version": 1764633367
+  },
+  "documentation\\images\\SWATCH.jpg": {
+    "public_id": "capstone/documentation_images_SWATCH",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633368/capstone/documentation_images_SWATCH.jpg",
+    "version": 1764633368
+  },
+  "services\\static\\services\\images\\cards\\aerator\\30-9-2025 at 1_18_18.png": {
+    "public_id": "capstone/services_static_services_images_cards_aerator_30-9-2025 at 1_18_18",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633370/capstone/services_static_services_images_cards_aerator_30-9-2025%20at%201_18_18.png",
+    "version": 1764633370
+  },
+  "services\\static\\services\\images\\cards\\aerator\\aerator.png": {
+    "public_id": "capstone/services_static_services_images_cards_aerator_aerator",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633370/capstone/services_static_services_images_cards_aerator_aerator.png",
+    "version": 1764633370
+  },
+  "services\\static\\services\\images\\cards\\aerator\\aerator1.jpg": {
+    "public_id": "capstone/services_static_services_images_cards_aerator_aerator1",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633372/capstone/services_static_services_images_cards_aerator_aerator1.jpg",
+    "version": 1764633372
+  },
+  "services\\static\\services\\images\\cards\\drains\\30-9-2025 at 1_28_59.png": {
+    "public_id": "capstone/services_static_services_images_cards_drains_30-9-2025 at 1_28_59",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633373/capstone/services_static_services_images_cards_drains_30-9-2025%20at%201_28_59.png",
+    "version": 1764633373
+  },
+  "services\\static\\services\\images\\cards\\drains\\dra1ins.png": {
+    "public_id": "capstone/services_static_services_images_cards_drains_dra1ins",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633377/capstone/services_static_services_images_cards_drains_dra1ins.png",
+    "version": 1764633377
+  },
+  "services\\static\\services\\images\\cards\\drains\\drains.png": {
+    "public_id": "capstone/services_static_services_images_cards_drains_drains",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633379/capstone/services_static_services_images_cards_drains_drains.png",
+    "version": 1764633379
+  },
+  "services\\static\\services\\images\\cards\\drains\\Shoots.png": {
+    "public_id": "capstone/services_static_services_images_cards_drains_Shoots",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633379/capstone/services_static_services_images_cards_drains_Shoots.png",
+    "version": 1764633379
+  },
+  "services\\static\\services\\images\\cards\\furniture\\furniture.png": {
+    "public_id": "capstone/services_static_services_images_cards_furniture_furniture",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633381/capstone/services_static_services_images_cards_furniture_furniture.png",
+    "version": 1764633381
+  },
+  "services\\static\\services\\images\\cards\\furniture\\furniture1.jpg": {
+    "public_id": "capstone/services_static_services_images_cards_furniture_furniture1",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633383/capstone/services_static_services_images_cards_furniture_furniture1.jpg",
+    "version": 1764633383
+  },
+  "services\\static\\services\\images\\cards\\furniture\\furniture2.jpg": {
+    "public_id": "capstone/services_static_services_images_cards_furniture_furniture2",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633386/capstone/services_static_services_images_cards_furniture_furniture2.png",
+    "version": 1764633386
+  },
+  "services\\static\\services\\images\\cards\\garden furniture\\30-9-2025 at 1_34_49.png": {
+    "public_id": "capstone/services_static_services_images_cards_garden furniture_30-9-2025 at 1_34_49",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633389/capstone/services_static_services_images_cards_garden%20furniture_30-9-2025%20at%201_34_49.png",
+    "version": 1764633389
+  },
+  "services\\static\\services\\images\\cards\\grass\\30-9-2025 at 1_22_41.png": {
+    "public_id": "capstone/services_static_services_images_cards_grass_30-9-2025 at 1_22_41",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633393/capstone/services_static_services_images_cards_grass_30-9-2025%20at%201_22_41.png",
+    "version": 1764633393
+  },
+  "services\\static\\services\\images\\cards\\grass\\grass.png": {
+    "public_id": "capstone/services_static_services_images_cards_grass_grass",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633395/capstone/services_static_services_images_cards_grass_grass.png",
+    "version": 1764633395
+  },
+  "services\\static\\services\\images\\cards\\grass\\grass2.jpg": {
+    "public_id": "capstone/services_static_services_images_cards_grass_grass2",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633396/capstone/services_static_services_images_cards_grass_grass2.jpg",
+    "version": 1764633396
+  },
+  "services\\static\\services\\images\\cards\\grass\\grass2.svg": {
+    "public_id": "capstone/services_static_services_images_cards_grass_grass2",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633396/capstone/services_static_services_images_cards_grass_grass2.svg",
+    "version": 1764633396
+  },
+  "services\\static\\services\\images\\cards\\grass\\grass3.jpg": {
+    "public_id": "capstone/services_static_services_images_cards_grass_grass3",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633398/capstone/services_static_services_images_cards_grass_grass3.jpg",
+    "version": 1764633398
+  },
+  "services\\static\\services\\images\\cards\\grass\\grass4.jpg": {
+    "public_id": "capstone/services_static_services_images_cards_grass_grass4",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633399/capstone/services_static_services_images_cards_grass_grass4.jpg",
+    "version": 1764633399
+  },
+  "services\\static\\services\\images\\cards\\grass\\grass5.jpg": {
+    "public_id": "capstone/services_static_services_images_cards_grass_grass5",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633400/capstone/services_static_services_images_cards_grass_grass5.jpg",
+    "version": 1764633400
+  },
+  "services\\static\\services\\images\\cards\\hedging\\30-9-2025 at 1_32_15.png": {
+    "public_id": "capstone/services_static_services_images_cards_hedging_30-9-2025 at 1_32_15",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633401/capstone/services_static_services_images_cards_hedging_30-9-2025%20at%201_32_15.png",
+    "version": 1764633401
+  },
+  "services\\static\\services\\images\\cards\\hedging\\hedge.png": {
+    "public_id": "capstone/services_static_services_images_cards_hedging_hedge",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633402/capstone/services_static_services_images_cards_hedging_hedge.png",
+    "version": 1764633402
+  },
+  "services\\static\\services\\images\\cards\\hedging\\hedge2.jpg": {
+    "public_id": "capstone/services_static_services_images_cards_hedging_hedge2",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633403/capstone/services_static_services_images_cards_hedging_hedge2.jpg",
+    "version": 1764633403
+  },
+  "services\\static\\services\\images\\cards\\hedging\\hedge3.png": {
+    "public_id": "capstone/services_static_services_images_cards_hedging_hedge3",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633407/capstone/services_static_services_images_cards_hedging_hedge3.png",
+    "version": 1764633407
+  },
+  "services\\static\\services\\images\\cards\\hedging\\relax.png": {
+    "public_id": "capstone/services_static_services_images_cards_hedging_relax",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633411/capstone/services_static_services_images_cards_hedging_relax.png",
+    "version": 1764633411
+  },
+  "services\\static\\services\\images\\cards\\paint\\pain1tBarney.jpg": {
+    "public_id": "capstone/services_static_services_images_cards_paint_pain1tBarney",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633412/capstone/services_static_services_images_cards_paint_pain1tBarney.jpg",
+    "version": 1764633412
+  },
+  "services\\static\\services\\images\\cards\\paint\\paintB1arney1.png": {
+    "public_id": "capstone/services_static_services_images_cards_paint_paintB1arney1",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633415/capstone/services_static_services_images_cards_paint_paintB1arney1.png",
+    "version": 1764633415
+  },
+  "services\\static\\services\\images\\cards\\paint\\paintBarney1.png": {
+    "public_id": "capstone/services_static_services_images_cards_paint_paintBarney1",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633417/capstone/services_static_services_images_cards_paint_paintBarney1.png",
+    "version": 1764633417
+  },
+  "services\\static\\services\\images\\cards\\power washing\\30-9-2025 at 1_26_10.png": {
+    "public_id": "capstone/services_static_services_images_cards_power washing_30-9-2025 at 1_26_10",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633418/capstone/services_static_services_images_cards_power%20washing_30-9-2025%20at%201_26_10.png",
+    "version": 1764633418
+  },
+  "services\\static\\services\\images\\cards\\power-washing\\power.png": {
+    "public_id": "capstone/services_static_services_images_cards_power-washing_power",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633418/capstone/services_static_services_images_cards_power-washing_power.png",
+    "version": 1764633418
+  },
+  "services\\static\\services\\images\\cards\\power-washing\\power1.jpg": {
+    "public_id": "capstone/services_static_services_images_cards_power-washing_power1",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633420/capstone/services_static_services_images_cards_power-washing_power1.jpg",
+    "version": 1764633420
+  },
+  "services\\static\\services\\images\\cards\\repair\\repair.jpg": {
+    "public_id": "capstone/services_static_services_images_cards_repair_repair",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633420/capstone/services_static_services_images_cards_repair_repair.jpg",
+    "version": 1764633420
+  },
+  "services\\static\\services\\images\\cards\\repair\\repair1.png": {
+    "public_id": "capstone/services_static_services_images_cards_repair_repair1",
+    "url": "https://res.cloudinary.com/do4zd0gjb/image/upload/v1764633424/capstone/services_static_services_images_cards_repair_repair1.png",
+    "version": 1764633424
+  }
+}

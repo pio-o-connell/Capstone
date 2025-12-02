@@ -1,0 +1,281 @@
+🔧 IMPORTANT: Missing pieces we need to add
+1. Signals (auto-create CustomerProfile)
+
+Without signals, customers will not automatically get profiles.
+
+I can write this for you.
+
+2. Admin registration
+
+You need this in users/admin.py or the models won’t appear in Django admin.
+
+3. Settings change
+
+Make sure settings.py has:
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+❓ What do you want next?
+
+I can provide any of the following:
+
+✔️ A complete admin.py for all your user models
+✔️ Signals to auto-create profiles
+✔️ Migration steps to apply all this
+✔️ How to connect blogger approval to your blog Post model
+✔️ How to secure views so only bloggers can post
+✔️ Cloudinary version of BloggerProfile avatar
+
+Just tell me:
+👉 What should we do next?
+
+For bloggers, I need an about section and editable rich text field to enter personal information 
+date created and date last updatedfor the blogger profile.
+
+For registered users, I need an avater image and date created and last updated for the user profile.
+
+from django.contrib.auth.models import AbstractUser, Group
+from django.db import models
+from django_summernote.fields import SummernoteTextField  # rich text editor
+from cloudinary.models import CloudinaryField  # Cloudinary avatar (recommended)
+
+
+class CustomUser(AbstractUser):
+    is_customer = models.BooleanField(default=True)
+    is_blogger = models.BooleanField(default=False)
+
+    # Avatar for ALL registered users
+    avatar = CloudinaryField('image', null=True, blank=True)
+
+    # timestamps for user profile
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def become_blogger(self):
+        self.is_blogger = True
+        self.save()
+        blogger_group, _ = Group.objects.get_or_create(name='Bloggers')
+        blogger_group.user_set.add(self)
+
+
+class CustomerProfile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+
+    # Optional extra fields
+    phone = models.CharField(max_length=20, blank=True)
+    address = models.TextField(blank=True)
+
+    # timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Customer Profile for {self.user.username}"
+
+
+class BloggerProfile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+
+    # Blogger-specific information
+    bio = SummernoteTextField(blank=True)       # rich text
+    about = SummernoteTextField(blank=True)     # rich text “about” section
+    avatar = CloudinaryField('image', null=True, blank=True)
+
+    # timestamps
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Blogger Profile for {self.user.username}"
+
+
+class BloggerRequest(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    reason = models.TextField()
+    approved = models.BooleanField(default=False)
+    requested_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Blogger Request by {self.user.username}"
+
+
+
+I have already configure my model for shopping cart and booking system. Maybe I have implemeted some of these 
+steps, maybe they overlap.
+Please show me how to implement these steps in my project.
+
+✔️ A complete admin.py for all your user models
+✔️ Signals to auto-create profiles
+✔️ Migration steps to apply all this
+✔️ How to connect blogger approval to your blog Post model
+✔️ How to secure views so only bloggers can post
+✔️ Cloudinary version of BloggerProfile avatar
+
+
+
+Full System Workflow (Updated Version)
+# FULL SYSTEM WORKFLOW (UPDATED)
+
+## Overview
+This document describes the full workflow for:
+- Customer registration and profiles
+- Blogger request + approval system
+- Blogger profiles (About + Avatar)
+- Blog post publishing permissions
+- Cart → Booking system
+- Admin role and approval responsibilities
+
+---
+
+## SYSTEM ACTORS
+- **Guest (Unauthenticated User)**
+- **Registered Customer**
+- **Blogger (Approved User)**
+- **Admin / CustomUser with elevated privileges**
+
+---
+
+## ADMIN RESPONSIBILITIES
+- Approve Bookings  
+- Approve Comments  
+- Approve Blogger Requests  
+- Manage Customer Profiles  
+- Manage Blogger Profiles  
+- Manage Posts and Site Content  
+
+---
+
+# WORKFLOW DIAGRAM
+
+
+                               ┌───────────────────┐
+                               │       Admin       │
+                               │ - Approve Bookings│
+                               │ - Approve Comments│
+                               │ - Approve Blogger │
+                               │       Requests    │
+                               │ - Manage Profiles │
+                               └─────────┬─────────┘
+                                         │
+        ┌───────────────┬───────────────┼────────────────┬────────────────┐
+        │               │               │                │                │
+        ▼               ▼               ▼                ▼                ▼
+ ┌───────────────┐ ┌──────────────┐ ┌────────────────┐ ┌────────────────┐ ┌─────────────────┐
+ │    Guest      │ │ Registered    │ │ BloggerRequest │ │   Blogger      │ │ CustomUser/Admin │
+ │  (Unauth)     │ │ Customer/User │ │ (Pending)      │ │  (Approved)    │ │ - Full Access   │
+ │ - View blogs  │ │ - View blogs  │ │ - User applies │ │ - Customer perms│ │ - Approve all   │
+ │ - Comment*    │ │ - Comment     │ │ - Reason text  │ │ - Create posts  │ │   content       │
+ │ - Add to cart │ │ - Add to cart │ │ - Auto profile │ │ - Edit posts    │ └─────────────────┘
+ │   (session)   │ │ - CustomerProf│ │ - Await admin  │ │ - BloggerProfile│
+ └───────┬───────┘ └───────┬────────┘ │   approval    │ │ (About+Avatar) │
+         │                 │          └─────────┬──────┘
+         │                 │                    │
+         │                 ▼                    │
+         │       ┌──────────────────────┐       │  Admin Approves
+         │       │ Login / Register     │       │─────────────▶ BloggerProfile created
+         │       │ - Auto-create        │       │              │ user.is_blogger=True
+         └──────▶│   CustomerProfile    │◀──────┘              │ added to Bloggers group
+                 │ - Auto-migrate cart  │                      │
+                 └───────────┬──────────┘                      │
+                             ▼                                 │
+                     ┌───────────────┐                         │
+                     │ Confirm Cart   │                         │
+                     │ - Convert      │                         │
+                     │   Cart →       │                         │
+                     │   Booking      │                         │
+                     │ - status=pend  │                         │
+                     └───────┬────────┘                         │
+                             ▼                                 │
+                     ┌───────────────┐                         │
+                     │ Booking Table │                         │
+                     │ - All bookings │                        │
+                     │ - status       │                        │
+                     └───────┬────────┘                        │
+                             │                                 │
+        ┌────────────────────┼───────────────────────────┬─────┘
+        ▼                    ▼                           ▼
+ ┌───────────────┐   ┌───────────────┐          ┌───────────────┐
+ │ Pending       │   │ Approved       │          │ Rejected       │
+ │ Bookings      │   │ Bookings       │          │ Bookings       │
+ └───────────────┘   └───────────────┘          └───────────────┘
+
+
+---
+
+# FEATURE BREAKDOWN
+
+## 1. Guest User
+- Can view blog posts  
+- Can leave comments (if allowed)  
+- Can add items to a session cart  
+- Must register to complete purchases  
+
+---
+
+## 2. Registered Customer
+- Has a **CustomerProfile** created automatically:
+  - `avatar`
+  - `phone`
+  - `address`
+  - `date_created`
+  - `last_updated`
+- Can:
+  - Comment on posts
+  - View posts
+  - Add items to cart
+  - Convert cart → booking
+- Can submit a **Blogger Request**
+
+---
+
+## 3. Blogger Request
+When a customer submits a request:
+- A `BloggerRequest` entry is created  
+- Admin reviews and approves or rejects  
+- If approved:
+  - Customer becomes a **Blogger**
+  - `is_blogger = True`
+  - Added to **Bloggers** group
+  - A **BloggerProfile** is created automatically:
+    - `avatar`
+    - Rich-text **About** section
+    - `date_created`
+    - `last_updated`
+
+---
+
+## 4. Blogger
+A blogger:
+- Has all customer abilities  
+- PLUS:
+  - Create posts  
+  - Edit posts  
+  - Manage comments on their posts  
+  - Has a public **Blogger Profile** page  
+
+---
+
+## 5. Cart → Booking Flow
+- Guest → session cart  
+- Registered user → database cart  
+- At checkout:
+  - CartItems → Booking
+  - Status defaults to **Pending**
+
+Admin can change:
+- Pending → Approved  
+- Pending → Rejected  
+
+---
+
+# ✔ Ready to paste into your README.md
+
+If you want, I can also generate:
+
+### ✔ A simpler version  
+### ✔ A coloured Mermaid diagram  
+### ✔ A swimlane diagram  
+### ✔ A separate page for your `/docs` folder  
+### ✔ A PDF export  
+
+Just tell me.

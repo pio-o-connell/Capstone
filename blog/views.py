@@ -33,19 +33,67 @@ def post_detail(request, slug):
     """Render a single post detail by slug (published posts only)."""
     post = get_object_or_404(Post, slug=slug, status='published')
 
-    # Handle new comment submission
-    if request.method == 'POST' and request.POST.get('action') == 'add_comment':
-        if not request.user.is_authenticated:
-            return redirect('login')
-        content = request.POST.get('content', '').strip()
+    # Handle new comment submission (allow anonymous comments)
+    if request.method == 'POST' and (request.POST.get('action') == 'add_comment' or request.POST.get('content') or request.POST.get('body')):
+        # retrieve content from possible field names (content or body)
+        content = (request.POST.get('content') or request.POST.get('body') or '').strip()
         if content:
-            Comment.objects.create(post=post, author=request.user, content=content, approved=False)
+            # author if authenticated, otherwise None
+            author = request.user if request.user.is_authenticated else None
+
+            # For anonymous users store a display name if provided, else 'Anonymous'
+            name = None
+            email = None
+            if author:
+                name = None
+                email = getattr(author, 'email', None)
+            else:
+                name = request.POST.get('name') or 'Anonymous'
+                email = request.POST.get('email') or None
+
+            # IP address (support X-Forwarded-For)
+            ip = request.META.get('HTTP_X_FORWARDED_FOR') or request.META.get('REMOTE_ADDR')
+            if ip and ',' in ip:
+                ip = ip.split(',')[0].strip()
+
+            # session id passed from client (populated from localStorage)
+            session_id = request.POST.get('anon_session_id') or request.POST.get('session_id') or None
+
+            Comment.objects.create(
+                post=post,
+                author=author,
+                name=name,
+                email=email,
+                content=content,
+                approved=False,
+                ip_address=ip,
+                session_id=session_id,
+            )
+
+        # If we have a session_id for an anonymous user, include it in the redirect
+        if not request.user.is_authenticated and session_id:
+            return redirect(f"{post.get_absolute_url()}?anon_sess={session_id}")
         return redirect(post.get_absolute_url())
 
     # Fetch comments: show all approved comments; also show unapproved comments by the current user
     approved_comments = post.comments.filter(approved=True)
-    user_unapproved = post.comments.filter(approved=False, author=request.user) if request.user.is_authenticated else Comment.objects.none()
-    comments = approved_comments | user_unapproved
+
+    # If the viewer is authenticated, include their unapproved comments (author match).
+    # If anonymous but an anon session marker is present in the GET params, include unapproved comments matching that session_id.
+    if request.user.is_authenticated:
+        user_unapproved = post.comments.filter(approved=False, author=request.user)
+    else:
+        session_marker = request.GET.get('anon_sess')
+        if session_marker:
+            user_unapproved = post.comments.filter(approved=False, session_id=session_marker)
+        else:
+            user_unapproved = Comment.objects.none()
+
+    # Additionally, include unapproved comments that explicitly have the name set to 'Anonymous'
+    # (case-insensitive) so these are visible as requested.
+    anon_named = post.comments.filter(approved=False, name__iexact='anonymous')
+
+    comments = approved_comments | user_unapproved | anon_named
 
     context = {
         'post': post,

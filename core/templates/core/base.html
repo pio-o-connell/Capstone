@@ -72,6 +72,8 @@
         var sess = null;
         try{ sess = JSON.parse(localStorage.getItem(storageKey) || 'null'); }catch(e){ sess = null; }
 
+        // Ensure a persistent site_session exists for anonymous visitors only.
+        // Create one if missing and the user is not authenticated.
         if(!sess && !isAuthenticated){
             sess = { id: makeId(), created_at: nowISO() };
             try{ localStorage.setItem(storageKey, JSON.stringify(sess)); }catch(e){}

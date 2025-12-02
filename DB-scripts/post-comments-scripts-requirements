@@ -1,0 +1,229 @@
+Please write a python script to -
+
+Please ensure all fields have a value, stop and prompt if needed
+
+
+I need to simulate ficticious posts and comments for each bloggers created in the system.
+
+Each post is to have 5 diffent comments from different users - guest,registered user(not blogger),blogger and system admin .
+
+Each post has to be Generate 300–500 Word Blog Content
+
+
+I have provided the post titles garden themed below 
+
+
+
+# -----------------------------
+# Sample Titles
+# -----------------------------
+POST_TITLES = [
+    "How to Start a Simple Vegetable Garden",
+    "The Secret to Perfect Tomato Plants",
+    "Beginner’s Guide to Composting at Home",
+    "10 Low-Maintenance Plants for Busy Gardeners",
+    "How to Improve Soil Quality Naturally",
+    "Best Spring Planting Tips for Irish Gardens",
+    "Common Gardening Mistakes and How to Fix Them",
+    "A Complete Guide to Raised Beds",
+    "How to Grow Herbs Indoors All Year",
+    "Organic Pest Control That Really Works"
+]
+
+
+
+
+
+
+Each post will have an accompanying slug generated from the title.
+
+   
+    The comments will be from the different users (sysadmin,guest,customer,blogger) and will be approved or not approved.
+
+    I have provided comments below(all garden themed)
+
+    The comments will have a created_at and updated_at timestamp.
+
+    The comments will have a content field that is a rich text field. I have provided the 
+
+    The comments will have a author field that is a foreign key to the CustomUser model.
+                                            
+
+
+    # -----------------------------
+# Fake Comments (50 realistic)
+# -----------------------------
+COMMENTS = [
+    "Great post — I learned a lot from this!",
+    "Thanks for sharing these tips, very helpful.",
+    "This really cleared up a lot of questions I had.",
+    "Brilliant advice, I’m definitely trying this in my garden.",
+    "Love this! Your posts are always so informative.",
+    "Exactly what I needed — thank you!",
+    "Really well explained. Appreciate the detail.",
+    "Another great read, keep them coming!",
+    "This is why I follow your blog — fantastic info.",
+    "I had no idea about this method; thanks for the insight!",
+    "I’ve struggled with this plant for years — trying this approach next.",
+    "Didn’t know you could propagate it like that. Amazing!",
+    "My tomatoes always split — now I know why!",
+    "I’ve been watering wrong the whole time… thanks for the correction.",
+    "Used your pruning method today and saw immediate improvement.",
+    "I never mulched before, but now I’m convinced.",
+    "Trying this fertiliser mix this weekend!",
+    "Your spacing tip solved my overcrowding issue.",
+    "Just planted mine following your guide — fingers crossed!",
+    "Love the companion planting suggestions.",
+    "New to gardening — this made everything so much easier to understand.",
+    "I usually get overwhelmed, but this was simple and clear.",
+    "Thank you for explaining this without the jargon.",
+    "I finally feel confident to start my own vegetable bed!",
+    "Your blog is becoming my beginner’s handbook.",
+    "Perfect timing — I was just planning my spring garden.",
+    "This is ideal for the Irish climate, thanks!",
+    "Our summer heat has been brutal; this helps a lot.",
+    "Great reminder for the autumn prep.",
+    "Bookmarking this for next season!",
+    "I tried this last year and it worked amazingly well.",
+    "My granny used to do something similar — memories!",
+    "This fixed the same issue I was having — thank you!",
+    "I’ve made so many mistakes before reading this!",
+    "Your method saved my seedlings after a rough start.",
+    "Would this also work for container gardens?",
+    "How often would you recommend watering like this?",
+    "Does this apply to colder regions too?",
+    "Do you have a list of plants that pair well with this?",
+    "Any alternative for people with limited sunlight?",
+    "You make gardening feel so approachable.",
+    "This gave me confidence to try again after failing last year.",
+    "I really appreciate the passion in your posts.",
+    "I shared this with my gardening group — they loved it.",
+    "Your advice has genuinely improved my garden.",
+    "My plants are probably happier than me now!",
+    "Off to apologise to my houseplants for everything I’ve done wrong.",
+    "My compost bin is now my pride and joy thanks to you.",
+    "Reading this made me want to buy MORE plants… dangerous!",
+    "Gardening is addictive — but worth it!"
+]
+
+
+
+# -----------------------------
+# Function: Generate 300–500 Word Blog Content
+# -----------------------------
+def generate_long_content():
+    paragraphs = []
+
+    tips = [
+        "Remember to water plants deeply but infrequently to encourage root growth.",
+        "Use mulch to retain soil moisture and prevent weeds.",
+        "Rotate crops annually to maintain healthy soil.",
+        "Choose native plants to attract beneficial insects.",
+        "Composting kitchen waste is a great way to enrich your soil.",
+        "Prune regularly to encourage healthy growth and flowering.",
+        "Monitor for pests early to prevent infestations.",
+        "Fertilize naturally using organic matter like compost or manure.",
+        "Consider companion planting to naturally deter pests and enhance growth.",
+        "Plan your garden layout to ensure proper sunlight for each plant."
+    ]
+
+
+
+The featured image is on-computer.jpg and google.jpg
+
+The excerpt is taked from the blog content
+
+
+
+
+
+
+
+from django.db import models
+from users.models import CustomUser
+from cloudinary.models import CloudinaryField
+from django.utils.text import slugify
+from django_summernote.fields import SummernoteTextField  # rich text
+
+
+class Post(models.Model):
+    """
+    Stores a single blog post entry related to CustomUser.
+    """
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+    ]
+
+    author = models.ForeignKey(
+        CustomUser, null=True, blank=True, on_delete=models.SET_NULL
+    )
+    title = models.CharField(max_length=200)
+    content = SummernoteTextField()  # rich text
+    slug = models.SlugField(max_length=200, unique=True, null=True, blank=True)
+    featured_image = CloudinaryField('image', default='placeholder')
+    excerpt = models.TextField(blank=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            # Fallback to "post" if title is empty
+            base_slug = slugify(self.title) or "post"
+            slug = base_slug
+            counter = 1
+
+            # Ensure unique slug
+            while Post.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+
+            self.slug = slug
+
+        super().save(*args, **kwargs)
+
+    class Meta:
+        ordering = ["-created_on"]
+
+    def __str__(self):
+        return f"{self.title} | written by {self.author}"
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse("post_detail", kwargs={"slug": self.slug})
+
+
+
+
+
+
+
+class Comment(models.Model):
+    """
+    Stores a single comment entry related to CustomUser and Post.
+    """
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+    author = models.ForeignKey(
+        CustomUser,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="comments_made",
+    )
+    name = models.CharField(max_length=100, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    content = SummernoteTextField(null=True, blank=True)  # rich text
+    approved = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    session_id = models.CharField(max_length=40, null=True, blank=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"Comment by {self.author} on {self.post.title}"
+
+
+

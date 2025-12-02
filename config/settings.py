@@ -25,6 +25,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 import os
 
+# Monkeypatch for bleach.clean compatibility: some versions of django_summernote
+# call bleach.clean(..., styles=...), which newer bleach versions don't accept.
+# Make a permissive wrapper during startup so migrations/management commands run.
+try:
+    import bleach
+    _bleach_clean = bleach.clean
+    def _bleach_clean_compat(text, *args, **kwargs):
+        # Some callers may pass None; coerce to empty string for sanitizer.
+        if text is None:
+            return ''
+        kwargs.pop('styles', None)
+        return _bleach_clean(text, *args, **kwargs)
+    bleach.clean = _bleach_clean_compat
+except Exception:
+    # If bleach isn't available or patching fails, continue — errors will surface later.
+    pass
+
 # Load local env.py if present (developer convenience). Keep using os.path.isfile.
 if os.path.isfile("env.py"):
     try:
@@ -62,10 +79,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cloudinary',
-    'cloudinary_storage',
+    'django_summernote',
+]
 
-    # Apps
+# Cloudinary apps only when configured to avoid import-time errors in dev
+if os.environ.get('CLOUDINARY_URL') or os.environ.get('CLOUDINARY_API_KEY'):
+    INSTALLED_APPS += [
+        'cloudinary',
+        'cloudinary_storage',
+    ]
+
+# Project apps
+INSTALLED_APPS += [
     'users.apps.UsersConfig',  # keep this
     'core',
     'blog',
@@ -165,4 +190,10 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+if os.environ.get('CLOUDINARY_URL') or os.environ.get('CLOUDINARY_API_KEY'):
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+else:
+    # Use local filesystem storage in development when Cloudinary is not configured
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+    MEDIA_ROOT = BASE_DIR / 'media'
+    MEDIA_URL = '/media/'

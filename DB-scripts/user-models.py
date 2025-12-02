@@ -1,3 +1,4 @@
+users/models.py
 
 # users/models.py
 from django.contrib.auth.models import AbstractUser, Group
@@ -21,7 +22,7 @@ class CustomerProfile(models.Model):
     avatar = CloudinaryField('image', blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True)
     address = models.TextField(blank=True)
-    date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -32,7 +33,7 @@ class BloggerProfile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     about = SummernoteTextField(blank=True, null=True)
     avatar = CloudinaryField('image', blank=True, null=True)
-    date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -42,7 +43,7 @@ class BloggerRequest(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     reason = SummernoteTextField()
     approved = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    requested_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Blogger request by {self.user.username}"

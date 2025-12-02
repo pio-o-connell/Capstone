@@ -26,6 +26,7 @@ from users.models import CustomUser
 from cloudinary.models import CloudinaryField
 from django.utils.text import slugify
 from django_summernote.fields import SummernoteTextField  # rich text
+from django.utils.text import Truncator
 
 
 class Post(models.Model):
@@ -62,6 +63,9 @@ class Post(models.Model):
                 counter += 1
 
             self.slug = slug
+
+        if not self.excerpt and self.content:
+            self.excerpt = Truncator(self.content).chars(300)
 
         super().save(*args, **kwargs)
 

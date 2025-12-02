@@ -1,87 +1,31 @@
 {% extends "core/base.html" %}
 
+{% load static %}
+
 {% block title %}{{ post.title }} | Blog{% endblock %}
 
 {% block content %}
-
-<!-- {% block extra_head %}
-<style>
-    /* Page-specific main margin adjustments for blog home.
-       Use the measured --header-height when available and add small offsets
-       for the 768px and 1024px breakpoints so blog posts aren't hidden. */
-
-    main {
-        margin-top: calc(var(--header-height, 50px) + 8px);
-    }
-
-    /* Mobile: up to 768px */
-    @media (max-width: 768px) {
-        main {
-            margin-top: calc(var(--header-height, 50px) + 6px);
-        }
-    }
-
-    /* Tablet: between 769px and 1023px */
-    @media (min-width: 769px) and (max-width: 1023px) {
-        main {
-            margin-top: calc(var(--header-height, 120px) + 24px);
-        }
-    }
-
-    /* Desktop and up: 1024px and wider */
-    @media (min-width: 1024px) {
-        main {
-            margin-top: calc(var(--header-height, 769px) + 12px);
-        }
-    }
-</style>
-{% endblock %} -->
-
-<section id="services" class="container section my-5">
-
+<section class="container section my-4">
     <div class="row">
-        <div class="col-12 text-center">
-            <h1 class="display-6">Services</h1>
+        <div class="col-12">
+            <article>
+                <h1>{{ post.title }}</h1>
+                <p class="text-muted">By {{ post.author.get_full_name|default:post.author.username }} — {{ post.created_on|date:"F j, Y" }}</p>
+
+                {% comment %}Treat Cloudinary placeholder as missing{% endcomment %}
+                {% if post.featured_image and 'placeholder' not in post.featured_image.url %}
+                    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="img-fluid mb-3" loading="lazy" data-default-src="{% static 'core/images/users/default.jpg' %}" onerror="this.onerror=null;this.src=this.dataset.defaultSrc;"/>
+                {% else %}
+                    <img src="{% static 'core/images/users/default.jpg' %}" alt="{{ post.title }}" class="img-fluid mb-3" loading="lazy"/>
+                {% endif %}
+
+                <div class="post-content">
+                    {{ post.content|safe }}
+                </div>
+
+                <p class="mt-4"><a href="{% url 'blog_home' %}" class="btn btn-secondary">Back to Blog</a></p>
+            </article>
         </div>
     </div>
 </section>
-we are in post detail 
-<div class="container mt-5">
-    <h1>{{ post.title }}</h1>
-    <small class="text-muted">Published on {{ post.created_on|date:"F j, Y" }}</small>
-    <hr>
-    <div>{{ post.content|linebreaks }}</div>
-
-    <hr>
-    <h4>Comments ({{ comments.count }})</h4>
-
-    {% if comments %}
-        <ul class="list-group mb-4">
-            {% for comment in comments %}
-                <li class="list-group-item">
-                    <strong>{{ comment.author.username }}</strong>
-                    <small class="text-muted">{{ comment.created_at|date:"F j, Y H:i" }}</small>
-                    <p>{{ comment.content }}</p>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No comments yet. Be the first to comment!</p>
-    {% endif %}
-
-    {% if user.is_authenticated %}
-        <form method="POST" class="mb-5">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Post Comment</button>
-        </form>
-    {% else %}
-        <p class="text-muted">
-            You must <a href="{% url 'login' %}">login</a> to post a comment.
-        </p>
-    {% endif %}
-
-    <a href="{% url 'blog_home' %}" class="btn btn-secondary">Back to Blog</a>
-</div>
-
 {% endblock %}

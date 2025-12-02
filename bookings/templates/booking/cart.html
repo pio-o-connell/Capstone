@@ -1,15 +1,26 @@
-<h2>Your Cart</h2>
-{% if cart %}
-<ul>
-    {% for item in cart %}
-        <li>{{ item.service_name }} - {{ item.date }}</li>
-    {% endfor %}
-</ul>
-<form method="post" action="{% url 'confirm_cart' %}">
-    {% csrf_token %}
-    <button type="submit">Confirm Booking</button>
-</form>
-{% else %}
-<p>Your cart is empty.</p>
-{% endif %}
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Cart | Beautiful Outdoor Spaces{% endblock %}
+
+{% block content %}
+    <div class="container my-4">
+        <h2>Your Cart</h2>
+        {% if cart %}
+            <ul class="list-group mb-3">
+                {% for item in cart %}
+                    <li class="list-group-item">{{ item.service_name }} - {{ item.date }}</li>
+                {% endfor %}
+            </ul>
+            <form method="post" action="{% url 'confirm_cart' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Confirm Booking</button>
+                <a href="{% url 'booking_services' %}" class="btn btn-link">Continue Browsing Services</a>
+            </form>
+        {% else %}
+            <p>Your cart is empty.</p>
+            <a href="{% url 'booking_services' %}" class="btn btn-primary">Browse Services</a>
+        {% endif %}
+    </div>
+{% endblock %}
 

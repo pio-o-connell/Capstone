@@ -13,11 +13,13 @@ def add_to_cart_guest(request):
         })
         request.session['cart'] = cart
         return redirect('view_cart_guest')
-    return render(request, 'bookings/add_guest.html')
+    # No dedicated add_guest template exists; redirect guests to the bookings services page
+    return redirect('booking_services')
 
 def view_cart_guest(request):
     cart = request.session.get('cart', [])
-    return render(request, 'bookings/guest_cart.html', {'cart': cart})
+    # Template is located under bookings/templates/booking/guest_cart.html
+    return render(request, 'booking/guest_cart.html', {'cart': cart})
 
 def confirm_guest_booking(request):
     cart = request.session.get('cart', [])
@@ -41,12 +43,14 @@ def add_to_cart(request):
             date=request.POST['date']
         )
         return redirect('view_cart')
-    return render(request, 'bookings/add_cart.html')
+    # No dedicated add_cart template; redirect to services landing inside bookings
+    return redirect('booking_services')
 
 @login_required
 def view_cart(request):
     cart = CartItem.objects.filter(user=request.user)
-    return render(request, 'bookings/cart.html', {'cart': cart})
+    # Template files live under bookings/templates/booking/, so render that path
+    return render(request, 'booking/cart.html', {'cart': cart})
 
 @login_required
 def confirm_cart(request):

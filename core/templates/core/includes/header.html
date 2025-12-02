@@ -13,7 +13,7 @@
             <li><a href="{% url 'blog_home' %}" class="CTA contact-button" id="call">Blog</a></li> -->
              <li><a href="{% url 'blog_home' %}">Blog</a></li>
             <li><a href="{% url 'booking_services' %}" class="CTA contact-button" id="call">Services</a></li>
-            <li><a href="{% url 'booking_home' %}">Bookings</a></li>
+            <li><a href="{% url 'view_cart' %}">Bookings</a></li>
 
             {% if user.is_authenticated %}
                 <li><a href="{% url 'logout' %}">Logout</a></li>

@@ -5,10 +5,17 @@ from django.http import HttpResponseForbidden
 
 from users.models import BloggerRequest
 from .models import Post
+from django.shortcuts import get_object_or_404
 
 def post_list(request):
     posts = Post.objects.filter(status='published').order_by('-created_on')
     return render(request, 'blog/post_list.html', {'posts': posts})
+
+
+def post_detail(request, slug):
+    """Render a single post detail by slug (published posts only)."""
+    post = get_object_or_404(Post, slug=slug, status='published')
+    return render(request, 'blog/post_detail.html', {'post': post})
 
 @login_required
 def create_post(request):

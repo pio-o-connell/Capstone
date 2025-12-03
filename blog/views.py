@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 
 from users.models import BloggerRequest
 from .models import Post, Comment
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -106,12 +107,17 @@ def post_detail(request, slug):
             return redirect(f"{post.get_absolute_url()}#messages")
         return redirect(post.get_absolute_url())
 
-    # Fetch comments: only include comments approved by an admin
-    comments = post.comments.filter(approved=True).order_by('-created_at')
+    # Fetch comments: include approved comments for everyone, and also include
+    # the viewing user's own comments (even if unapproved) so they can see
+    # their edits immediately.
+    if request.user.is_authenticated:
+        comments = post.comments.filter(Q(approved=True) | Q(author=request.user)).order_by('-created_at')
+    else:
+        comments = post.comments.filter(approved=True).order_by('-created_at')
 
     context = {
         'post': post,
-        'comments': comments.order_by('-created_at'),
+        'comments': comments,
     }
     return render(request, 'blog/post_detail.html', context)
 

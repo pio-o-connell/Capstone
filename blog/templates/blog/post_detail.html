@@ -236,23 +236,12 @@ body {
                         <p>{{ comment.content }}</p>
                     </div>
 
-                    {% if not comment.approved %}
-                        <p class="approval">This comment is awaiting approval</p>
-                    {% endif %}
+                    {# approval notice removed: do not show "awaiting approval" text #}
 
                     <div class="mt-2">
                         {% if user.is_authenticated and comment.author == user %}
-                            <button class="btn btn-delete" comment_id="{{ comment.pk }}" data-delete-url="{% url 'comment_delete' post.slug comment.pk %}" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
-                            <button class="btn btn-edit" comment_id="{{ comment.pk }}" type="button" onclick="toggleEdit('{{ comment.pk }}');">Edit</button>
-
-                            <form id="edit-form-{{ comment.pk }}" method="post" action="{% url 'comment_edit' post.slug comment.pk %}" style="display:none; margin-top:0.75rem;">
-                                {% csrf_token %}
-                                <div class="mb-3">
-                                    <textarea name="content" class="form-control" rows="3">{{ comment.content }}</textarea>
-                                </div>
-                                <button class="btn btn-signup btn-sm" type="submit">Save</button>
-                                <button class="btn btn-secondary btn-sm" type="button" onclick="toggleEdit('{{ comment.pk }}');">Cancel</button>
-                            </form>
+                            <button class="btn btn-delete" comment_id="{{ comment.pk }}" data-delete-url="{% url 'comment_delete' post.slug comment.pk %}">Delete</button>
+                            <button class="btn btn-edit" type="button" data-edit-url="{% url 'comment_edit' post.slug comment.pk %}" data-comment-pk="{{ comment.pk }}" onclick="startEdit('{{ comment.pk }}', this.getAttribute('data-edit-url'))">Edit</button>
                         {% endif %}
                     </div>
                 </div>
@@ -294,50 +283,57 @@ body {
     </div>
 </section>
 
-<!-- Delete confirmation modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Delete comment?</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">Are you sure you want to delete your comment? This action cannot be undone.</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button id="deleteConfirm" type="button" class="btn btn-danger">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Hidden delete form (submitted by modal) -->
-<form id="delete-form-generic" method="post" style="display:none;">
-    {% csrf_token %}
-</form>
-
 <script>
-function toggleEdit(pk){
-    var f = document.getElementById('edit-form-'+pk);
-    if(!f) return;
-    f.style.display = (f.style.display === 'none' || f.style.display === '') ? 'block' : 'none';
-}
-// Delete modal handling: set target URL on confirm
 document.addEventListener('DOMContentLoaded', function(){
+
+    // Start editing a comment by populating the main comment textarea and
+    // switching the comment form to submit to the comment edit URL.
+    var _originalFormAction = null;
+    var _originalActionValue = null;
+    var _originalSubmitText = null;
+    var editingPk = null;
+
+    function startEdit(pk, editUrl){
+        var commentDiv = document.getElementById('comment'+pk);
+        var form = document.getElementById('commentForm');
+        var textarea = document.getElementById('id_body');
+        var actionInput = form.querySelector('[name=action]');
+        var submitBtn = document.getElementById('submitButton');
+        if(!form || !textarea || !submitBtn) return;
+
+        // Save originals once
+        if(_originalFormAction === null) _originalFormAction = form.action || '';
+        if(_originalActionValue === null) _originalActionValue = (actionInput && actionInput.value) ? actionInput.value : '';
+        if(_originalSubmitText === null) _originalSubmitText = submitBtn.textContent;
+
+        // Populate textarea with comment text (use innerText to avoid HTML)
+        if(commentDiv){ textarea.value = commentDiv.innerText.trim(); }
+
+        // Point the main form at the edit URL so submission goes to comment_edit view
+        if(editUrl){ form.action = editUrl; }
+        if(actionInput){ actionInput.value = 'edit'; }
+
+        submitBtn.textContent = 'Update';
+        textarea.focus();
+        editingPk = pk;
+        // scroll the comment form into view for convenience
+        try{ textarea.scrollIntoView({behavior: 'smooth', block: 'center'}); }catch(e){}
+    }
+    window.startEdit = startEdit;
+
+    // Capture delete button clicks (used by modal logic elsewhere)
     var deleteButtons = document.querySelectorAll('.btn-delete');
-    var activeCommentId = null;
     deleteButtons.forEach(function(btn){
         btn.addEventListener('click', function(e){
-            activeCommentId = btn.getAttribute('comment_id') || btn.getAttribute('data-comment-id');
+            // data-delete-url is handled by the site-wide delete modal code
+            // in the base template; nothing else needed here.
         });
     });
 
     // Populate anon_session_id hidden input from window.siteSessionId if available
     try{
         var anonField = document.getElementById('anon_session_id');
-        // prefer the helper exposed by base template
         var sessId = (typeof window.siteSessionId !== 'undefined' && window.siteSessionId) ? window.siteSessionId : null;
-        // fallback: try reading localStorage directly (in case base script didn't expose window.siteSessionId)
         if(!sessId){
             try{
                 var raw = localStorage.getItem('site_session');
@@ -348,7 +344,6 @@ document.addEventListener('DOMContentLoaded', function(){
         if(anonField && sessId){
             anonField.value = sessId;
         }
-        // ensure field is populated at submit time as a final fallback
         var commentFormEl = document.getElementById('commentForm');
         if(commentFormEl){
             commentFormEl.addEventListener('submit', function(){
@@ -357,52 +352,46 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     }catch(e){}
 
-    var deleteConfirm = document.getElementById('deleteConfirm');
-    <script>
-    function toggleEdit(pk){
-        var f = document.getElementById('edit-form-'+pk);
-        if(!f) return;
-        f.style.display = (f.style.display === 'none' || f.style.display === '') ? 'block' : 'none';
-    }
-    // Populate anon_session_id hidden input from window.siteSessionId if available
-    document.addEventListener('DOMContentLoaded', function(){
-        try{
-            var anonField = document.getElementById('anon_session_id');
-            // prefer the helper exposed by base template
-            var sessId = (typeof window.siteSessionId !== 'undefined' && window.siteSessionId) ? window.siteSessionId : null;
-            // fallback: try reading localStorage directly (in case base script didn't expose window.siteSessionId)
-            if(!sessId){
-                try{
-                    var raw = localStorage.getItem('site_session');
-                    var parsed = raw ? JSON.parse(raw) : null;
-                    if(parsed && parsed.id) sessId = parsed.id;
-                }catch(e){}
-            }
-            if(anonField && sessId){
-                anonField.value = sessId;
-            }
-            // ensure field is populated at submit time as a final fallback
-            var commentFormEl = document.getElementById('commentForm');
-            if(commentFormEl){
-                commentFormEl.addEventListener('submit', function(){
-                    try{ if(anonField && !anonField.value){ anonField.value = sessId || (JSON.parse(localStorage.getItem('site_session')||'null')||{}).id || ''; } }catch(e){}
-                });
-            }
-        }catch(e){}
-
-        {% if user.is_authenticated %}
-        // Intercept comment form submit for authenticated users and POST via fetch.
-        // If the server returns rendered HTML (for auto-approved users), insert it.
-        (function(){
-            var form = document.getElementById('commentForm');
-            if(!form) return;
+    {% if user.is_authenticated %}
+    // Intercept comment form submit for authenticated users and POST via fetch.
+    // If the server returns rendered HTML (for auto-approved users), insert it.
+    (function(){
+        var form = document.getElementById('commentForm');
+        if(!form) return;
             form.addEventListener('submit', function(e){
-                // Only intercept if the user is authenticated (template gated) — still allow fallback
+                        // If currently editing a comment, show the site-styled confirmation
+                        // modal and submit normally on confirm so the server-side
+                        // `comment_edit` view performs the update and redirects.
+                        if(editingPk){
+                            e.preventDefault();
+                            // Use the shared site action modal exposed by base template.
+                            if(window.showSiteActionModal){
+                                window.showSiteActionModal({
+                                    title: 'Update comment?',
+                                    body: 'Apply your changes to this comment? Your edit will be saved, and may require admin approval.',
+                                    confirmText: 'Update',
+                                    onConfirm: function(){
+                                        // submit the main comment form normally
+                                        var f = document.getElementById('commentForm');
+                                        if(f) f.submit();
+                                    }
+                                });
+                                return;
+                            }
+                            // fallback to native confirm
+                            var ok = window.confirm('Apply update to this comment?');
+                            if(ok){ form.submit(); }
+                            return;
+                        }
+
+                // Only intercept if adding a new comment (not editing)
                 e.preventDefault();
                 var fd = new FormData(form);
                 var csrftokenEl = document.querySelector('[name=csrfmiddlewaretoken]');
                 var csrftoken = csrftokenEl ? csrftokenEl.value : '';
-                fetch(location.href, {
+                // Post to the form's action (which may have been changed for editing)
+                var target = form.action || location.href;
+                fetch(target, {
                     method: 'POST',
                     headers: {
                         'X-Requested-With': 'XMLHttpRequest',
@@ -422,6 +411,11 @@ document.addEventListener('DOMContentLoaded', function(){
                             if(newNode) commentsBody.insertBefore(newNode, commentsBody.firstElementChild);
                             // clear textarea
                             var ta = form.querySelector('textarea[name=content]'); if(ta) ta.value = '';
+                            // restore form action and submit text after successful insert
+                            if(_originalFormAction !== null){ form.action = _originalFormAction; }
+                            var actionInput2 = form.querySelector('[name=action]'); if(actionInput2) actionInput2.value = _originalActionValue || 'add_comment';
+                            var submitBtn2 = document.getElementById('submitButton'); if(submitBtn2) submitBtn2.textContent = _originalSubmitText || 'Submit';
+                            editingPk = null;
                             return;
                         }
                     }
@@ -429,8 +423,63 @@ document.addEventListener('DOMContentLoaded', function(){
                     window.location = location.href;
                 }).catch(function(){ window.location = location.href; });
             });
-        })();
-        {% endif %}
-    });
+    })();
+    {% endif %}
 
-    {% endblock %}
+});
+</script>
+
+{% endblock %}
+
+<!-- Site-styled edit confirmation modal (used when user presses Update while editing) -->
+<div id="siteEditModal" class="site-modal" aria-hidden="true">
+    <div class="site-modal-overlay"></div>
+    <div class="site-modal-dialog">
+        <div class="site-modal-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Update comment?</h5>
+            <button type="button" class="site-modal-close btn btn-sm btn-close btn-close-white" aria-label="Close"></button>
+        </div>
+        <div class="site-modal-body">
+            <p>Apply your changes to this comment? Your edit will be saved, and may require admin approval.</p>
+        </div>
+        <div class="site-modal-footer text-end">
+            <button type="button" class="btn btn-secondary site-edit-cancel">Close</button>
+            <button id="siteEditConfirm" type="button" class="btn btn-danger">Update</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Wire the site-styled edit modal so it can be shown when editing and will
+// submit the main comment form on confirm.
+(function(){
+    var siteModal = document.getElementById('siteEditModal');
+    if(!siteModal) return;
+    var siteConfirm = document.getElementById('siteEditConfirm');
+    var siteCancelBtns = document.querySelectorAll('.site-edit-cancel, .site-modal-close');
+    var siteOverlay = siteModal.querySelector('.site-modal-overlay');
+
+    function show(){
+        siteModal.classList.add('open');
+        siteModal.setAttribute('aria-hidden','false');
+    }
+    function hide(){
+        siteModal.classList.remove('open');
+        siteModal.setAttribute('aria-hidden','true');
+    }
+
+    window.showSiteEditModal = show;
+
+    if(siteConfirm){
+        siteConfirm.addEventListener('click', function(){
+            // submit the main comment form normally so Django handles the POST
+            var form = document.getElementById('commentForm');
+            hide();
+            if(form) form.submit();
+        });
+    }
+
+    siteCancelBtns.forEach(function(btn){ btn.addEventListener('click', hide); });
+    if(siteOverlay) siteOverlay.addEventListener('click', hide);
+})();
+</script>

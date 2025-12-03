@@ -132,11 +132,11 @@
     <div class="site-modal-overlay"></div>
     <div class="site-modal-dialog">
         <div class="site-modal-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Delete comment?</h5>
+            <h5 class="mb-0 site-modal-title">Delete comment?</h5>
             <button type="button" class="site-modal-close btn btn-sm btn-close btn-close-white" aria-label="Close"></button>
         </div>
         <div class="site-modal-body">
-            <p>Are you sure you want to delete this comment? This action cannot be undone.</p>
+            <p class="site-modal-body-text">Are you sure you want to delete this comment? This action cannot be undone.</p>
         </div>
         <div class="site-modal-footer text-end">
             <button type="button" class="btn btn-secondary site-modal-cancel">Close</button>
@@ -168,7 +168,10 @@
 // Site custom delete modal handling: open on .btn-delete click, submit hidden form on confirm.
 document.addEventListener('DOMContentLoaded', function(){
     var activeDeleteUrl = null;
+    var activeActionCallback = null; // optional callback for confirm
     var siteModal = document.getElementById('siteDeleteModal');
+    var siteTitleEl = siteModal && siteModal.querySelector('.site-modal-title');
+    var siteBodyEl = siteModal && siteModal.querySelector('.site-modal-body-text');
     var siteConfirm = document.getElementById('siteDeleteConfirm');
     var siteCancelBtns = document.querySelectorAll('.site-modal-cancel, .site-modal-close');
 
@@ -183,15 +186,41 @@ document.addEventListener('DOMContentLoaded', function(){
         siteModal.setAttribute('aria-hidden','true');
     }
 
+    // Generic API: showSiteActionModal({title, body, confirmText, onConfirm})
+    window.showSiteActionModal = function(opts){
+        opts = opts || {};
+        if(siteTitleEl) siteTitleEl.textContent = opts.title || 'Confirm action';
+        if(siteBodyEl) siteBodyEl.innerHTML = opts.body || '';
+        if(siteConfirm) siteConfirm.textContent = opts.confirmText || 'Confirm';
+        activeActionCallback = typeof opts.onConfirm === 'function' ? opts.onConfirm : null;
+        // if opts.deleteUrl provided, set activeDeleteUrl so default behavior can submit form
+        activeDeleteUrl = opts.deleteUrl || null;
+        showSiteModal();
+    };
+
     document.addEventListener('click', function(e){
         var btn = e.target.closest && e.target.closest('.btn-delete');
         if(!btn) return;
         activeDeleteUrl = btn.getAttribute('data-delete-url') || null;
+        activeActionCallback = null;
+        // default delete modal content
+        if(siteTitleEl) siteTitleEl.textContent = 'Delete comment?';
+        if(siteBodyEl) siteBodyEl.textContent = 'Are you sure you want to delete this comment? This action cannot be undone.';
+        if(siteConfirm) siteConfirm.textContent = 'Delete';
         showSiteModal();
     });
 
     if(siteConfirm){
         siteConfirm.addEventListener('click', function(){
+            // If a custom callback is set, call it. Otherwise, if a delete URL is set,
+            // submit the generic delete form to that URL.
+            if(activeActionCallback){
+                try{ activeActionCallback(); }catch(e){}
+                hideSiteModal();
+                activeActionCallback = null;
+                activeDeleteUrl = null;
+                return;
+            }
             if(!activeDeleteUrl){ hideSiteModal(); return; }
             var form = document.getElementById('delete-form-generic');
             form.action = activeDeleteUrl;
@@ -199,9 +228,9 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     }
 
-    siteCancelBtns.forEach(function(btn){ btn.addEventListener('click', hideSiteModal); });
+    siteCancelBtns.forEach(function(btn){ btn.addEventListener('click', function(){ hideSiteModal(); activeActionCallback = null; activeDeleteUrl = null; }); });
     var overlay = siteModal && siteModal.querySelector('.site-modal-overlay');
-    if(overlay){ overlay.addEventListener('click', hideSiteModal); }
+    if(overlay){ overlay.addEventListener('click', function(){ hideSiteModal(); activeActionCallback = null; activeDeleteUrl = null; }); }
 });
 </script>
 

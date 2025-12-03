@@ -2,7 +2,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, JsonResponse, HttpResponse
+from django.template.loader import render_to_string
 
 from users.models import BloggerRequest
 from .models import Post, Comment
@@ -60,13 +61,24 @@ def post_detail(request, slug):
             # session id passed from client (populated from localStorage)
             session_id = request.POST.get('anon_session_id') or request.POST.get('session_id') or None
 
-            Comment.objects.create(
+            # Determine approval rules for registered users:
+            # - If user has at least one previously approved comment, auto-approve this one.
+            # - Otherwise (first-time commenter), mark as not approved and notify them.
+            approved = False
+            if author:
+                has_approved_before = Comment.objects.filter(author=author, approved=True).exists()
+                if has_approved_before:
+                    approved = True
+                else:
+                    approved = False
+
+            comment = Comment.objects.create(
                 post=post,
                 author=author,
                 name=name,
                 email=email,
                 content=content,
-                approved=False,
+                approved=approved,
                 ip_address=ip,
                 session_id=session_id,
             )
@@ -74,6 +86,17 @@ def post_detail(request, slug):
             # Inform anonymous posters that their comment is pending approval
             if not author:
                 messages.success(request, 'Thanks — your comment was submitted and will be displayed once approved by an administrator.')
+
+            # For registered users who are submitting their first comment (not yet approved)
+            if author and not approved:
+                messages.success(request, 'Thanks — your comment was submitted and will be displayed once approved by an administrator. Future comments will be approved automatically.')
+
+            # If this is a registered, already-approved commenter and the comment is auto-approved,
+            # support AJAX by returning rendered HTML for insertion into the page.
+            if author and approved:
+                if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                    html = render_to_string('blog/_comment_item.html', {'comment': comment, 'user': request.user, 'post': post}, request=request)
+                    return HttpResponse(html, content_type='text/html')
 
         # If the commenter is anonymous, redirect back to the post and
         # include a fragment so the browser jumps to the messages area.

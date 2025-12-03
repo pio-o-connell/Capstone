@@ -1,0 +1,29 @@
+<div class="p-2 comments {% if not comment.approved %}faded{% endif %}" id="comment{{ comment.pk }}">
+    <p class="font-weight-bold">
+        {% if comment.author %}{{ comment.author.get_full_name|default:comment.author.username }}{% else %}{{ comment.name|default:"Guest" }}{% endif %}
+        <span class="font-weight-normal">{{ comment.created_at|date:"F j, Y, g:i a" }}</span> wrote:
+    </p>
+    <div>
+        <p>{{ comment.content }}</p>
+    </div>
+
+    {% if not comment.approved %}
+        <p class="approval">This comment is awaiting approval</p>
+    {% endif %}
+
+    <div class="mt-2">
+        {% if user.is_authenticated and comment.author == user %}
+            <button class="btn btn-delete" comment_id="{{ comment.pk }}" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+            <button class="btn btn-edit" comment_id="{{ comment.pk }}" type="button" onclick="toggleEdit('{{ comment.pk }}');">Edit</button>
+
+            <form id="edit-form-{{ comment.pk }}" method="post" action="{% url 'comment_edit' post.slug comment.pk %}" style="display:none; margin-top:0.75rem;">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <textarea name="content" class="form-control" rows="3">{{ comment.content }}</textarea>
+                </div>
+                <button class="btn btn-signup btn-sm" type="submit">Save</button>
+                <button class="btn btn-secondary btn-sm" type="button" onclick="toggleEdit('{{ comment.pk }}');">Cancel</button>
+            </form>
+        {% endif %}
+    </div>
+</div>

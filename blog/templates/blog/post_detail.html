@@ -367,6 +367,48 @@ document.addEventListener('DOMContentLoaded', function(){
         form.action = action;
         form.submit();
     });
+
+    {% if user.is_authenticated %}
+    // Intercept comment form submit for authenticated users and POST via fetch.
+    // If the server returns rendered HTML (for auto-approved users), insert it.
+    (function(){
+        var form = document.getElementById('commentForm');
+        if(!form) return;
+        form.addEventListener('submit', function(e){
+            // Only intercept if the user is authenticated (template gated) — still allow fallback
+            e.preventDefault();
+            var fd = new FormData(form);
+            var csrftokenEl = document.querySelector('[name=csrfmiddlewaretoken]');
+            var csrftoken = csrftokenEl ? csrftokenEl.value : '';
+            fetch(location.href, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': csrftoken
+                },
+                body: fd,
+                credentials: 'same-origin'
+            }).then(function(resp){
+                return resp.text().catch(function(){ return null; });
+            }).then(function(html){
+                if(html){
+                    var commentsBody = document.querySelector('.comments .card-body');
+                    if(commentsBody){
+                        var wrapper = document.createElement('div');
+                        wrapper.innerHTML = html;
+                        var newNode = wrapper.firstElementChild;
+                        if(newNode) commentsBody.insertBefore(newNode, commentsBody.firstChild);
+                        // clear textarea
+                        var ta = form.querySelector('textarea[name=content]'); if(ta) ta.value = '';
+                        return;
+                    }
+                }
+                // Fallback: perform full-page navigation to handle redirects or non-HTML responses
+                window.location = location.href;
+            }).catch(function(){ window.location = location.href; });
+        });
+    })();
+    {% endif %}
 });
 
 {% endblock %}

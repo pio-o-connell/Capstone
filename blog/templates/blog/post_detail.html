@@ -242,7 +242,7 @@ body {
 
                     <div class="mt-2">
                         {% if user.is_authenticated and comment.author == user %}
-                            <button class="btn btn-delete" comment_id="{{ comment.pk }}" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                            <button class="btn btn-delete" comment_id="{{ comment.pk }}" data-delete-url="{% url 'comment_delete' post.slug comment.pk %}" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
                             <button class="btn btn-edit" comment_id="{{ comment.pk }}" type="button" onclick="toggleEdit('{{ comment.pk }}');">Edit</button>
 
                             <form id="edit-form-{{ comment.pk }}" method="post" action="{% url 'comment_edit' post.slug comment.pk %}" style="display:none; margin-top:0.75rem;">
@@ -358,57 +358,79 @@ document.addEventListener('DOMContentLoaded', function(){
     }catch(e){}
 
     var deleteConfirm = document.getElementById('deleteConfirm');
-    deleteConfirm.addEventListener('click', function(){
-        if(!activeCommentId) return;
-        // build action URL for delete endpoint - use pattern and replace last segment
-        var pattern = "{% url 'comment_delete' post.slug 0 %}"; // e.g. /blog/slug/comment/0/delete/
-        var action = pattern.replace('/0/delete/', '/' + activeCommentId + '/delete/');
-        var form = document.getElementById('delete-form-generic');
-        form.action = action;
-        form.submit();
+    <script>
+    function toggleEdit(pk){
+        var f = document.getElementById('edit-form-'+pk);
+        if(!f) return;
+        f.style.display = (f.style.display === 'none' || f.style.display === '') ? 'block' : 'none';
+    }
+    // Populate anon_session_id hidden input from window.siteSessionId if available
+    document.addEventListener('DOMContentLoaded', function(){
+        try{
+            var anonField = document.getElementById('anon_session_id');
+            // prefer the helper exposed by base template
+            var sessId = (typeof window.siteSessionId !== 'undefined' && window.siteSessionId) ? window.siteSessionId : null;
+            // fallback: try reading localStorage directly (in case base script didn't expose window.siteSessionId)
+            if(!sessId){
+                try{
+                    var raw = localStorage.getItem('site_session');
+                    var parsed = raw ? JSON.parse(raw) : null;
+                    if(parsed && parsed.id) sessId = parsed.id;
+                }catch(e){}
+            }
+            if(anonField && sessId){
+                anonField.value = sessId;
+            }
+            // ensure field is populated at submit time as a final fallback
+            var commentFormEl = document.getElementById('commentForm');
+            if(commentFormEl){
+                commentFormEl.addEventListener('submit', function(){
+                    try{ if(anonField && !anonField.value){ anonField.value = sessId || (JSON.parse(localStorage.getItem('site_session')||'null')||{}).id || ''; } }catch(e){}
+                });
+            }
+        }catch(e){}
+
+        {% if user.is_authenticated %}
+        // Intercept comment form submit for authenticated users and POST via fetch.
+        // If the server returns rendered HTML (for auto-approved users), insert it.
+        (function(){
+            var form = document.getElementById('commentForm');
+            if(!form) return;
+            form.addEventListener('submit', function(e){
+                // Only intercept if the user is authenticated (template gated) — still allow fallback
+                e.preventDefault();
+                var fd = new FormData(form);
+                var csrftokenEl = document.querySelector('[name=csrfmiddlewaretoken]');
+                var csrftoken = csrftokenEl ? csrftokenEl.value : '';
+                fetch(location.href, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: fd,
+                    credentials: 'same-origin'
+                }).then(function(resp){
+                    return resp.text().catch(function(){ return null; });
+                }).then(function(html){
+                    if(html){
+                        var commentsBody = document.querySelector('.comments .card-body');
+                        if(commentsBody){
+                            var wrapper = document.createElement('div');
+                            wrapper.innerHTML = html;
+                            var newNode = wrapper.firstElementChild;
+                            if(newNode) commentsBody.insertBefore(newNode, commentsBody.firstElementChild);
+                            // clear textarea
+                            var ta = form.querySelector('textarea[name=content]'); if(ta) ta.value = '';
+                            return;
+                        }
+                    }
+                    // Fallback: perform full-page navigation to handle redirects or non-HTML responses
+                    window.location = location.href;
+                }).catch(function(){ window.location = location.href; });
+            });
+        })();
+        {% endif %}
     });
 
-    {% if user.is_authenticated %}
-    // Intercept comment form submit for authenticated users and POST via fetch.
-    // If the server returns rendered HTML (for auto-approved users), insert it.
-    (function(){
-        var form = document.getElementById('commentForm');
-        if(!form) return;
-        form.addEventListener('submit', function(e){
-            // Only intercept if the user is authenticated (template gated) — still allow fallback
-            e.preventDefault();
-            var fd = new FormData(form);
-            var csrftokenEl = document.querySelector('[name=csrfmiddlewaretoken]');
-            var csrftoken = csrftokenEl ? csrftokenEl.value : '';
-            fetch(location.href, {
-                method: 'POST',
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRFToken': csrftoken
-                },
-                body: fd,
-                credentials: 'same-origin'
-            }).then(function(resp){
-                return resp.text().catch(function(){ return null; });
-            }).then(function(html){
-                if(html){
-                    var commentsBody = document.querySelector('.comments .card-body');
-                    if(commentsBody){
-                        var wrapper = document.createElement('div');
-                        wrapper.innerHTML = html;
-                        var newNode = wrapper.firstElementChild;
-                        if(newNode) commentsBody.insertBefore(newNode, commentsBody.firstChild);
-                        // clear textarea
-                        var ta = form.querySelector('textarea[name=content]'); if(ta) ta.value = '';
-                        return;
-                    }
-                }
-                // Fallback: perform full-page navigation to handle redirects or non-HTML responses
-                window.location = location.href;
-            }).catch(function(){ window.location = location.href; });
-        });
-    })();
-    {% endif %}
-});
-
-{% endblock %}
+    {% endblock %}

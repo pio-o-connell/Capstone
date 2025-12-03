@@ -13,7 +13,7 @@
 
     <div class="mt-2">
         {% if user.is_authenticated and comment.author == user %}
-            <button class="btn btn-delete" comment_id="{{ comment.pk }}" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+            <button class="btn btn-delete" comment_id="{{ comment.pk }}" data-delete-url="{% url 'comment_delete' post.slug comment.pk %}" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
             <button class="btn btn-edit" comment_id="{{ comment.pk }}" type="button" onclick="toggleEdit('{{ comment.pk }}');">Edit</button>
 
             <form id="edit-form-{{ comment.pk }}" method="post" action="{% url 'comment_edit' post.slug comment.pk %}" style="display:none; margin-top:0.75rem;">

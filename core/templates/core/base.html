@@ -127,5 +127,83 @@
 
     {% block extra_js %}{% endblock %}
 
+<!-- Custom site-styled delete modal (in-page) + hidden generic delete form -->
+<div id="siteDeleteModal" class="site-modal" aria-hidden="true">
+    <div class="site-modal-overlay"></div>
+    <div class="site-modal-dialog">
+        <div class="site-modal-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Delete comment?</h5>
+            <button type="button" class="site-modal-close btn btn-sm btn-close btn-close-white" aria-label="Close"></button>
+        </div>
+        <div class="site-modal-body">
+            <p>Are you sure you want to delete this comment? This action cannot be undone.</p>
+        </div>
+        <div class="site-modal-footer text-end">
+            <button type="button" class="btn btn-secondary site-modal-cancel">Close</button>
+            <button id="siteDeleteConfirm" type="button" class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+</div>
+
+<form id="delete-form-generic" method="post" style="display:none;">
+        {% csrf_token %}
+</form>
+
+<style>
+/* Custom in-page modal styles matching site theme */
+.site-modal{display:none;position:fixed;inset:0;z-index:1200;align-items:center;justify-content:center}
+.site-modal.open{display:flex}
+.site-modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.45)}
+.site-modal-dialog{position:relative;background:#fff;border-radius:.5rem;max-width:560px;width:94%;box-shadow:0 0.5rem 1rem rgba(0,0,0,.28);overflow:hidden}
+.site-modal-header{padding:.75rem 1rem; background: var(--secondary-color); color: #ffffff}
+.site-modal-header .site-modal-close{color:#fff}
+.site-modal-footer .btn-danger, #siteDeleteConfirm{background:var(--secondary-color);border-color:var(--secondary-color);color:#fff}
+.site-modal-footer .btn-danger:hover, #siteDeleteConfirm:hover{opacity:0.92}
+.site-modal-body{padding:1rem}
+.site-modal-footer{padding:.75rem 1rem;border-top:1px solid rgba(0,0,0,.05)}
+.site-modal-close{background:transparent;border:0}
+</style>
+
+<script>
+// Site custom delete modal handling: open on .btn-delete click, submit hidden form on confirm.
+document.addEventListener('DOMContentLoaded', function(){
+    var activeDeleteUrl = null;
+    var siteModal = document.getElementById('siteDeleteModal');
+    var siteConfirm = document.getElementById('siteDeleteConfirm');
+    var siteCancelBtns = document.querySelectorAll('.site-modal-cancel, .site-modal-close');
+
+    function showSiteModal(){
+        if(!siteModal) return;
+        siteModal.classList.add('open');
+        siteModal.setAttribute('aria-hidden','false');
+    }
+    function hideSiteModal(){
+        if(!siteModal) return;
+        siteModal.classList.remove('open');
+        siteModal.setAttribute('aria-hidden','true');
+    }
+
+    document.addEventListener('click', function(e){
+        var btn = e.target.closest && e.target.closest('.btn-delete');
+        if(!btn) return;
+        activeDeleteUrl = btn.getAttribute('data-delete-url') || null;
+        showSiteModal();
+    });
+
+    if(siteConfirm){
+        siteConfirm.addEventListener('click', function(){
+            if(!activeDeleteUrl){ hideSiteModal(); return; }
+            var form = document.getElementById('delete-form-generic');
+            form.action = activeDeleteUrl;
+            form.submit();
+        });
+    }
+
+    siteCancelBtns.forEach(function(btn){ btn.addEventListener('click', hideSiteModal); });
+    var overlay = siteModal && siteModal.querySelector('.site-modal-overlay');
+    if(overlay){ overlay.addEventListener('click', hideSiteModal); }
+});
+</script>
+
 </body>
 </html>

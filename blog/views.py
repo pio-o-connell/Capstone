@@ -1,5 +1,6 @@
 
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 
@@ -70,30 +71,20 @@ def post_detail(request, slug):
                 session_id=session_id,
             )
 
-        # If we have a session_id for an anonymous user, include it in the redirect
+            # Inform anonymous posters that their comment is pending approval
+            if not author:
+                messages.success(request, 'Thanks — your comment was submitted and will be displayed once approved by an administrator.')
+
+        # If the commenter is anonymous, redirect back to the post and
+        # include a fragment so the browser jumps to the messages area.
         if not request.user.is_authenticated and session_id:
-            return redirect(f"{post.get_absolute_url()}?anon_sess={session_id}")
+            return redirect(f"{post.get_absolute_url()}?anon_sess={session_id}#messages")
+        if not request.user.is_authenticated:
+            return redirect(f"{post.get_absolute_url()}#messages")
         return redirect(post.get_absolute_url())
 
-    # Fetch comments: show all approved comments; also show unapproved comments by the current user
-    approved_comments = post.comments.filter(approved=True)
-
-    # If the viewer is authenticated, include their unapproved comments (author match).
-    # If anonymous but an anon session marker is present in the GET params, include unapproved comments matching that session_id.
-    if request.user.is_authenticated:
-        user_unapproved = post.comments.filter(approved=False, author=request.user)
-    else:
-        session_marker = request.GET.get('anon_sess')
-        if session_marker:
-            user_unapproved = post.comments.filter(approved=False, session_id=session_marker)
-        else:
-            user_unapproved = Comment.objects.none()
-
-    # Additionally, include unapproved comments that explicitly have the name set to 'Anonymous'
-    # (case-insensitive) so these are visible as requested.
-    anon_named = post.comments.filter(approved=False, name__iexact='anonymous')
-
-    comments = approved_comments | user_unapproved | anon_named
+    # Fetch comments: only include comments approved by an admin
+    comments = post.comments.filter(approved=True).order_by('-created_at')
 
     context = {
         'post': post,

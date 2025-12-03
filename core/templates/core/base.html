@@ -28,6 +28,14 @@
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
 
+    <style>
+    /* Ensure anchor target for messages is visible below a fixed header.
+       Uses the --header-height CSS variable set by header-offset.js. */
+    #messages {
+        scroll-margin-top: calc(var(--header-height, 0px) + 0.5rem);
+    }
+    </style>
+
     {% block extra_head %}{% endblock %}
 </head>
 
@@ -38,6 +46,37 @@
 
     <!-- Main content -->
     <main>
+        <!-- Django messages -->
+        {% if messages %}
+        <div id="messages" class="container mt-3">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <script>
+        // Fallback close handler for dismissible alerts: removes the alert when the close button is clicked.
+        // This ensures the close button works even if Bootstrap's JS hasn't initialized alerts.
+        (function(){
+            document.addEventListener('click', function(e){
+                var target = e.target;
+                if(!target) return;
+                if(target.classList && target.classList.contains('btn-close')){
+                    var alert = target.closest && target.closest('.alert');
+                    if(alert){
+                        // begin fade out by removing 'show'
+                        alert.classList.remove('show');
+                        // wait briefly for CSS transition then remove from DOM
+                        setTimeout(function(){ if(alert.parentNode) alert.parentNode.removeChild(alert); }, 150);
+                    }
+                }
+            });
+        })();
+        </script>
         {% block content %}{% endblock %}
     </main>
 

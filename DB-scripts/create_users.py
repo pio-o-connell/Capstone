@@ -1,4 +1,4 @@
-"""Create 20 users with profiles for local development.
+r"""Create 20 users with profiles for local development.
 
 Place this file in `DB-scripts/` and run from project root with the project's venv active:
 

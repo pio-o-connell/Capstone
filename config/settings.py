@@ -56,6 +56,7 @@ else:
 # Secret key should come from env or environment variable in production
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
+DEBUG = True
 
 
 
@@ -100,7 +101,10 @@ INSTALLED_APPS += [
     'cart',
 ]
 
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.codeinstitute-ide.net/",
+    "https://*.herokuapp.com"
+]
 # -------------------------------
 # Custom user model
 # -------------------------------
@@ -147,6 +151,44 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# Optional: Postgres configuration (enable by setting USE_POSTGRES env var
+# to '1' or providing a DATABASE_URL). Keeps SQLite as a safe default.
+_use_postgres_flag = os.environ.get('USE_POSTGRES', '')
+if (_use_postgres_flag and str(_use_postgres_flag).lower() in ('1', 'true', 'yes')) or os.environ.get('DATABASE_URL'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('DB_NAME', 'capstone_db'),
+            'USER': os.environ.get('DB_USER', 'capstone_user'),
+            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+            'HOST': os.environ.get('DB_HOST', 'localhost'),
+            'PORT': os.environ.get('DB_PORT', '5432'),
+        }
+    }
+
+    # Example for DATABASE_URL support (requires `dj-database-url`):
+    # import dj_database_url
+    # DATABASES['default'] = dj_database_url.parse(os.environ['DATABASE_URL'])
+    # If a full DATABASE_URL is provided, prefer it. Use dj-database-url if installed,
+    # otherwise parse the URL with urllib.
+    _db_url = os.environ.get('DATABASE_URL')
+    if _db_url:
+        try:
+            import dj_database_url
+            DATABASES['default'] = dj_database_url.parse(_db_url)
+        except Exception:
+            # Fallback simple parser for postgres URLs: postgres://user:pass@host:port/dbname
+            from urllib.parse import urlparse
+            _p = urlparse(_db_url)
+            DATABASES['default'] = {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': _p.path[1:] if _p.path else '',
+                'USER': _p.username,
+                'PASSWORD': _p.password,
+                'HOST': _p.hostname,
+                'PORT': _p.port or '5432',
+            }
 
 
 # Password validation

@@ -22,16 +22,27 @@ User = get_user_model()
 
 # Titles and shorter mapping (use existing mapping where available)
 POST_TITLES = [
-    "How to Start a Simple Vegetable Garden",
-    "The Secret to Perfect Tomato Plants",
-    "Beginner’s Guide to Composting at Home",
-    "10 Low-Maintenance Plants for Busy Gardeners",
-    "How to Improve Soil Quality Naturally",
-    "Best Spring Planting Tips for Irish Gardens",
-    "Common Gardening Mistakes and How to Fix Them",
-    "A Complete Guide to Raised Beds",
-    "How to Grow Herbs Indoors All Year",
-    "Organic Pest Control That Really Works",
+    # "How to Start a Simple Vegetable Garden",
+    # "The Secret to Perfect Tomato Plants",
+    # "Beginner’s Guide to Composting at Home",
+    # "10 Low-Maintenance Plants for Busy Gardeners",
+    # "How to Improve Soil Quality Naturally",
+    # "Best Spring Planting Tips for Irish Gardens",
+    # "Common Gardening Mistakes and How to Fix Them",
+    # "A Complete Guide to Raised Beds",
+    # "How to Grow Herbs Indoors All Year",
+    # "Organic Pest Control That Really Works",
+    # "How Eco-Friendly Outdoor Spaces Protect Our Ecosystems and Boost Biodiversity",
+    # "The Hidden Power of Pollinators: Why Your Garden Depends on Them",
+    "Create a Sustainable Garden: Simple Ways to Build a Resilient Outdoor Space",
+    "Healthy Soil, Healthy Planet: How Rich Soil Prevents Erosion and Supports Life",
+    "Gardening for Wellness: How Outdoor Work Boosts Mood, Energy, and Happiness",
+    "Eco-Smart Landscaping: Designs That Support Wildlife and Reduce Pollution",
+    "From Soil to Streams: How Sustainable Gardens Help Keep Water Clean",
+    "Why Resilient Gardens Resist Pests Naturally—No Chemicals Needed",
+    "The Beautiful Cycle: How Plants, Pollinators, and Microbes Keep Nature Thriving",
+    "Pet-Safe, Planet-Safe: Creating an Outdoor Space That’s Healthy for Everyone",
+    "How Native Plants Create a Thriving, Low-Maintenance Garden",
 ]
 
 # Minimal BLOG_POSTS mapping (use the long content for first two titles; others will be generated)

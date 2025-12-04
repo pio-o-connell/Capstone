@@ -56,7 +56,7 @@ else:
 # Secret key should come from env or environment variable in production
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = True
+
 
 
 
@@ -113,6 +113,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -155,31 +156,24 @@ DATABASES = {
 # Optional: Postgres configuration (enable by setting USE_POSTGRES env var
 # to '1' or providing a DATABASE_URL). Keeps SQLite as a safe default.
 _use_postgres_flag = os.environ.get('USE_POSTGRES', '')
-if (_use_postgres_flag and str(_use_postgres_flag).lower() in ('1', 'true', 'yes')) or os.environ.get('DATABASE_URL'):
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DB_NAME', 'capstone_db'),
-            'USER': os.environ.get('DB_USER', 'capstone_user'),
-            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-            'HOST': os.environ.get('DB_HOST', 'localhost'),
-            'PORT': os.environ.get('DB_PORT', '5432'),
-        }
-    }
+_db_url = os.environ.get('DATABASE_URL')
 
-    # Example for DATABASE_URL support (requires `dj-database-url`):
-    # import dj_database_url
-    # DATABASES['default'] = dj_database_url.parse(os.environ['DATABASE_URL'])
-    # If a full DATABASE_URL is provided, prefer it. Use dj-database-url if installed,
-    # otherwise parse the URL with urllib.
-    _db_url = os.environ.get('DATABASE_URL')
-    if _db_url:
-        try:
-            import dj_database_url
-            DATABASES['default'] = dj_database_url.parse(_db_url)
-        except Exception:
-            # Fallback simple parser for postgres URLs: postgres://user:pass@host:port/dbname
+if (_use_postgres_flag and str(_use_postgres_flag).lower() in ('1', 'true', 'yes')) or _db_url:
+    # Prefer full DATABASE_URL when available and use dj-database-url if installed.
+    try:
+        import dj_database_url
+
+        DATABASES['default'] = dj_database_url.config(
+            env='DATABASE_URL',
+            default=_db_url,
+            conn_max_age=int(os.environ.get('DB_CONN_MAX_AGE', 600)),
+            ssl_require=os.environ.get('DB_SSL_REQUIRE', '1').lower() in ('1', 'true', 'yes'),
+        )
+    except Exception:
+        # Fallback: if DATABASE_URL present, parse it with urllib; otherwise use DB_* vars
+        if _db_url:
             from urllib.parse import urlparse
+
             _p = urlparse(_db_url)
             DATABASES['default'] = {
                 'ENGINE': 'django.db.backends.postgresql',
@@ -188,6 +182,15 @@ if (_use_postgres_flag and str(_use_postgres_flag).lower() in ('1', 'true', 'yes
                 'PASSWORD': _p.password,
                 'HOST': _p.hostname,
                 'PORT': _p.port or '5432',
+            }
+        else:
+            DATABASES['default'] = {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': os.environ.get('DB_NAME', 'capstone_db'),
+                'USER': os.environ.get('DB_USER', 'capstone_user'),
+                'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+                'HOST': os.environ.get('DB_HOST', 'localhost'),
+                'PORT': os.environ.get('DB_PORT', '5432'),
             }
 
 
@@ -226,6 +229,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_DIRS = [os.path.join(BASE_DIR, 'static')]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

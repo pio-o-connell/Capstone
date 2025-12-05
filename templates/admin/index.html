@@ -10,6 +10,7 @@
     {% if dashboard_cards %}
         {{ dashboard_cards|safe }}
     {% endif %}
+
     {% if recent_items %}
         {{ recent_items|safe }}
     {% endif %}
@@ -24,31 +25,25 @@
     {{ charts_data|json_script:"charts-data" }}
 
     <script>
-        // Parse JSON injected safely via json_script
         const charts = JSON.parse(document.getElementById('charts-data').textContent || '{}');
         const labels = charts.labels || [];
         const bookingsData = charts.bookings || [];
         const bloggerData = charts.blogger_requests || [];
         const commentsData = charts.comments || [];
 
-        const chartOptions = {
-            responsive: true,
-            plugins: { legend: { display: false } }
-        };
+        const chartOptions = { responsive: true, plugins: { legend: { display: false } } };
 
-        if (Array.isArray(labels) && labels.length) {
+        if (labels.length) {
             new Chart(document.getElementById('bookingsChart'), {
                 type: 'bar',
                 data: { labels: labels, datasets: [{ label: 'Bookings', data: bookingsData, backgroundColor: '#28a745' }] },
                 options: chartOptions
             });
-
             new Chart(document.getElementById('bloggerChart'), {
                 type: 'bar',
                 data: { labels: labels, datasets: [{ label: 'Blogger Requests', data: bloggerData, backgroundColor: '#007bff' }] },
                 options: chartOptions
             });
-
             new Chart(document.getElementById('commentsChart'), {
                 type: 'bar',
                 data: { labels: labels, datasets: [{ label: 'Comments', data: commentsData, backgroundColor: '#ffc107' }] },

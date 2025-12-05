@@ -1,0 +1,36 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}Posts with Pending Comments{% endblock %}
+
+{% block content %}
+<h1>Posts with Pending Comments</h1>
+<hr>
+
+{% for post, comments in posts_with_unapproved_comments %}
+<article class="mb-4">
+    <h3>{{ post.title }}</h3>
+    <p class="text-muted">By {{ post.author.username }} | {{ post.created_on|date:"F j, Y" }}</p>
+
+    <ul>
+        {% for comment in comments %}
+        <li id="comment-{{ comment.id }}">
+            <strong>
+                {% if comment.author %}
+                    {{ comment.author.username }}
+                {% else %}
+                    {{ comment.name|default:"Guest" }}
+                {% endif %}
+            </strong>
+            <span class="text-muted">({{ comment.created_at|date:"F j, Y, g:i a" }})</span>:
+            {{ comment.content }}
+            <a href="{% url 'admin:blog_comment_change' comment.id %}">[Edit/View in Admin]</a>
+        </li>
+        {% endfor %}
+    </ul>
+</article>
+<hr>
+{% empty %}
+<p>No pending comments.</p>
+{% endfor %}
+{% endblock %}

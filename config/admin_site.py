@@ -1,123 +1,5 @@
-# from django.contrib.admin import AdminSite
-# from django.urls import reverse
-# from django.utils.html import format_html
-# from users.models import BloggerRequest
-# from blog.models import Comment, Post
-# from bookings.models import Booking
-# from django.utils.timezone import now, timedelta
+# config/admin_site.py
 
-# class CustomAdminSite(AdminSite):
-#     site_header = "Capstone Admin Dashboard"
-#     site_title = "Capstone Admin"
-#     index_title = "SuperUser Control Panel"
-
-#     def each_context(self, request):
-#         context = super().each_context(request)
-
-#         # --- Dashboard cards ---
-#         pending_bloggers = BloggerRequest.objects.filter(approved=False).count()
-#         unapproved_comments = Comment.objects.filter(approved=False).count()
-#         pending_bookings = Booking.objects.filter(status='pending').count()
-
-#         context['dashboard_cards'] = format_html(
-#             """
-#             <div style="display:flex; gap:20px; margin-bottom:20px;">
-#                 <div style="padding:20px; background:#007bff; color:white; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;" 
-#                      onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-#                     <h3>📝 Pending Blogger Requests</h3>
-#                     <p style="font-size:28px; font-weight:bold;">{}</p>
-#                     <a href="{}" style="color:white; text-decoration:underline;">View Details</a>
-#                 </div>
-#                 <div style="padding:20px; background:#ffc107; color:black; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;" 
-#                      onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-#                     <h3>💬 Unapproved Comments</h3>
-#                     <p style="font-size:28px; font-weight:bold;">{}</p>
-#                     <a href="{}" style="color:black; text-decoration:underline;">View Details</a>
-#                 </div>
-#                 <div style="padding:20px; background:#28a745; color:white; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;" 
-#                      onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-#                     <h3>📅 Pending Bookings</h3>
-#                     <p style="font-size:28px; font-weight:bold;">{}</p>
-#                     <a href="{}" style="color:white; text-decoration:underline;">View Details</a>
-#                 </div>
-#             </div>
-#             """,
-#             pending_bloggers,
-#             reverse('admin:users_bloggerrequest_changelist') + '?approved__exact=0',
-#             unapproved_comments,
-#             reverse('admin:blog_comment_changelist') + '?approved__exact=0',
-#             pending_bookings,
-#             reverse('admin:bookings_booking_changelist') + '?status__exact=pending',
-#         )
-
-#         # --- Recent items panels ---
-#         recent_bloggers = BloggerRequest.objects.order_by('-created_at')[:5]
-#         recent_comments = Comment.objects.order_by('-created_at')[:5]
-#         recent_bookings = Booking.objects.order_by('-created_at')[:5]
-
-#         def status_label(approved):
-#             return '<span style="color:green; font-weight:bold;">Approved</span>' if approved else '<span style="color:red; font-weight:bold;">Pending</span>'
-
-#         def booking_status_label(status):
-#             color = {'pending':'orange','approved':'green','rejected':'red','cancelled':'gray'}.get(status,'black')
-#             return f'<span style="color:{color}; font-weight:bold;">{status.capitalize()}</span>'
-
-#         context['recent_items'] = format_html(
-#             """
-#             <div style="display:flex; gap:20px; margin-top:20px;">
-#                 <div style="flex:1; background:#f8f9fa; padding:15px; border-radius:10px; box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-#                     <h4>Recent Blogger Requests</h4>
-#                     <ul style="list-style:none; padding-left:0;">
-#                         {}
-#                     </ul>
-#                 </div>
-#                 <div style="flex:1; background:#f8f9fa; padding:15px; border-radius:10px; box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-#                     <h4>Recent Comments</h4>
-#                     <ul style="list-style:none; padding-left:0;">
-#                         {}
-#                     </ul>
-#                 </div>
-#                 <div style="flex:1; background:#f8f9fa; padding:15px; border-radius:10px; box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-#                     <h4>Recent Bookings</h4>
-#                     <ul style="list-style:none; padding-left:0;">
-#                         {}
-#                     </ul>
-#                 </div>
-#             </div>
-#             """,
-#             format_html(''.join(
-#                 f'<li style="padding:5px 0;" onmouseover="this.style.background=\'#e9ecef\'" onmouseout="this.style.background=\'transparent\'">'
-#                 f'{r.user.username if r.user else "Unknown"} - '
-#                 f'<a href="{reverse("admin:users_bloggerrequest_change", args=[r.id])}">{r.reason[:40]}</a> [{status_label(r.approved)}]</li>'
-#                 for r in recent_bloggers
-#             )),
-#             format_html(''.join(
-#                 f'<li style="padding:5px 0;" onmouseover="this.style.background=\'#e9ecef\'" onmouseout="this.style.background=\'transparent\'">'
-#                 f'{c.author.username if c.author else "Anonymous"} - '
-#                 f'<a href="{reverse("admin:blog_comment_change", args=[c.id])}">{c.content[:40]}</a> [{status_label(c.approved)}]</li>'
-#                 for c in recent_comments
-#             )),
-#             format_html(''.join(
-#                 f'<li style="padding:5px 0;" onmouseover="this.style.background=\'#e9ecef\'" onmouseout="this.style.background=\'transparent\'">'
-#                 f'{b.user.username if b.user else "Unknown"} - '
-#                 f'<a href="{reverse("admin:bookings_booking_change", args=[b.id])}">{b.service_name}</a> [{booking_status_label(b.status)}]</li>'
-#                 for b in recent_bookings
-#             ))
-#         )
-
-#         # --- Charts data ---
-#         today = now().date()
-#         dates = [(today - timedelta(days=i)) for i in range(6, -1, -1)]
-#         labels = [d.strftime('%b %d') for d in dates]
-
-#         context['charts_data'] = {
-#             'labels': labels,
-#             'bookings': [Booking.objects.filter(created_at__date=d).count() for d in dates],
-#             'blogger_requests': [BloggerRequest.objects.filter(created_at__date=d).count() for d in dates],
-#             'comments': [Comment.objects.filter(created_at__date=d).count() for d in dates],
-#         }
-
-#         return context
 from django.contrib.admin import AdminSite
 from django.urls import reverse
 from django.utils.html import format_html
@@ -141,21 +23,43 @@ class CustomAdminSite(AdminSite):
 
         context['dashboard_cards'] = format_html(
             """
-            <div style="display:flex; gap:20px; margin-bottom:20px;">
-                <div style="padding:20px; background:#007bff; color:white; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1);">
+            <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px;">
+                <!-- Pending Blogger Requests -->
+                <div style="padding:20px; background:#007bff; color:white; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;"
+                     onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
                     <h3>📝 Pending Blogger Requests</h3>
                     <p style="font-size:28px; font-weight:bold;">{}</p>
                     <a href="{}" style="color:white; text-decoration:underline;">View Details</a>
                 </div>
-                <div style="padding:20px; background:#ffc107; color:black; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1);">
+
+                <!-- Unapproved Comments -->
+                <div style="padding:20px; background:#ffc107; color:black; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;"
+                     onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
                     <h3>💬 Unapproved Comments</h3>
                     <p style="font-size:28px; font-weight:bold;">{}</p>
                     <a href="{}" style="color:black; text-decoration:underline;">View Details</a>
                 </div>
-                <div style="padding:20px; background:#28a745; color:white; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1);">
+
+                <!-- Pending Bookings -->
+                <div style="padding:20px; background:#28a745; color:white; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;"
+                     onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
                     <h3>📅 Pending Bookings</h3>
                     <p style="font-size:28px; font-weight:bold;">{}</p>
                     <a href="{}" style="color:white; text-decoration:underline;">View Details</a>
+                </div>
+
+                <!-- All Posts with Comments -->
+                <div style="padding:20px; background:#17a2b8; color:white; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;"
+                     onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <h3>📝 All Posts with Comments</h3>
+                    <a href="{}" style="color:white; text-decoration:underline;">View Posts & Comments</a>
+                </div>
+
+                <!-- Pending Comments Page -->
+                <div style="padding:20px; background:#dc3545; color:white; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;"
+                     onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <h3>⏳ Pending Comments</h3>
+                    <a href="{}" style="color:white; text-decoration:underline;">View Pending</a>
                 </div>
             </div>
             """,
@@ -165,6 +69,8 @@ class CustomAdminSite(AdminSite):
             reverse('admin:blog_comment_changelist') + '?approved__exact=0',
             pending_bookings,
             reverse('admin:bookings_booking_changelist') + '?status__exact=pending',
+            reverse('blog_with_comments'),      # New: All Posts with Comments
+            reverse('blog_pending_comments')    # New: Pending Comments
         )
 
         # --- Recent items panels ---
@@ -181,24 +87,19 @@ class CustomAdminSite(AdminSite):
 
         context['recent_items'] = format_html(
             """
-            <div style="display:flex; gap:20px; margin-top:20px;">
-                <!-- Recent Blogger Requests -->
+            <div style="display:flex; gap:20px; margin-top:20px; flex-wrap:wrap;">
                 <div style="flex:1; background:#f8f9fa; padding:15px; border-radius:10px; box-shadow:0 2px 4px rgba(0,0,0,0.1);">
                     <h4>Recent Blogger Requests</h4>
                     <ul style="list-style:none; padding-left:0;">
                         {}
                     </ul>
                 </div>
-
-                <!-- Recent Comments -->
                 <div style="flex:1; background:#f8f9fa; padding:15px; border-radius:10px; box-shadow:0 2px 4px rgba(0,0,0,0.1);">
                     <h4>Recent Comments</h4>
                     <ul style="list-style:none; padding-left:0;">
                         {}
                     </ul>
                 </div>
-
-                <!-- Recent Bookings -->
                 <div style="flex:1; background:#f8f9fa; padding:15px; border-radius:10px; box-shadow:0 2px 4px rgba(0,0,0,0.1);">
                     <h4>Recent Bookings</h4>
                     <ul style="list-style:none; padding-left:0;">
@@ -207,23 +108,18 @@ class CustomAdminSite(AdminSite):
                 </div>
             </div>
             """,
-            # Blogger Requests
             format_html(''.join(
                 f'<li style="padding:5px 0;" onmouseover="this.style.background=\'#e9ecef\'" onmouseout="this.style.background=\'transparent\'">'
                 f'{r.user.username if r.user else "Unknown"} - '
                 f'<a href="{reverse("admin:users_bloggerrequest_change", args=[r.id])}">{r.reason[:40]}</a> [{status_label(r.approved)}]</li>'
                 for r in recent_bloggers
             )),
-            # Comments - UPDATED to include post link
             format_html(''.join(
                 f'<li style="padding:5px 0;" onmouseover="this.style.background=\'#e9ecef\'" onmouseout="this.style.background=\'transparent\'">'
                 f'{c.author.username if c.author else "Anonymous"} - '
-                f'<a href="{reverse("admin:blog_comment_change", args=[c.id])}">Comment</a> on '
-                f'<a href="{reverse("admin:blog_post_change", args=[c.post.id])}">{c.post.title[:40]}</a> '
-                f'[{status_label(c.approved)}]</li>'
+                f'<a href="{reverse("admin:blog_comment_change", args=[c.id])}">{c.content[:40]}</a> [{status_label(c.approved)}]</li>'
                 for c in recent_comments
             )),
-            # Bookings
             format_html(''.join(
                 f'<li style="padding:5px 0;" onmouseover="this.style.background=\'#e9ecef\'" onmouseout="this.style.background=\'transparent\'">'
                 f'{b.user.username if b.user else "Unknown"} - '

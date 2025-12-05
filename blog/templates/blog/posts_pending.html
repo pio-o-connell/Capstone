@@ -1,0 +1,47 @@
+{% extends "core/base.html" %}
+{% block title %}Pending Comments{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h1 class="mb-4">Posts with Pending Comments</h1>
+
+    {% for post in posts %}
+    <div class="card mb-4 border-danger">
+        <div class="card-body">
+            <h3>
+                <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
+            </h3>
+
+            <p class="text-muted">{{ post.created_on|date:"F j, Y" }}</p>
+            <hr>
+            <h5>Pending Comments:</h5>
+
+            {% for c in post.comments.all %}
+                {% if not c.approved %}
+                <div class="border p-2 mb-2 rounded bg-light">
+                    <strong>
+                        {% if c.author %}
+                            {{ c.author.username }}
+                        {% else %}
+                            {{ c.name }}
+                        {% endif %}
+                    </strong>
+
+                    <span class="badge bg-warning text-dark">Pending</span>
+                    <br>
+
+                    <small class="text-muted">{{ c.created_at|date:"M j, Y H:i" }}</small>
+
+                    <p class="mt-2">{{ c.content }}</p>
+
+                    <a href="{% url 'post_detail' post.slug %}#comment-{{ c.id }}">Go to post</a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% empty %}
+        <p class="text-muted">No pending comments 🎉</p>
+    {% endfor %}
+</div>
+{% endblock %}

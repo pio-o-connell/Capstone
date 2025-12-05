@@ -15,7 +15,3 @@ urlpatterns = [
     path('create/', views.create_post, name='create_post'),
 ]
 
-urlpatterns += [
-    path('with-comments/', views.blog_with_comments, name='blog_with_comments'),
-    path('pending-comments/', views.blog_pending_comments, name='blog_pending_comments'),
-]

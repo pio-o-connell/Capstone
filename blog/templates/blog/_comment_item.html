@@ -1,6 +1,28 @@
-<div class="p-2 comments {% if not comment.approved %}faded{% endif %}" id="comment{{ comment.pk }}">
+<!-- <div class="p-2 comments {% if not comment.approved %}faded{% endif %}" id="comment{{ comment.pk }}">
     <p class="font-weight-bold">
         {% if comment.author %}{{ comment.author.get_full_name|default:comment.author.username }}{% else %}{{ comment.name|default:"Guest" }}{% endif %}
+        <span class="font-weight-normal">{{ comment.created_at|date:"F j, Y, g:i a" }}</span> wrote:
+    </p>
+    <div>
+        <p>{{ comment.content }}</p>
+    </div>
+
+    {# approval notice removed: do not show "awaiting approval" text #}
+
+    <div class="mt-2">
+        {% if user.is_authenticated and comment.author == user %}
+            <button class="btn btn-delete" comment_id="{{ comment.pk }}" data-delete-url="{% url 'comment_delete' post.slug comment.pk %}">Delete</button>
+            <button class="btn btn-edit" type="button" data-edit-url="{% url 'comment_edit' post.slug comment.pk %}" data-comment-pk="{{ comment.pk }}" onclick="startEdit('{{ comment.pk }}', this.getAttribute('data-edit-url'))">Edit</button>
+        {% endif %}
+    </div>
+</div> -->
+<div class="p-2 comments {% if not comment.approved %}faded{% endif %}" id="comment-{{ comment.pk }}">
+    <p class="font-weight-bold">
+        {% if comment.author %}
+            {{ comment.author.get_full_name|default:comment.author.username }}
+        {% else %}
+            {{ comment.name|default:"Guest" }}
+        {% endif %}
         <span class="font-weight-normal">{{ comment.created_at|date:"F j, Y, g:i a" }}</span> wrote:
     </p>
     <div>

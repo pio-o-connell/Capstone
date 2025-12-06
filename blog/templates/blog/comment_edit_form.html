@@ -1,0 +1,8 @@
+<form method="post" action="{% url 'comment_edit' post.slug comment.pk %}">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="id_body_edit" class="form-label">Edit comment</label>
+    <textarea id="id_body_edit" name="content" class="form-control" rows="4">{{ comment.content }}</textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Update</button>
+</form>

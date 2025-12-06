@@ -1,6 +1,6 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponseNotAllowed
+from django.http import HttpResponseNotAllowed, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 
 from .models import Post, Comment
@@ -14,17 +14,106 @@ def post_list(request):
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug, status='published')
+
+    # Handle new comment submissions via POST
+    if request.method == 'POST':
+        action = request.POST.get('action', 'add_comment')
+        # Create a new comment (minimal validation)
+        if action == 'add_comment':
+            content = request.POST.get('content', '').strip()
+            name = request.POST.get('name', '').strip() or None
+            email = request.POST.get('email', '').strip() or None
+            anon_session = request.POST.get('anon_session_id') or None
+
+            if content:
+                comment = Comment(
+                    post=post,
+                    content=content,
+                    name=name,
+                    email=email,
+                )
+                # Associate an authenticated user as the author
+                if request.user.is_authenticated:
+                    comment.author = request.user
+                    # Auto-approve comments from authenticated users
+                    comment.approved = True
+                else:
+                    comment.approved = False
+
+                # Optionally store anon_session if the model supports it
+                try:
+                    if anon_session and hasattr(comment, 'anon_session_id'):
+                        setattr(comment, 'anon_session_id', anon_session)
+                except Exception:
+                    pass
+
+                comment.save()
+
+                # If this is an AJAX (XHR) request, return the rendered comment fragment
+                is_xhr = request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+                if is_xhr:
+                    # Render the single comment partial and return HTML
+                    return render(request, 'blog/_comment_item.html', {'comment': comment, 'post': post, 'user': request.user})
+
+                # Fallback: redirect back to the post detail (anchor to comments)
+                return redirect(post.get_absolute_url() + '#comments')
+
+        # For other actions, fall through to rendering the page
+
     comments = post.comments.filter(approved=True).order_by('-created_at')
     return render(request, 'blog/post_detail.html', {'post': post, 'comments': comments})
 
 
 def comment_edit(request, slug, pk):
-    # Minimal placeholder: not implemented form handling here
-    return HttpResponseNotAllowed(['GET', 'POST'])
+    post = get_object_or_404(Post, slug=slug, status='published')
+    comment = get_object_or_404(Comment, pk=pk, post=post)
+
+    # Only the comment author or staff may edit
+    user = request.user
+    if not (user.is_authenticated and (comment.author == user or user.is_staff)):
+        return HttpResponseForbidden('You do not have permission to edit this comment.')
+
+    if request.method == 'POST':
+        # Update the comment content
+        content = request.POST.get('content', '').strip()
+        if content:
+            comment.content = content
+            # After edit, mark as unapproved unless edited by staff
+            if not user.is_staff:
+                comment.approved = False
+            comment.save()
+
+        # Redirect back to the post (anchor to the comment)
+        try:
+            return redirect(post.get_absolute_url() + '#comment-' + str(comment.pk))
+        except Exception:
+            return redirect(post.get_absolute_url())
+
+    # For non-POST (GET), render a minimal edit form fragment (optional)
+    return render(request, 'blog/comment_edit_form.html', {'post': post, 'comment': comment})
 
 
 def comment_delete(request, slug, pk):
-    return HttpResponseNotAllowed(['POST'])
+    post = get_object_or_404(Post, slug=slug, status='published')
+    comment = get_object_or_404(Comment, pk=pk, post=post)
+
+    if request.method != 'POST':
+        return HttpResponseNotAllowed(['POST'])
+
+    user = request.user
+    if not (user.is_authenticated and (comment.author == user or user.is_staff)):
+        return HttpResponseForbidden('You do not have permission to delete this comment.')
+
+    # perform deletion
+    comment.delete()
+
+    # If AJAX, return a small JSON response; otherwise redirect back to the post
+    is_xhr = request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+    if is_xhr:
+        from django.http import JsonResponse
+        return JsonResponse({'deleted': True})
+
+    return redirect(post.get_absolute_url())
 
 
 @login_required

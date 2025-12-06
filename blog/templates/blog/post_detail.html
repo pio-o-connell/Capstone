@@ -310,7 +310,24 @@ document.addEventListener('DOMContentLoaded', function(){
         if(commentDiv){ textarea.value = commentDiv.innerText.trim(); }
 
         // Point the main form at the edit URL so submission goes to comment_edit view
-        if(editUrl){ form.action = editUrl; }
+        // Defensive: ensure we don't accidentally assign a DOM element (or other
+        // non-string) to `form.action` which would coerce to "[object HTMLInputElement]"
+        // and produce incorrect request URLs. Accept either a string URL or an
+        // element that contains a `data-edit-url` attribute.
+        try{
+            var safeUrl = null;
+            if(typeof editUrl === 'string'){
+                safeUrl = editUrl;
+            }else if(editUrl && typeof editUrl.getAttribute === 'function'){
+                safeUrl = editUrl.getAttribute('data-edit-url') || '';
+            }else if(editUrl && editUrl.href){
+                safeUrl = editUrl.href;
+            }else{
+                // fallback: coerce to string but guard against '[object HTMLInputElement]'
+                safeUrl = String(editUrl || '');
+            }
+            if(safeUrl){ form.action = safeUrl; }
+        }catch(e){ /* ignore and leave original form.action intact */ }
         if(actionInput){ actionInput.value = 'edit'; }
 
         submitBtn.textContent = 'Update';
@@ -391,6 +408,21 @@ document.addEventListener('DOMContentLoaded', function(){
                 var csrftoken = csrftokenEl ? csrftokenEl.value : '';
                 // Post to the form's action (which may have been changed for editing)
                 var target = form.action || location.href;
+                // Defensive validation: if `target` looks like a coerced DOM string
+                // such as "[object HTMLInputElement]" or is not a plausible URL,
+                // fall back to the current location so we don't POST to an invalid path.
+                try{
+                    var isString = (typeof target === 'string');
+                    var containsObject = isString && target.indexOf('[object') !== -1;
+                    var looksLikeUrl = isString && (target.indexOf('/') === 0 || /^https?:\/\//.test(target));
+                    if(containsObject || !looksLikeUrl){
+                        console.warn('Comment form action invalid, falling back to current location:', target);
+                        target = location.href;
+                        // also repair the form.action so subsequent submits use a good value
+                        try{ form.action = target; }catch(e){}
+                    }
+                }catch(e){ target = location.href; }
+
                 fetch(target, {
                     method: 'POST',
                     headers: {

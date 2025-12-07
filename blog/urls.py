@@ -9,6 +9,9 @@ urlpatterns = [
     path('with-comments/', views.posts_with_comments, name='posts_with_comments'),
     path('pending-comments/', views.posts_with_pending_comments, name='posts_pending'),
 
+    # Edit a blog post by primary key
+    path('edit/<int:pk>/', views.blog_edit, name='blog_edit'),
+
     path('<slug:slug>/', views.post_detail, name='post_detail'),
     path('<slug:slug>/comment/<int:pk>/edit/', views.comment_edit, name='comment_edit'),
     path('<slug:slug>/comment/<int:pk>/delete/', views.comment_delete, name='comment_delete'),

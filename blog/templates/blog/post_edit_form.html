@@ -1,0 +1,34 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Edit Post - {{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+  <h2>Edit Post</h2>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="id_title" class="form-label">Title</label>
+      <input id="id_title" name="title" class="form-control" value="{{ post.title }}" />
+    </div>
+    <div class="mb-3">
+      <label for="id_content" class="form-label">Content</label>
+      <textarea id="id_content" name="content" class="form-control" rows="8">{{ post.content }}</textarea>
+    </div>
+    <div class="mb-3">
+      <label for="id_excerpt" class="form-label">Excerpt</label>
+      <textarea id="id_excerpt" name="excerpt" class="form-control" rows="3">{{ post.excerpt }}</textarea>
+    </div>
+    <div class="mb-3">
+      <label for="id_status" class="form-label">Status</label>
+      <select id="id_status" name="status" class="form-select">
+        <option value="draft" {% if post.status == 'draft' %}selected{% endif %}>Draft</option>
+        <option value="published" {% if post.status == 'published' %}selected{% endif %}>Published</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{{ post.get_absolute_url }}" class="btn btn-secondary ms-2">Cancel</a>
+  </form>
+</div>
+{% endblock %}

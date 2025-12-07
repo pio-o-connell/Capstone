@@ -1,0 +1,19 @@
+{% extends "core/base.html" %}
+{% block content %}
+<h2>Confirm {% if is_edit %}Update{% else %}Create{% endif %} Post</h2>
+<p>Review changes before applying:</p>
+<ul>
+<li><strong>Title:</strong> {{ form.cleaned_data.title }}</li>
+<li><strong>Status:</strong> {{ form.cleaned_data.status }}</li>
+<li><strong>Excerpt:</strong> {{ form.cleaned_data.excerpt }}</li>
+{% if form.cleaned_data.featured_image %}
+<li><strong>Featured Image:</strong> <img src="{{ form.cleaned_data.featured_image.url }}" width="200"></li>
+{% endif %}
+</ul>
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit" name="confirm" class="btn btn-success">Confirm</button>
+<a href="{% url 'blogger_dashboard' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

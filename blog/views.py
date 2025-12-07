@@ -169,8 +169,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseNotAllowed, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.contrib import messages
 
 from .models import Post, Comment
+from .forms import PostForm
 
 
 def post_list(request):
@@ -192,7 +194,18 @@ def post_list(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'blog/post_list.html', {'page_obj': page_obj, 'is_paginated': page_obj.has_other_pages(), 'posts': page_obj})
+    is_blogger = request.user.is_authenticated and hasattr(request.user, 'bloggerprofile')
+
+    return render(
+        request,
+        'blog/post_list.html',
+        {
+            'page_obj': page_obj,
+            'is_paginated': page_obj.has_other_pages(),
+            'posts': page_obj,
+            'is_blogger': is_blogger,
+        },
+    )
 
 
 def post_detail(request, slug):
@@ -281,35 +294,6 @@ def create_post(request):
     return HttpResponseNotAllowed(['GET', 'POST'])
 
 
-@login_required
-def blog_edit(request, pk):
-    """Simple edit view for a Post. Only author or staff can edit."""
-    post = get_object_or_404(Post, pk=pk)
-
-    user = request.user
-    if not (user.is_staff or post.author == user):
-        return HttpResponseForbidden('You do not have permission to edit this post.')
-
-    if request.method == 'POST':
-        title = request.POST.get('title', '').strip()
-        content = request.POST.get('content', '').strip()
-        excerpt = request.POST.get('excerpt', '').strip()
-        status = request.POST.get('status', post.status)
-
-        if title:
-            post.title = title
-        if content:
-            post.content = content
-        post.excerpt = excerpt
-        post.status = status
-        post.save()
-
-        return redirect(post.get_absolute_url())
-
-    # GET -> render a simple edit form
-    return render(request, 'blog/post_edit_form.html', {'post': post})
-
-
 @staff_member_required
 def blog_with_comments(request):
     posts = Post.objects.filter(status='published').order_by('-created_on').prefetch_related('comments')
@@ -329,3 +313,46 @@ def blog_pending_comments(request):
 # Aliases for older URL names
 posts_with_comments = blog_with_comments
 posts_with_pending_comments = blog_pending_comments
+
+
+
+@login_required
+def blogger_dashboard(request):
+    posts = Post.objects.filter(author=request.user)
+    return render(request, "blog/blogger_dashboard.html", {"posts": posts})
+
+
+@login_required
+def blog_edit(request, slug=None):
+    if slug:
+        post = get_object_or_404(Post, slug=slug)
+        if post.author != request.user and not request.user.is_superuser:
+            return HttpResponseForbidden()
+    else:
+        post = None
+
+    if request.method == "POST":
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            new_post = form.save(commit=False)
+            if not post:
+                new_post.author = request.user
+            new_post.save()
+            messages.success(request, f"Post {'updated' if post else 'created'} successfully.")
+            return redirect("blogger_dashboard")
+    else:
+        form = PostForm(instance=post)
+
+    return render(request, "blog/blog_edit.html", {"form": form, "post": post})
+def blog_delete(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    if post.author != request.user and not request.user.is_superuser:
+        return HttpResponseForbidden()
+
+    if request.method == "POST":
+        post.delete()
+        messages.success(request, "Post deleted successfully.")
+        return redirect("blogger_dashboard")
+
+    return render(request, "blog/blog_delete_confirm.html", {"post": post})
+

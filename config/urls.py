@@ -14,6 +14,9 @@
 
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
 from config.admin_site import CustomAdminSite
 
 custom_admin = CustomAdminSite(name='custom_admin')
@@ -49,3 +52,6 @@ urlpatterns = [
     # Include services with a namespace so templates can reverse 'services:services_home'
     path('services/', include(('services.urls', 'services'), namespace='services')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

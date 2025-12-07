@@ -81,6 +81,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_summernote',
+    'crispy_forms',
 ]
 
 # Cloudinary apps only when configured to avoid import-time errors in dev

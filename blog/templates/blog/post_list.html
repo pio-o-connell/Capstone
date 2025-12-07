@@ -13,6 +13,7 @@
     .image-wrapper { position:relative; }
     .post-excerpt { transition: background-color .18s ease, color .18s ease, transform .12s ease; padding:0.5rem 0.25rem; }
     .post-link { color:inherit; text-decoration:none; display:block; }
+    .post-link:hover { text-decoration:none; }
     .post-card:hover .post-excerpt { background:#222; color:#f8f8f8; transform:translateY(-2px); }
     @media (max-width:576px){ .post-card .card-img-top{ height:160px; } }
     .posts-grid{ gap:1rem; display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
@@ -29,6 +30,12 @@
         border-radius: 0.25rem;
         z-index: 2;
     }
+
+    .post-link:hover,
+    .page-link {
+        color: #E84610;
+    }
+
 </style>
 {% endblock %}
 
@@ -37,7 +44,12 @@
 <section class="container section my-4" aria-labelledby="blog-heading">
     <div class="row">
         <div class="col-12 text-center">
-            <h1 id="blog-heading" class="display-6">Blog Posts</h1>
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 id="blog-heading" class="display-6 mb-0">Blog Posts</h1>
+                {% if is_blogger or user.is_staff %}
+                    <a href="{% url 'blogger_dashboard' %}" class="btn btn-primary">Dashboard</a>
+                {% endif %}
+            </div>
         </div>
     </div>
 
@@ -71,7 +83,7 @@
                         <a href="{% url 'post_detail' post.slug %}#comments" class="btn btn-sm btn-outline-primary">Add Comment</a>
 
                         {% if post.is_mine %}
-                            <a href="{% url 'blog_edit' post.pk %}" class="btn btn-sm btn-primary ms-2">Edit Your Blog</a>
+                            <a href="{% url 'blog_edit' post.slug %}" class="btn btn-sm btn-primary ms-2">Edit Your Blog</a>
                         {% endif %}
                     </div>
 

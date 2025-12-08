@@ -1,0 +1,16 @@
+<!-- Logged-in banner BELOW navigation -->
+    <div class="container login-banner-wrapper">
+        <div class="row">
+            <div class="col text-center">
+                {% if user.is_authenticated %}
+                    <p class="login-banner text-white">
+                       Signed in: {{ user.username }}
+                    </p>
+                {% else %}
+                    <p class="login-banner text-white">
+                        Guest
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>

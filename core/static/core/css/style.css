@@ -168,6 +168,41 @@ nav {
     font-size: 2rem;
 }
 
+/* Banner styling */
+.login-banner-wrapper {
+    position: fixed;           /* fixed positioning like header */
+    top: 0;                    /* initially at top, will be adjusted by header */
+    left: 0;
+    right: 0;
+    z-index: 98;               /* below header (99) but above content */
+    display: block;            /* ensures full width */
+    width: 100%;               /* span the whole page */
+    background-color: #ffffff; /* same as nav bar */
+    text-align: left;          /* align text to left */
+    padding: 0 1rem;           /* no vertical padding, horizontal spacing */
+    padding-left: 2rem;        /* increased left padding */
+    border-bottom: none;       /* no border */
+}
+
+.login-banner {
+    margin: 0;                 /* remove all margins */
+    font-size: 0.875rem;       /* responsive text size */
+    font-weight: 600;
+    color: var(--secondary-color); /* green color from Services button */
+    line-height: 1;            /* reduce line height for compact appearance */
+}
+
+/* Responsive adjustments */
+@media screen and (min-width: 768px) {
+    .login-banner {
+        font-size: 1rem;       /* slightly larger on bigger screens */
+    }
+    .login-banner-wrapper {
+        padding: 8px 1rem;
+    }
+}
+
+
 
 /* Main content */
 main {
@@ -177,7 +212,20 @@ main {
     -webkit-box-flex: 1;
         -ms-flex: 1 0 auto;
             flex: 1 0 auto;
-    margin-top: var(--header-height, 50.23px);
+    margin-top: var(--header-height, 50.23px); 
+    /* margin-top: calc(79px + 32px); header height + banner height */
+}
+
+/* Ensure page titles and sections are scrollable to and visible */
+main section:first-of-type,
+main > .container:first-of-type {
+    scroll-margin-top: var(--header-height, 50.23px);
+    margin-top: calc(var(--header-height, 50.23px) + 1rem) !important;
+}
+
+main h1,
+main h2 {
+    scroll-margin-top: var(--header-height, 50.23px);
 }
 
 #contacts {

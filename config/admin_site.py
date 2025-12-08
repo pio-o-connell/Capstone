@@ -3,7 +3,7 @@
 from django.contrib.admin import AdminSite
 from django.urls import reverse
 from django.utils.html import format_html
-from users.models import BloggerRequest
+from users.models import BloggerRequest, CustomUser
 from blog.models import Comment, Post
 from bookings.models import Booking
 from django.utils.timezone import now, timedelta
@@ -19,11 +19,20 @@ class CustomAdminSite(AdminSite):
         # --- Dashboard cards ---
         pending_bloggers = BloggerRequest.objects.filter(approved=False).count()
         unapproved_comments = Comment.objects.filter(approved=False).count()
+        total_users = CustomUser.objects.count()
         pending_bookings = Booking.objects.filter(status='pending').count()
 
         context['dashboard_cards'] = format_html(
             """
             <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px;">
+                <!-- Number of Users -->
+                <div style="padding:20px; background:#6f42c1; color:white; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;"
+                     onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <h3>👥 Number of Users</h3>
+                    <p style="font-size:28px; font-weight:bold;">{}</p>
+                    <a href="{}" style="color:white; text-decoration:underline;">View Users</a>
+                </div>
+
                 <!-- Pending Blogger Requests -->
                 <div style="padding:20px; background:#007bff; color:white; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;"
                      onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
@@ -54,23 +63,17 @@ class CustomAdminSite(AdminSite):
                     <h3>📝 All Posts with Comments</h3>
                     <a href="{}" style="color:white; text-decoration:underline;">View Posts & Comments</a>
                 </div>
-
-                <!-- Pending Comments Page -->
-                <div style="padding:20px; background:#dc3545; color:white; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;"
-                     onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                    <h3>⏳ Pending Comments</h3>
-                    <a href="{}" style="color:white; text-decoration:underline;">View Pending</a>
-                </div>
             </div>
             """,
+            total_users,
+            reverse('admin:users_customuser_changelist'),
             pending_bloggers,
             reverse('admin:users_bloggerrequest_changelist') + '?approved__exact=0',
             unapproved_comments,
             reverse('admin:blog_comment_changelist') + '?approved__exact=0',
             pending_bookings,
             reverse('admin:bookings_booking_changelist') + '?status__exact=pending',
-            reverse('blog_with_comments'),      # New: All Posts with Comments
-            reverse('blog_pending_comments')    # New: Pending Comments
+            reverse('blog_with_comments')      # New: All Posts with Comments
         )
 
         # --- Recent items panels ---

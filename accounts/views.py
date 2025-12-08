@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
 from .forms import CustomUserCreationForm
+
+# Import email verification functions from users app
+from users.views import send_verification_email
 
 
 def accounts_home(request):
@@ -26,9 +30,23 @@ def register_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')
+            user = form.save(commit=False)
+            user.is_active = False  # Deactivate until email verified
+            user.email_verified = False
+            user.save()
+            
+            print(f"User created: {user.username} ({user.email})")
+            print(f"Sending verification email...")
+            
+            # Send verification email
+            try:
+                send_verification_email(request, user)
+                messages.success(request, "Registration successful! Please check your email to verify your account.")
+                return render(request, 'registration/check_email.html')
+            except Exception as e:
+                print(f"Email send error: {str(e)}")
+                messages.error(request, f"Registration created but email failed to send: {str(e)}")
+                return render(request, 'registration/check_email.html')
     else:
         form = CustomUserCreationForm()
 

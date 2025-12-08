@@ -44,6 +44,7 @@ custom_admin.register(Booking)
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('admin/', custom_admin.urls),
+    path('users/', include('users.urls')),  # include your users app URLs
     path('summernote/', include('django_summernote.urls')),
     path('', include('core.urls')),
     path('accounts/', include('accounts.urls')),

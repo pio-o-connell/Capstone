@@ -1,0 +1,6 @@
+<h2>Resend verification link</h2>
+<form method="post">
+    {% csrf_token %}
+    <input type="email" name="email" placeholder="Enter your email">
+    <button type="submit">Send link</button>
+</form>

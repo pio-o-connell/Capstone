@@ -21,6 +21,7 @@ class CustomerProfile(models.Model):
     avatar = CloudinaryField('image', blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True)
     address = models.TextField(blank=True)
+    approved = models.BooleanField(default=False)  # NEW: admin approval flag
     date_created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     last_updated = models.DateTimeField(auto_now=True)
 

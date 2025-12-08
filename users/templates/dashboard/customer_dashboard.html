@@ -1,0 +1,7 @@
+<h2>Customer Dashboard</h2>
+
+{% if can_request_blogger %}
+    <a href="{% url 'submit_blogger_request' %}">Request Blogger Access</a>
+{% else %}
+    <p>You are not approved yet or already a blogger.</p>
+{% endif %}

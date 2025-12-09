@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: don't run with debug turned on in production!
 import os
+import importlib.util
 
 # Monkeypatch for bleach.clean compatibility: some versions of django_summernote
 # call bleach.clean(..., styles=...), which newer bleach versions don't accept.
@@ -43,18 +44,21 @@ except Exception:
     pass
 
 # Load local env.py if present (developer convenience). Keep using os.path.isfile.
-if os.path.isfile("env.py"):
+_env_path = BASE_DIR / "env.py"
+if _env_path.is_file():
     try:
-        import env  # optional local overrides (defines SECRET_KEY, etc.)
+        spec = importlib.util.spec_from_file_location("env", _env_path)
+        env_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(env_module)
     except Exception:
-        # If env.py exists but fails to import, continue with environment variables
+        # If env.py exists but fails to import, continue with environment variables.
         pass
     DEBUG = True
 else:
     DEBUG = False
 
 # Secret key should come from env or environment variable in production
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-c8=d-b8^&45w+zkj(*2i+h)o72q!h=v%n_ahlr$3n64novxsw2')
 
 
 

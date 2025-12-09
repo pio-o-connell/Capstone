@@ -24,7 +24,6 @@ django.setup()
 
 from django.contrib.auth.models import User
 from django.db import IntegrityError, transaction
-from bs4 import BeautifulSoup
 
 # Import models from your app
 try:

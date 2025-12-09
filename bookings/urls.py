@@ -1,9 +1,7 @@
 from django.urls import path
 from . import views
 from .views import (
-    add_to_cart, view_cart, confirm_cart,
-    add_to_cart_guest, view_cart_guest, confirm_guest_booking,
-    add_to_cart_ajax, cart_summary,
+    add_to_cart_ajax,
 )
 
 urlpatterns = [

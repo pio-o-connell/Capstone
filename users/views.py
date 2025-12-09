@@ -6,12 +6,12 @@ from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from .forms import RegistrationForm, BloggerRequestForm
-from .models import BloggerRequest, CustomerProfile
+from .models import BloggerRequest
 
 User = get_user_model()
 
@@ -35,7 +35,7 @@ def register_view(request):
             user.email_verified = False
             user.save()
             print(f"User created: {user.username} ({user.email})")
-            print(f"Sending verification email...")
+            print("Sending verification email...")
             send_verification_email(request, user)
             messages.success(request, "Registration successful! Please check your email to verify your account.")
             return redirect("home")

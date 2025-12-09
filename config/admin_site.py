@@ -4,7 +4,7 @@ from django.contrib.admin import AdminSite
 from django.urls import reverse
 from django.utils.html import format_html
 from users.models import BloggerRequest, CustomUser
-from blog.models import Comment, Post
+from blog.models import Comment
 from bookings.models import Booking
 from django.utils.timezone import now, timedelta
 

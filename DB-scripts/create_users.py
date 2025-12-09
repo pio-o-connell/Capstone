@@ -36,7 +36,6 @@ django.setup()
 
 from django.contrib.auth import get_user_model
 from users.models import CustomerProfile, BloggerProfile
-from django.utils import timezone
 
 User = get_user_model()
 

@@ -16,7 +16,7 @@ import mimetypes
 try:
     import cloudinary
     import cloudinary.uploader
-except Exception as e:
+except Exception:
     print("cloudinary package is required. Install with: pip install cloudinary")
     raise
 

@@ -13,6 +13,6 @@ from django.template.loader import get_template
 try:
     get_template('accounts/register.html')
     print('register.html OK')
-except TemplateSyntaxError as e:
+except TemplateSyntaxError:
     print('TEMPLATE SYNTAX ERROR:')
     raise

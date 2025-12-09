@@ -1,4 +1,6 @@
-import urllib.request, sys, time
+import urllib.request
+import sys
+import time
 url = 'http://127.0.0.1:8000/services/'
 for i in range(10):
     try:

@@ -1,4 +1,7 @@
-import http.cookiejar, urllib.request, urllib.parse, re
+import http.cookiejar
+import urllib.request
+import urllib.parse
+import re
 
 BASE = 'http://127.0.0.1:8000'
 LOGIN = BASE + '/accounts/login/'

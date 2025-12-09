@@ -146,7 +146,7 @@ def main(dump_path: str, database_url: str | None = None, dry_run: bool = False)
             if pk is not None:
                 try:
                     exists = model.objects.filter(pk=pk).exists()
-                except Exception as e:
+                except Exception:
                     exists = False
                 if exists:
                     will_update += 1
@@ -255,7 +255,6 @@ def _run_ordered_or_single_dry_run(dump_file_path: Path) -> int:
     """
     import json
     from django.apps import apps as django_apps
-    from django.conf import settings
 
     # load the fixture
     try:

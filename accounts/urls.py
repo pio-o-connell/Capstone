@@ -8,5 +8,3 @@ urlpatterns = [
     path('register/', views.register_view, name='register'),  # custom register
     path('', include('django.contrib.auth.urls')),       # password reset URLs
 ]
-
-

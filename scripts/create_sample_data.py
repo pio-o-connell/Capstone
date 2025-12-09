@@ -29,7 +29,6 @@ django.setup()
 
 from django.contrib.auth import get_user_model
 from blog.models import Post, Comment
-from django.utils import timezone
 
 User = get_user_model()
 

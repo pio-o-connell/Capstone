@@ -2,7 +2,6 @@ import sys
 import pathlib
 import random
 import argparse
-from datetime import timedelta
 
 # Ensure project root is on PYTHONPATH so `config` is importable
 sys.path.append(str(pathlib.Path(__file__).resolve().parents[1]))

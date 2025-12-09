@@ -26,249 +26,197 @@
         </div>
 
         <!-- CARD ONE -->
-        <article id="card-one" class="col-12 col-md-6 col-xl-3">
+        <article id="card-one" class="col-12 col-md-6 col-xl-3 service-card" data-service-name="Lawns">
             <div class="card">
                 <img src="{% static 'services/images/cards/grass/grass4.jpg' %}"
                      class="card-img-top"
                      alt="Man cutting lawn">
                 <div class="card-body">
                     <h3 class="card-title sub-heading-color">Lawn</h3>
-                    <p class="card-text">
-                        Every two weeks<br><br>
-                        <div class="d-flex align-items-center gap-2 flex-wrap">
-                            <select name="lawns" id="lawns" class="form-select form-select-sm w-auto">
-                                <option value="small" selected>Small Lawn</option>
-                                <option value="medium">Medium Lawn</option>
-                                <option value="large">Large Lawn</option>
-                            </select>
-                            <select name="lawns_qty" id="lawns_qty" class="form-select form-select-sm w-auto">
-                                <option value="0">0</option>
+                    <p class="card-text mb-3">Every two weeks</p>
+                    <div class="service-option-group">
+                        <div class="service-option d-flex align-items-center gap-2 flex-wrap" data-size="small" data-label="Small Lawn">
+                            <span class="badge text-bg-light text-dark">Small Lawn</span>
+                            <select class="form-select form-select-sm w-auto quantity-select" aria-label="Small lawn quantity">
+                                <option value="0" selected>0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                             </select>
                         </div>
-                        <br>
-                        <div class="d-flex align-items-center gap-2 flex-wrap">
-                            <select name="lawns" id="lawns" class="form-select form-select-sm w-auto">
-                                <option value="small" >Small Lawn</option>
-                                <option value="medium" selected>Medium Lawn</option>
-                                <option value="large">Large Lawn</option>
-                            </select>
-                            <select name="lawns_qty" id="lawns_qty" class="form-select form-select-sm w-auto">
-                                <option value="0">0</option>
+                        <div class="service-option d-flex align-items-center gap-2 flex-wrap" data-size="medium" data-label="Medium Lawn">
+                            <span class="badge text-bg-light text-dark">Medium Lawn</span>
+                            <select class="form-select form-select-sm w-auto quantity-select" aria-label="Medium lawn quantity">
+                                <option value="0" selected>0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                             </select>
                         </div>
-                        <br>
-                        <div class="d-flex align-items-center gap-2 flex-wrap">
-                            <select name="lawns" id="lawns" class="form-select form-select-sm w-auto">
-                                <option value="small" >Small Lawn</option>
-                                <option value="medium">Medium Lawn</option>
-                                <option value="large" selected>Large Lawn</option>
-                            </select>
-                            <select name="lawns_qty" id="lawns_qty" class="form-select form-select-sm w-auto">
-                                <option value="0">0</option>
+                        <div class="service-option d-flex align-items-center gap-2 flex-wrap" data-size="large" data-label="Large Lawn">
+                            <span class="badge text-bg-light text-dark">Large Lawn</span>
+                            <select class="form-select form-select-sm w-auto quantity-select" aria-label="Large lawn quantity">
+                                <option value="0" selected>0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                             </select>
                         </div>
-                    </p>
+                    </div>
                 </div>
                 <div class="card-footer">
-                    <button>Add to Cart</button>
+                    <button type="button" class="btn btn-primary w-100 add-to-cart-btn">Add to Cart</button>
+                    <div class="feedback-message text-success small mt-2 d-none">Added!</div>
                 </div>
             </div>
         </article>
 
         <!-- CARD TWO -->
-        <article id="card-two" class="col-12 col-md-6 col-xl-3">
+        <article id="card-two" class="col-12 col-md-6 col-xl-3 service-card" data-service-name="Hedging">
             <div class="card">
                 <img src="{% static 'services/images/cards/hedging/hedge2.jpg' %}"
                      class="card-img-top"
                      alt="Man cutting a hedge">
                 <div class="card-body">
                     <h3 class="card-title sub-heading-color">Hedging</h3>
-                    <p class="card-text">
-                        Spring and/or Autumn<br><br>
-                        <div class="d-flex align-items-center gap-2 flex-wrap">
-                            <select name="hedges" id="hedges" class="form-select form-select-sm w-auto">
-                                <option value="small" selected>Small Hedge</option>
-                                <option value="medium">Medium Hedge</option>
-                                <option value="large">Large Hedge</option>
-                            </select>
-                            <select name="hedges_qty" id="hedges_qty" class="form-select form-select-sm w-auto">
-                                <option value="0">0</option>
+                    <p class="card-text mb-3">Spring and/or Autumn</p>
+                    <div class="service-option-group">
+                        <div class="service-option d-flex align-items-center gap-2 flex-wrap" data-size="small" data-label="Small Hedge">
+                            <span class="badge text-bg-light text-dark">Small Hedge</span>
+                            <select class="form-select form-select-sm w-auto quantity-select" aria-label="Small hedge quantity">
+                                <option value="0" selected>0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                             </select>
                         </div>
-                        <br>
-                        <div class="d-flex align-items-center gap-2 flex-wrap">
-                            <select name="hedges" id="hedges" class="form-select form-select-sm w-auto">
-                                <option value="small">Small Hedge</option>
-                                <option value="medium" selected>Medium Hedge</option>
-                                <option value="large">Large Hedge</option>
-                            </select>
-                            <select name="hedges_qty" id="hedges_qty" class="form-select form-select-sm w-auto">
-                                <option value="0">0</option>
+                        <div class="service-option d-flex align-items-center gap-2 flex-wrap" data-size="medium" data-label="Medium Hedge">
+                            <span class="badge text-bg-light text-dark">Medium Hedge</span>
+                            <select class="form-select form-select-sm w-auto quantity-select" aria-label="Medium hedge quantity">
+                                <option value="0" selected>0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                             </select>
                         </div>
-                        <br>
-                        <div class="d-flex align-items-center gap-2 flex-wrap">
-                            <select name="hedges" id="hedges" class="form-select form-select-sm w-auto">
-                                <option value="small">Small Hedge</option>
-                                <option value="medium">Medium Hedge</option>
-                                <option value="large" selected>Large Hedge</option>
-                            </select>
-                            <select name="hedges_qty" id="hedges_qty" class="form-select form-select-sm w-auto">
-                                <option value="0">0</option>
+                        <div class="service-option d-flex align-items-center gap-2 flex-wrap" data-size="large" data-label="Large Hedge">
+                            <span class="badge text-bg-light text-dark">Large Hedge</span>
+                            <select class="form-select form-select-sm w-auto quantity-select" aria-label="Large hedge quantity">
+                                <option value="0" selected>0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                             </select>
                         </div>
-                    </p>
+                    </div>
                 </div>
                 <div class="card-footer">
-                    <button>Add to Cart</button>
+                    <button type="button" class="btn btn-primary w-100 add-to-cart-btn">Add to Cart</button>
+                    <div class="feedback-message text-success small mt-2 d-none">Added!</div>
                 </div>
             </div>
         </article>
 
         <!-- CARD THREE -->
-        <article id="card-three" class="col-12 col-md-6 col-xl-3">
+        <article id="card-three" class="col-12 col-md-6 col-xl-3 service-card" data-service-name="Scarifying">
             <div class="card">
                 <img src="{% static 'services/images/cards/aerator/aerator1.jpg' %}"
                      class="card-img-top"
                      alt="Man scarifying a lawn">
                 <div class="card-body">
                     <h3 class="card-title sub-heading-color">Scarifying</h3>
-                    <p class="card-text">
-                        During growing season<br><br>
-                        <div class="d-flex align-items-center gap-2 flex-wrap">
-                            <select name="scarify" id="scarify" class="form-select form-select-sm w-auto">
-                                <option value="small" selected>Small Garden</option>
-                                <option value="medium">Medium Garden</option>
-                                <option value="large">Large Garden</option>
-                            </select>
-                            <select name="scarify_qty" id="scarify_qty" class="form-select form-select-sm w-auto">
-                                <option value="0">0</option>
+                    <p class="card-text mb-3">During growing season</p>
+                    <div class="service-option-group">
+                        <div class="service-option d-flex align-items-center gap-2 flex-wrap" data-size="small" data-label="Small Garden">
+                            <span class="badge text-bg-light text-dark">Small Garden</span>
+                            <select class="form-select form-select-sm w-auto quantity-select" aria-label="Small garden quantity">
+                                <option value="0" selected>0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                             </select>
                         </div>
-                        <br>
-                        <div class="d-flex align-items-center gap-2 flex-wrap">
-                            <select name="scarify" id="scarify" class="form-select form-select-sm w-auto">
-                                <option value="small">Small Garden</option>
-                                <option value="medium" selected>Medium Garden</option>
-                                <option value="large">Large Garden</option>
-                            </select>
-                            <select name="scarify_qty" id="scarify_qty" class="form-select form-select-sm w-auto">
-                                <option value="0">0</option>
+                        <div class="service-option d-flex align-items-center gap-2 flex-wrap" data-size="medium" data-label="Medium Garden">
+                            <span class="badge text-bg-light text-dark">Medium Garden</span>
+                            <select class="form-select form-select-sm w-auto quantity-select" aria-label="Medium garden quantity">
+                                <option value="0" selected>0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                             </select>
                         </div>
-                        <br>
-                        <div class="d-flex align-items-center gap-2 flex-wrap">
-                            <select name="scarify" id="scarify" class="form-select form-select-sm w-auto">
-                                <option value="small">Small Garden</option>
-                                <option value="medium">Medium Garden</option>
-                                <option value="large" selected>Large Garden</option>
-                            </select>
-                            <select name="scarify_qty" id="scarify_qty" class="form-select form-select-sm w-auto">
-                                <option value="0">0</option>
+                        <div class="service-option d-flex align-items-center gap-2 flex-wrap" data-size="large" data-label="Large Garden">
+                            <span class="badge text-bg-light text-dark">Large Garden</span>
+                            <select class="form-select form-select-sm w-auto quantity-select" aria-label="Large garden quantity">
+                                <option value="0" selected>0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                             </select>
                         </div>
-                    </p>
+                    </div>
                 </div>
                 <div class="card-footer">
-                    <button>Add to Cart</button>
+                    <button type="button" class="btn btn-primary w-100 add-to-cart-btn">Add to Cart</button>
+                    <div class="feedback-message text-success small mt-2 d-none">Added!</div>
                 </div>
             </div>
         </article>
 
         <!-- CARD FOUR -->
-        <article id="card-four" class="col-12 col-md-6 col-xl-3">
+        <article id="card-four" class="col-12 col-md-6 col-xl-3 service-card" data-service-name="Shoots &amp; Drains">
             <div class="card">
                 <img src="{% static 'services/images/cards/drains/drains.png' %}"
                      class="card-img-top"
                      alt="Cleaning house gutters">
                 <div class="card-body">
                     <h3 class="card-title sub-heading-color">Shoots & Drains</h3>
-                    <p class="card-text">
-                        Spring/Autumn<br><br>
-                        <div class="d-flex align-items-center gap-2 flex-wrap">
-                            <select name="house" id="house" class="form-select form-select-sm w-auto">
-                                <option value="small" selected>Small House</option>
-                                <option value="medium">Medium House</option>
-                                <option value="large">Large House</option>
-                            </select>
-                            <select name="house_qty" id="house_qty" class="form-select form-select-sm w-auto">
-                                <option value="0">0</option>
+                    <p class="card-text mb-3">Spring/Autumn</p>
+                    <div class="service-option-group">
+                        <div class="service-option d-flex align-items-center gap-2 flex-wrap" data-size="small" data-label="Small House">
+                            <span class="badge text-bg-light text-dark">Small House</span>
+                            <select class="form-select form-select-sm w-auto quantity-select" aria-label="Small house quantity">
+                                <option value="0" selected>0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                             </select>
                         </div>
-                        <br>
-                        <div class="d-flex align-items-center gap-2 flex-wrap">
-                            <select name="house" id="house" class="form-select form-select-sm w-auto">
-                                <option value="small">Small House</option>
-                                <option value="medium" selected>Medium House</option>
-                                <option value="large">Large House</option>
-                            </select>
-                            <select name="house_qty" id="house_qty" class="form-select form-select-sm w-auto">
-                                <option value="0">0</option>
+                        <div class="service-option d-flex align-items-center gap-2 flex-wrap" data-size="medium" data-label="Medium House">
+                            <span class="badge text-bg-light text-dark">Medium House</span>
+                            <select class="form-select form-select-sm w-auto quantity-select" aria-label="Medium house quantity">
+                                <option value="0" selected>0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                             </select>
                         </div>
-                        <br>
-                        <div class="d-flex align-items-center gap-2 flex-wrap">
-                            <select name="house" id="house" class="form-select form-select-sm w-auto">
-                                <option value="small">Small House</option>
-                                <option value="medium">Medium House</option>
-                                <option value="large" selected>Large House</option>
-                            </select>
-                            <select name="house_qty" id="house_qty" class="form-select form-select-sm w-auto">
-                                <option value="0">0</option>
+                        <div class="service-option d-flex align-items-center gap-2 flex-wrap" data-size="large" data-label="Large House">
+                            <span class="badge text-bg-light text-dark">Large House</span>
+                            <select class="form-select form-select-sm w-auto quantity-select" aria-label="Large house quantity">
+                                <option value="0" selected>0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                             </select>
                         </div>
-                    </p>
+                    </div>
                 </div>
                 <div class="card-footer">
-                    <button>Add to Cart</button>
+                    <button type="button" class="btn btn-primary w-100 add-to-cart-btn">Add to Cart</button>
+                    <div class="feedback-message text-success small mt-2 d-none">Added!</div>
                 </div>
             </div>
         </article>
@@ -311,10 +259,10 @@
 <script>
 document.addEventListener('DOMContentLoaded', function(){
     var offcanvasEl = document.getElementById('cartDrawer');
-    if(!offcanvasEl){ return; }
     var cartBody = document.getElementById('cartDrawerBody');
     var cartTotal = document.getElementById('cartDrawerTotal');
     var cartCount = document.getElementById('cartDrawerCount');
+    var addToCartUrl = '{% url "add_to_cart_ajax" %}';
 
     function formatCurrency(value){
         try {
@@ -327,11 +275,17 @@ document.addEventListener('DOMContentLoaded', function(){
 
     function renderCart(data){
         var items = (data && data.items) ? data.items : [];
-        if(cartCount){ cartCount.textContent = items.length; }
+        if(cartCount && typeof data.count === 'number'){
+            cartCount.textContent = data.count;
+        } else if(cartCount) {
+            cartCount.textContent = items.length;
+        }
+
+        if(!cartBody){ return; }
 
         if(!items.length){
             cartBody.innerHTML = '<p class="text-muted small mb-0">Your cart is empty.</p>';
-            cartTotal.textContent = formatCurrency(0);
+            if(cartTotal){ cartTotal.textContent = formatCurrency(0); }
             return;
         }
 
@@ -350,10 +304,11 @@ document.addEventListener('DOMContentLoaded', function(){
         }).join('');
 
         cartBody.innerHTML = list;
-        cartTotal.textContent = formatCurrency(data.total || 0);
+        if(cartTotal){ cartTotal.textContent = formatCurrency(data.total || 0); }
     }
 
     function loadCartSummary(){
+        if(!cartBody){ return; }
         cartBody.innerHTML = '<p class="text-muted small mb-0">Loading your cart...</p>';
         fetch('{% url "cart_summary" %}')
             .then(function(response){
@@ -367,7 +322,112 @@ document.addEventListener('DOMContentLoaded', function(){
             });
     }
 
-    offcanvasEl.addEventListener('show.bs.offcanvas', loadCartSummary);
+    function getCsrfToken(){
+        var cookieValue = null;
+        if(document.cookie && document.cookie !== ''){
+            var cookies = document.cookie.split(';');
+            for(var i = 0; i < cookies.length; i++){
+                var cookie = cookies[i].trim();
+                if(cookie.substring(0, 10) === 'csrftoken='){
+                    cookieValue = decodeURIComponent(cookie.substring(10));
+                    break;
+                }
+            }
+        }
+        if(!cookieValue){
+            var csrfInput = document.querySelector('input[name=csrfmiddlewaretoken]');
+            cookieValue = csrfInput ? csrfInput.value : null;
+        }
+        return cookieValue;
+    }
+
+    function showFeedback(card, message, isError){
+        var feedback = card.querySelector('.feedback-message');
+        if(!feedback){ return; }
+        feedback.textContent = message;
+        feedback.classList.toggle('text-danger', !!isError);
+        feedback.classList.toggle('text-success', !isError);
+        feedback.classList.remove('d-none');
+        setTimeout(function(){ feedback.classList.add('d-none'); }, 2500);
+    }
+
+    function resetQuantities(card){
+        card.querySelectorAll('.quantity-select').forEach(function(select){
+            select.value = '0';
+        });
+    }
+
+    function handleAddToCart(card, button){
+        var serviceName = card.dataset.serviceName;
+        var options = card.querySelectorAll('.service-option');
+        var items = [];
+
+        options.forEach(function(option){
+            var qtyEl = option.querySelector('.quantity-select');
+            if(!qtyEl){ return; }
+            var quantity = parseInt(qtyEl.value, 10) || 0;
+            if(quantity > 0){
+                items.push({
+                    service_name: serviceName,
+                    size: option.dataset.size,
+                    quantity: quantity
+                });
+            }
+        });
+
+        if(!items.length){
+            showFeedback(card, 'Choose a quantity before adding.', true);
+            return;
+        }
+
+        button.disabled = true;
+        fetch(addToCartUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken() || ''
+            },
+            body: JSON.stringify({ items: items })
+        })
+        .then(function(response){
+            if(!response.ok){ throw new Error('Network response was not ok'); }
+            return response.json();
+        })
+        .then(function(data){
+            if(!data.success){
+                throw new Error(data.error || 'Unable to add to cart.');
+            }
+            resetQuantities(card);
+            showFeedback(card, 'Added to cart!', false);
+            if(cartCount){
+                var newCount = (data.cart && typeof data.cart.count === 'number') ? data.cart.count : data.cart_count;
+                if(typeof newCount === 'number'){
+                    cartCount.textContent = newCount;
+                }
+            }
+            document.dispatchEvent(new CustomEvent('cart:updated'));
+        })
+        .catch(function(err){
+            console.error('Add to cart failed:', err);
+            showFeedback(card, err.message || 'Unable to add right now.', true);
+        })
+        .finally(function(){
+            button.disabled = false;
+        });
+    }
+
+    document.querySelectorAll('.service-card').forEach(function(card){
+        var button = card.querySelector('.add-to-cart-btn');
+        if(button){
+            button.addEventListener('click', function(){
+                handleAddToCart(card, button);
+            });
+        }
+    });
+
+    if(offcanvasEl){
+        offcanvasEl.addEventListener('show.bs.offcanvas', loadCartSummary);
+    }
     document.addEventListener('cart:updated', loadCartSummary);
 });
 </script>

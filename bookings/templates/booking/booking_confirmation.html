@@ -1,0 +1,61 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Booking Confirmed | Beautiful Outdoor Spaces{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <div class="card shadow-sm text-center">
+                <div class="card-body py-5 px-4 px-lg-5">
+                    <div class="text-success mb-4">
+                        <i class="fa-solid fa-circle-check fa-3x"></i>
+                    </div>
+                    <h1 class="h3 mb-3">Thank you for your booking!</h1>
+                    {% if booking_count %}
+                        <p class="text-muted mb-4">
+                            We have scheduled {{ booking_count }} booking{{ booking_count|pluralize }} and will be in touch shortly.
+                        </p>
+                    {% else %}
+                        <p class="text-muted mb-4">
+                            There were no items left in your cart, but you can head back to services any time.
+                        </p>
+                    {% endif %}
+                    <div class="d-flex flex-column flex-md-row justify-content-center gap-2">
+                        <a href="{% url 'services:services_home' %}" class="btn btn-primary">Return to Services</a>
+                        <a href="{% url 'booking_home' %}" class="btn btn-outline-secondary">Booking Hub</a>
+                    </div>
+                </div>
+            </div>
+
+            {% if bookings %}
+                <div class="card shadow-sm mt-4">
+                    <div class="card-header bg-light">
+                        <strong class="text-uppercase small">Booking Summary</strong>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for booking in bookings %}
+                            <li class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+                                <div>
+                                    <strong>
+                                        {% if booking.service %}
+                                            {{ booking.service.name }}
+                                        {% else %}
+                                            Service unavailable
+                                        {% endif %}
+                                    </strong>
+                                    <div class="text-muted small">
+                                        {{ booking.size|title }} &middot; Qty {{ booking.quantity }}
+                                    </div>
+                                </div>
+                                <span class="text-muted small mt-2 mt-md-0">{{ booking.date|date:"M j, Y" }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

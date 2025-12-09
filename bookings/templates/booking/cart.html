@@ -31,7 +31,7 @@
                 {% endfor %}
             </tbody>
         </table>
-        <h4>Total: €{{ total }}</h4>
+        <h4>Total: €{{ total|floatformat:2 }}</h4>
         <a href="{% url 'confirm_cart' %}" class="btn btn-success">Confirm Booking</a>
         <a href="{% url 'services:services_home' %}" class="btn btn-secondary">Continue Shopping</a>
     {% else %}

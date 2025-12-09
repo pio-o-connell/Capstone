@@ -1,26 +1,42 @@
 {% extends "core/base.html" %}
 {% load static %}
+{% load booking_filters %}
 
 {% block title %}Cart | Beautiful Outdoor Spaces{% endblock %}
 
 {% block content %}
-    <div class="container my-4">
-        <h2>Your Cart</h2>
-        {% if cart %}
-            <ul class="list-group mb-3">
-                {% for item in cart %}
-                    <li class="list-group-item">{{ item.service_name }} - {{ item.date }}</li>
-                {% endfor %}
-            </ul>
-            <form method="post" action="{% url 'confirm_cart' %}">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-success">Confirm Booking</button>
-                <a href="{% url 'booking_services' %}" class="btn btn-link">Continue Browsing Services</a>
-            </form>
-        {% else %}
-            <p>Your cart is empty.</p>
-            <a href="{% url 'booking_services' %}" class="btn btn-primary">Browse Services</a>
-        {% endif %}
-    </div>
-{% endblock %}
+<div class="container my-4">
+    <h2>Your Cart</h2>
 
+    {% if cart %}
+        <table class="table table-striped mb-3">
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Size</th>
+                    <th>Quantity</th>
+                    <th>Price (€)</th>
+                    <th>Total (€)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                <tr>
+                    <td>{{ item.service.name }}</td>
+                    <td>{{ item.size|title }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.service|get_price:item.size }}</td>
+                    <td>{{ item.total_price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h4>Total: €{{ total }}</h4>
+        <a href="{% url 'confirm_cart' %}" class="btn btn-success">Confirm Booking</a>
+        <a href="{% url 'services:services_home' %}" class="btn btn-secondary">Continue Shopping</a>
+    {% else %}
+        <p>Your cart is empty.</p>
+        <a href="{% url 'services:services_home' %}" class="btn btn-primary">Browse Services</a>
+    {% endif %}
+</div>
+{% endblock %}

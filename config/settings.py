@@ -111,7 +111,6 @@ INSTALLED_APPS += [
     'bookings',
     'services',
     'accounts',
-    'cart',
 ]
 
 CSRF_TRUSTED_ORIGINS = [

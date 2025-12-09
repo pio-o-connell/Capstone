@@ -1,0 +1,55 @@
+<section class="container my-5">
+    <h1 class="text-center display-6 mb-4">Services</h1>
+    <div class="row g-4">
+        {% for service in services %}
+        <article class="col-12 col-md-6 col-xl-3">
+            <div class="card h-100">
+                <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.name }}">
+                <div class="card-body">
+                    <h3 class="card-title">{{ service.name }}</h3>
+                    <p>{{ service.description }}</p>
+
+                    <label>Choose size:</label>
+                    <select class="form-select service-size" data-service="{{ service.id }}">
+                        <option value="small">Small (€{{ service.small_price }})</option>
+                        <option value="medium">Medium (€{{ service.medium_price }})</option>
+                        <option value="large">Large (€{{ service.large_price }})</option>
+                    </select>
+
+                    <label class="mt-2">Quantity:</label>
+                    <input type="number" class="form-control service-qty" data-service="{{ service.id }}" value="1" min="1">
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary w-100 add-to-cart-btn" data-service="{{ service.id }}">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+<script>
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const serviceId = this.dataset.service;
+            const size = document.querySelector(`select[data-service="${serviceId}"]`).value;
+            const qty = document.querySelector(`input[data-service="${serviceId}"]`).value;
+
+            fetch("/bookings/add-to-cart-ajax/", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    service_id: serviceId,
+                    size: size,
+                    quantity: qty
+                })
+            })
+            .then(r => r.json())
+            .then(data => alert(data.message));
+        });
+    });
+</script>

@@ -1,5 +1,6 @@
 {% extends "core/base.html" %}
 {% load static %}
+{% load booking_filters %}
 
 {% block title %}Services | Beautiful Outdoor Spaces{% endblock %}
 
@@ -10,120 +11,112 @@
     <div class="row">
         <div class="col-12 text-center">
             <h1 class="display-6">Services</h1>
+            <p class="lead text-muted">Professional outdoor maintenance services</p>
         </div>
 
-        <!-- CARD ONE -->
-        <article id="card-one" class="col-12 col-md-6 col-xl-3">
-            <div class="card">
-                <img src="{% static 'services/images/cards/grass/grass4.jpg' %}"
-                     class="card-img-top"
-                     alt="Man cutting lawn">
+        {% for service in services %}
+        <article class="col-12 col-md-6 col-xl-3">
+            <div class="card h-100">
+                {% if service.image %}
+                    <img src="{{ service.image.url }}"
+                         class="card-img-top"
+                         alt="{{ service.name }}">
+                {% else %}
+                    <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" 
+                         style="height: 250px;">
+                        <span class="text-white">No Image Available</span>
+                    </div>
+                {% endif %}
+                
                 <div class="card-body">
-                    <h3 class="card-title sub-heading-color">Lawn</h3>
-                    <p class="card-text">
-                        Every two weeks<br><br>
-                        <label for="lawns">Lawn Size:</label>
-                        <select name="lawns" id="lawns">
-                            <option value="small">Small Lawn</option>
-                            <option value="medium">Medium Lawn</option>
-                            <option value="large">Large Lawn</option>
-                        </select>
-                        <br><br>
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <button>Book your callout</button>
-                    <p class="mb-0"><a href="https://www.youtube.com/watch?v=P6lwyRmOk30"
-                                       target="_blank" rel="noopener">Watch Video</a></p>
-                </div>
-            </div>
-        </article>
+                    <h3 class="card-title sub-heading-color">{{ service.name }}</h3>
+                    <p class="card-text small text-muted">{{ service.description }}</p>
+                    
+                    <!-- Pricing -->
+                    <div class="pricing-info my-3">
+                        <p class="mb-2"><strong>Pricing:</strong></p>
+                        <ul class="list-unstyled">
+                            <li>Small: <strong>€{{ service.small_price }}</strong></li>
+                            <li>Medium: <strong>€{{ service.medium_price }}</strong></li>
+                            <li>Large: <strong>€{{ service.large_price }}</strong></li>
+                        </ul>
+                    </div>
 
-        <!-- CARD TWO -->
-        <article id="card-two" class="col-12 col-md-6 col-xl-3">
-            <div class="card">
-                <img src="{% static 'services/images/cards/hedging/hedge2.jpg' %}"
-                     class="card-img-top"
-                     alt="Man cutting a hedge">
-                <div class="card-body">
-                    <h3 class="card-title sub-heading-color">Hedging</h3>
-                    <p class="card-text">
-                        Spring and/or Autumn<br><br>
-                        <label for="hedges">Hedge size:</label>
-                        <select name="hedges" id="hedges">
-                            <option value="small">Small Hedge</option>
-                            <option value="medium">Medium Hedge</option>
-                            <option value="large">Large Hedge</option>
-                        </select>
-                        <br><br>
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <button>Book your callout</button>
-                    <p><a href="https://www.youtube.com/watch?v=7y4T6yv5L1k" target="_blank"
-                          rel="noopener">Watch Video</a></p>
-                </div>
-            </div>
-        </article>
-
-        <!-- CARD THREE -->
-        <article id="card-three" class="col-12 col-md-6 col-xl-3">
-            <div class="card">
-                <img src="{% static 'services/images/cards/aerator/aerator1.jpg' %}"
-                     class="card-img-top"
-                     alt="Man scarifying a lawn">
-                <div class="card-body">
-                    <h3 class="card-title sub-heading-color">Scarifying</h3>
-                    <p class="card-text">
-                        During growing season<br><br>
-                        <label for="scarify">Scarify size:</label>
-                        <select name="scarify" id="scarify">
-                            <option value="small">Small Scarify</option>
-                            <option value="medium">Medium Scarify</option>
-                            <option value="large">Large Scarify</option>
-                        </select>
-                        <br><br>
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <button>Book your callout</button>
-                    <p><a href="https://www.youtube.com/watch?v=P6lwyRmOk30"
-                          target="_blank" rel="noopener">Watch Video</a></p>
-                </div>
-            </div>
-        </article>
-
-        <!-- CARD FOUR -->
-        <article id="card-four" class="col-12 col-md-6 col-xl-3">
-            <div class="card">
-                <img src="{% static 'services/images/cards/drains/drains.png' %}"
-                     class="card-img-top"
-                     alt="Cleaning house gutters">
-                <div class="card-body">
-                    <h3 class="card-title sub-heading-color">Shoots & Drains</h3>
-                    <p class="card-text">
-                        Spring/Autumn<br><br>
-                        <label for="house">House size:</label>
-                        <select name="house" id="house">
+                    <!-- Size Selection -->
+                    <div class="form-group">
+                        <label for="size_{{ service.id }}" class="form-label">Select Size:</label>
+                        <select name="size" id="size_{{ service.id }}" class="form-select form-select-sm">
                             <option value="small">Small</option>
                             <option value="medium">Medium</option>
                             <option value="large">Large</option>
                         </select>
-                        <br><br>
-                    </p>
+                    </div>
+
+                    <!-- Quantity Selection -->
+                    <div class="form-group">
+                        <label for="quantity_{{ service.id }}" class="form-label">Quantity:</label>
+                        <input type="number" id="quantity_{{ service.id }}" 
+                               name="quantity" value="1" min="1" max="10" 
+                               class="form-control form-control-sm">
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <button>Book your callout</button>
-                    <p><a href="https://www.youtube.com/watch?v=P6lwyRmOk30"
-                          target="_blank" rel="noopener">Watch Video</a></p>
+
+                <div class="card-footer bg-white border-top">
+                    <button class="btn btn-primary btn-sm w-100 add-to-cart-btn" 
+                            data-service-id="{{ service.id }}">
+                        Add to Cart
+                    </button>
                 </div>
             </div>
         </article>
-
-        <!-- Continue adding cards EXACTLY the same way... -->
+        {% empty %}
+        <div class="col-12 text-center mt-5">
+            <p class="text-muted">No services available at the moment.</p>
+        </div>
+        {% endfor %}
 
     </div>
 
 </section>
+
+<script>
+document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+    btn.addEventListener('click', async function() {
+        const serviceId = this.dataset.serviceId;
+        const sizeSelect = document.getElementById(`size_${serviceId}`);
+        const quantityInput = document.getElementById(`quantity_${serviceId}`);
+        
+        const size = sizeSelect.value;
+        const quantity = quantityInput.value;
+
+        try {
+            const response = await fetch('{% url "add_to_cart_ajax" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]')?.value || ''
+                },
+                body: JSON.stringify({
+                    service_id: serviceId,
+                    size: size,
+                    quantity: quantity
+                })
+            });
+
+            const data = await response.json();
+            
+            if (data.success) {
+                alert(`✓ Added to cart!\n${data.message}`);
+                quantityInput.value = 1;
+            } else {
+                alert(`✗ Error: ${data.error}`);
+            }
+        } catch (error) {
+            alert('Error adding to cart. Please try again.');
+            console.error('Error:', error);
+        }
+    });
+});
+</script>
 
 {% endblock %}

@@ -12,6 +12,19 @@
             <h1 class="display-6">Services</h1>
         </div>
 
+        <div class="col-12 d-flex justify-content-end align-items-center mb-4">
+            <button
+                class="btn btn-outline-dark d-inline-flex align-items-center gap-2"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#cartDrawer"
+                aria-controls="cartDrawer">
+                <i class="fa-solid fa-cart-shopping"></i>
+                View Cart
+                <span class="badge bg-success" id="cartDrawerCount">0</span>
+            </button>
+        </div>
+
         <!-- CARD ONE -->
         <article id="card-one" class="col-12 col-md-6 col-xl-3">
             <div class="card">
@@ -22,19 +35,54 @@
                     <h3 class="card-title sub-heading-color">Lawn</h3>
                     <p class="card-text">
                         Every two weeks<br><br>
-                        <label for="lawns">Lawn Size:</label>
-                        <select name="lawns" id="lawns">
-                            <option value="small">Small Lawn</option>
-                            <option value="medium">Medium Lawn</option>
-                            <option value="large">Large Lawn</option>
-                        </select>
-                        <br><br>
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <select name="lawns" id="lawns" class="form-select form-select-sm w-auto">
+                                <option value="small" selected>Small Lawn</option>
+                                <option value="medium">Medium Lawn</option>
+                                <option value="large">Large Lawn</option>
+                            </select>
+                            <select name="lawns_qty" id="lawns_qty" class="form-select form-select-sm w-auto">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <select name="lawns" id="lawns" class="form-select form-select-sm w-auto">
+                                <option value="small" >Small Lawn</option>
+                                <option value="medium" selected>Medium Lawn</option>
+                                <option value="large">Large Lawn</option>
+                            </select>
+                            <select name="lawns_qty" id="lawns_qty" class="form-select form-select-sm w-auto">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <select name="lawns" id="lawns" class="form-select form-select-sm w-auto">
+                                <option value="small" >Small Lawn</option>
+                                <option value="medium">Medium Lawn</option>
+                                <option value="large" selected>Large Lawn</option>
+                            </select>
+                            <select name="lawns_qty" id="lawns_qty" class="form-select form-select-sm w-auto">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
                     </p>
                 </div>
                 <div class="card-footer">
-                    <button>Book your callout</button>
-                    <p class="mb-0"><a href="https://www.youtube.com/watch?v=P6lwyRmOk30"
-                                       target="_blank" rel="noopener">Watch Video</a></p>
+                    <button>Add to Cart</button>
                 </div>
             </div>
         </article>
@@ -49,19 +97,54 @@
                     <h3 class="card-title sub-heading-color">Hedging</h3>
                     <p class="card-text">
                         Spring and/or Autumn<br><br>
-                        <label for="hedges">Hedge size:</label>
-                        <select name="hedges" id="hedges">
-                            <option value="small">Small Hedge</option>
-                            <option value="medium">Medium Hedge</option>
-                            <option value="large">Large Hedge</option>
-                        </select>
-                        <br><br>
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <select name="hedges" id="hedges" class="form-select form-select-sm w-auto">
+                                <option value="small" selected>Small Hedge</option>
+                                <option value="medium">Medium Hedge</option>
+                                <option value="large">Large Hedge</option>
+                            </select>
+                            <select name="hedges_qty" id="hedges_qty" class="form-select form-select-sm w-auto">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <select name="hedges" id="hedges" class="form-select form-select-sm w-auto">
+                                <option value="small">Small Hedge</option>
+                                <option value="medium" selected>Medium Hedge</option>
+                                <option value="large">Large Hedge</option>
+                            </select>
+                            <select name="hedges_qty" id="hedges_qty" class="form-select form-select-sm w-auto">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <select name="hedges" id="hedges" class="form-select form-select-sm w-auto">
+                                <option value="small">Small Hedge</option>
+                                <option value="medium">Medium Hedge</option>
+                                <option value="large" selected>Large Hedge</option>
+                            </select>
+                            <select name="hedges_qty" id="hedges_qty" class="form-select form-select-sm w-auto">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
                     </p>
                 </div>
                 <div class="card-footer">
-                    <button>Book your callout</button>
-                    <p><a href="https://www.youtube.com/watch?v=7y4T6yv5L1k" target="_blank"
-                          rel="noopener">Watch Video</a></p>
+                    <button>Add to Cart</button>
                 </div>
             </div>
         </article>
@@ -76,19 +159,54 @@
                     <h3 class="card-title sub-heading-color">Scarifying</h3>
                     <p class="card-text">
                         During growing season<br><br>
-                        <label for="scarify">Scarify size:</label>
-                        <select name="scarify" id="scarify">
-                            <option value="small">Small Scarify</option>
-                            <option value="medium">Medium Scarify</option>
-                            <option value="large">Large Scarify</option>
-                        </select>
-                        <br><br>
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <select name="scarify" id="scarify" class="form-select form-select-sm w-auto">
+                                <option value="small" selected>Small Garden</option>
+                                <option value="medium">Medium Garden</option>
+                                <option value="large">Large Garden</option>
+                            </select>
+                            <select name="scarify_qty" id="scarify_qty" class="form-select form-select-sm w-auto">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <select name="scarify" id="scarify" class="form-select form-select-sm w-auto">
+                                <option value="small">Small Garden</option>
+                                <option value="medium" selected>Medium Garden</option>
+                                <option value="large">Large Garden</option>
+                            </select>
+                            <select name="scarify_qty" id="scarify_qty" class="form-select form-select-sm w-auto">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <select name="scarify" id="scarify" class="form-select form-select-sm w-auto">
+                                <option value="small">Small Garden</option>
+                                <option value="medium">Medium Garden</option>
+                                <option value="large" selected>Large Garden</option>
+                            </select>
+                            <select name="scarify_qty" id="scarify_qty" class="form-select form-select-sm w-auto">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
                     </p>
                 </div>
                 <div class="card-footer">
-                    <button>Book your callout</button>
-                    <p><a href="https://www.youtube.com/watch?v=P6lwyRmOk30"
-                          target="_blank" rel="noopener">Watch Video</a></p>
+                    <button>Add to Cart</button>
                 </div>
             </div>
         </article>
@@ -103,19 +221,54 @@
                     <h3 class="card-title sub-heading-color">Shoots & Drains</h3>
                     <p class="card-text">
                         Spring/Autumn<br><br>
-                        <label for="house">House size:</label>
-                        <select name="house" id="house">
-                            <option value="small">Small</option>
-                            <option value="medium">Medium</option>
-                            <option value="large">Large</option>
-                        </select>
-                        <br><br>
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <select name="house" id="house" class="form-select form-select-sm w-auto">
+                                <option value="small" selected>Small House</option>
+                                <option value="medium">Medium House</option>
+                                <option value="large">Large House</option>
+                            </select>
+                            <select name="house_qty" id="house_qty" class="form-select form-select-sm w-auto">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <select name="house" id="house" class="form-select form-select-sm w-auto">
+                                <option value="small">Small House</option>
+                                <option value="medium" selected>Medium House</option>
+                                <option value="large">Large House</option>
+                            </select>
+                            <select name="house_qty" id="house_qty" class="form-select form-select-sm w-auto">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="d-flex align-items-center gap-2 flex-wrap">
+                            <select name="house" id="house" class="form-select form-select-sm w-auto">
+                                <option value="small">Small House</option>
+                                <option value="medium">Medium House</option>
+                                <option value="large" selected>Large House</option>
+                            </select>
+                            <select name="house_qty" id="house_qty" class="form-select form-select-sm w-auto">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
                     </p>
                 </div>
                 <div class="card-footer">
-                    <button>Book your callout</button>
-                    <p><a href="https://www.youtube.com/watch?v=P6lwyRmOk30"
-                          target="_blank" rel="noopener">Watch Video</a></p>
+                    <button>Add to Cart</button>
                 </div>
             </div>
         </article>
@@ -126,4 +279,96 @@
 
 </section>
 
+<!-- Cart Drawer -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="cartDrawer" aria-labelledby="cartDrawerLabel">
+    <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title" id="cartDrawerLabel">Your Cart</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body" id="cartDrawerBody">
+        <p class="text-muted small mb-0">Loading your cart...</p>
+    </div>
+    <div class="border-top p-3 bg-light">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Subtotal</span>
+            <strong id="cartDrawerTotal">€0.00</strong>
+        </div>
+        {% if user.is_authenticated %}
+            <a href="{% url 'view_cart' %}"
+               class="btn btn-primary w-100 mb-2">Go to Bookings Cart</a>
+        {% else %}
+            <a href="{% url 'view_cart_guest' %}"
+               class="btn btn-primary w-100 mb-2">Go to Guest Cart</a>
+        {% endif %}
+        <a href="{% url 'booking_home' %}"
+           class="btn btn-outline-secondary w-100">Booking Hub</a>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+    var offcanvasEl = document.getElementById('cartDrawer');
+    if(!offcanvasEl){ return; }
+    var cartBody = document.getElementById('cartDrawerBody');
+    var cartTotal = document.getElementById('cartDrawerTotal');
+    var cartCount = document.getElementById('cartDrawerCount');
+
+    function formatCurrency(value){
+        try {
+            return new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR' }).format(value || 0);
+        } catch(err){
+            var num = (value || 0).toFixed ? (value || 0).toFixed(2) : (Math.round((value || 0) * 100)/100);
+            return '€' + num;
+        }
+    }
+
+    function renderCart(data){
+        var items = (data && data.items) ? data.items : [];
+        if(cartCount){ cartCount.textContent = items.length; }
+
+        if(!items.length){
+            cartBody.innerHTML = '<p class="text-muted small mb-0">Your cart is empty.</p>';
+            cartTotal.textContent = formatCurrency(0);
+            return;
+        }
+
+        var list = items.map(function(item){
+            var image = item.image ? '<img src="' + item.image + '" class="rounded me-3" style="width:60px;height:60px;object-fit:cover;" alt="' + (item.service || '') + '">' : '';
+            return (
+                '<div class="d-flex align-items-start mb-3 border-bottom pb-2">' +
+                    image +
+                    '<div class="flex-grow-1">' +
+                        '<div class="fw-semibold">' + (item.service || 'Service') + '</div>' +
+                        '<div class="text-muted small">' + (item.size || '') + ' · Qty ' + item.quantity + '</div>' +
+                        '<div class="text-end fw-semibold">' + formatCurrency(item.subtotal || 0) + '</div>' +
+                    '</div>' +
+                '</div>'
+            );
+        }).join('');
+
+        cartBody.innerHTML = list;
+        cartTotal.textContent = formatCurrency(data.total || 0);
+    }
+
+    function loadCartSummary(){
+        cartBody.innerHTML = '<p class="text-muted small mb-0">Loading your cart...</p>';
+        fetch('{% url "cart_summary" %}')
+            .then(function(response){
+                if(!response.ok){ throw new Error('Network response was not ok'); }
+                return response.json();
+            })
+            .then(function(data){ renderCart(data); })
+            .catch(function(err){
+                cartBody.innerHTML = '<p class="text-danger small mb-0">Unable to load cart at the moment.</p>';
+                console.error('Cart summary failed:', err);
+            });
+    }
+
+    offcanvasEl.addEventListener('show.bs.offcanvas', loadCartSummary);
+    document.addEventListener('cart:updated', loadCartSummary);
+});
+</script>
 {% endblock %}

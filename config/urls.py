@@ -52,6 +52,10 @@ urlpatterns = [
     path('bookings/', include('bookings.urls')),
     # Include services with a namespace so templates can reverse 'services:services_home'
     path('services/', include(('services.urls', 'services'), namespace='services')),
+
+    #Stripe
+    # path('checkout/', include('payments.urls')),  # or a view in bookings
+
 ]
 
 if settings.DEBUG:

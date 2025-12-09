@@ -1,4 +1,4 @@
-<h2>Guest Cart</h2>
+<!-- <h2>Guest Cart</h2>
 {% if cart %}
 <ul>
     {% for item in cart %}
@@ -12,3 +12,90 @@
 {% else %}
 <p>Your cart is empty.</p>
 {% endif %}
+                    <h2>Your Cart</h2>
+                <table class="table">
+                <thead>
+                    <tr>
+                    <th>Service</th><th>Size</th><th>Quantity</th><th>Price</th><th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart %}
+                    <tr>
+                    <td>{{ item.service.name }}</td>
+                    <td>{{ item.size }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>€{{ item.service.get_price(item.size) }}</td>
+                    <td>€{{ item.total_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+                <h4>Total: €{{ total }}</h4>
+<a href="{% url 'confirm_cart' %}" class="btn btn-success">Confirm Booking</a> -->
+<!-- {% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Guest Cart | Beautiful Outdoor Spaces{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h2>Guest Cart</h2>
+
+    {% if cart %}
+        <table class="table table-striped mb-3">
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Size</th>
+                    <th>Quantity</th>
+                    <th>Price (€)</th>
+                    <th>Total (€)</th> -->
+
+   {% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Guest Cart | Beautiful Outdoor Spaces{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h2>Your Cart (Guest)</h2>
+
+    {% if cart %}
+        <table class="table table-striped mb-3">
+            <thead>
+                <tr>
+                    <th>Service</th>
+                    <th>Size</th>
+                    <th>Quantity</th>
+                    <th>Price (€)</th>
+                    <th>Total (€)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                <tr>
+                    <td>{{ item.service_name }}</td>
+                    <td>{{ item.size|title }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.price|floatformat:2|add:"0"|floatformat:2|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h4>Total: €{{ total }}</h4>
+
+        <form method="post" action="{% url 'confirm_guest_booking' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Confirm Booking</button>
+            <a href="{% url 'services:services_home' %}" class="btn btn-link">Continue Browsing Services</a>
+        </form>
+    {% else %}
+        <p>Your cart is empty.</p>
+        <a href="{% url 'services:services_home' %}" class="btn btn-primary">Browse Services</a>
+    {% endif %}
+</div>
+{% endblock %}
+                 

@@ -5,11 +5,11 @@ from .models import Booking
 # Bookings
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('service_name', 'user', 'date', 'status')
+    list_display = ('service', 'user', 'size', 'quantity', 'date', 'status')
     actions = ['approve_bookings']
 
     @admin.action(description='Approve selected bookings')
     def approve_bookings(self, request, queryset):
-        queryset.update(approved=True)
+        queryset.update(status='approved')
 
 # Register your models here.

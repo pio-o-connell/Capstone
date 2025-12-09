@@ -5,15 +5,28 @@ from cloudinary.models import CloudinaryField
 from django_summernote.fields import SummernoteTextField
 from users.models import CustomUser
 
+
 class Post(models.Model):
-    STATUS_CHOICES = [('draft','Draft'),('published','Published')]
-    author = models.ForeignKey(CustomUser, null=True, blank=True, on_delete=models.SET_NULL)
+    STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+    ]
+    author = models.ForeignKey(
+        CustomUser,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+    )
     title = models.CharField(max_length=200)
     content = SummernoteTextField()
     slug = models.SlugField(max_length=200, unique=True, null=True, blank=True)
     featured_image = CloudinaryField('image', default='placeholder')
     excerpt = models.TextField(blank=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='draft',
+    )
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -38,7 +51,6 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("post_detail", kwargs={"slug": self.slug})
-
 
 
 class Comment(models.Model):

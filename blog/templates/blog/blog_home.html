@@ -177,7 +177,16 @@ index.html content ends here
 <section class="container section my-4" aria-labelledby="blog-heading">
     <div class="row">
         <div class="col-12 text-center">
-            <h1 id="blog-heading" class="display-6">Blog Posts</h1>
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+                <h1 id="blog-heading" class="display-6 mb-0">Blog Posts</h1>
+                {% if is_blogger %}
+                    <a href="{% url 'blogger_dashboard' %}"
+                       class="btn btn-primary w-100 w-md-auto">Blog Dashboard</a>
+                {% else %}
+                    <a href="{% url 'start_writing' %}"
+                       class="btn btn-outline-primary w-100 w-md-auto">Start Writing</a>
+                {% endif %}
+            </div>
         </div>
     </div>
 

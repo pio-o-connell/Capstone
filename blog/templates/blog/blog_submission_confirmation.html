@@ -1,0 +1,41 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Submission Received | Beautiful Outdoor Spaces{% endblock %}
+
+{% block content %}
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <div class="card shadow-sm text-center">
+                <div class="card-body py-5 px-4 px-lg-5">
+                    <div class="text-success mb-4">
+                        <i class="fa-solid fa-circle-check fa-3x"></i>
+                    </div>
+                    <h1 class="h4 mb-3">Thank you for sharing your story!</h1>
+                    <p class="text-muted mb-4">
+                        We will reply shortly, please enjoy reading the blogs.
+                    </p>
+                    <div class="d-flex flex-column flex-md-row justify-content-center gap-2">
+                        <a href="{% url 'blog_home' %}" class="btn btn-primary">Return to Blog</a>
+                        <a href="{% url 'services:services_home' %}" class="btn btn-outline-secondary">Browse Services</a>
+                    </div>
+                </div>
+            </div>
+
+            {% if post %}
+                <div class="card shadow-sm mt-4">
+                    <div class="card-header bg-light">
+                        <strong class="text-uppercase small">Submitted Draft</strong>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="h5 mb-1">{{ post.title }}</h2>
+                        <p class="text-muted small mb-0">Status: {{ post.get_status_display }}</p>
+                        <p class="text-muted small mb-0">{{ post.created_on|date:"F j, Y" }}</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

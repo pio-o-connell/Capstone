@@ -164,6 +164,7 @@
 # # Aliases for older URL names (keeps compatibility with urls.py)
 # posts_with_comments = blog_with_comments
 # posts_with_pending_comments = blog_pending_comments
+from django import forms
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseNotAllowed, HttpResponseForbidden
@@ -173,6 +174,12 @@ from django.contrib import messages
 
 from .models import Post, Comment
 from .forms import PostForm
+
+
+def _lock_post_form_status(post_form):
+    if 'status' in post_form.fields:
+        post_form.fields['status'].initial = 'draft'
+        post_form.fields['status'].widget = forms.HiddenInput()
 
 
 def post_list(request):
@@ -204,6 +211,42 @@ def post_list(request):
             'is_paginated': page_obj.has_other_pages(),
             'posts': page_obj,
             'is_blogger': is_blogger,
+        },
+    )
+
+
+def start_writing(request):
+    is_blogger = request.user.is_authenticated and hasattr(request.user, 'bloggerprofile')
+    if is_blogger:
+        return redirect('blogger_dashboard')
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        _lock_post_form_status(form)
+        if form.is_valid():
+            new_post = form.save(commit=False)
+            if request.user.is_authenticated:
+                new_post.author = request.user
+            new_post.status = 'draft'
+            new_post.save()
+            return render(
+                request,
+                'blog/blog_submission_confirmation.html',
+                {
+                    'post': new_post,
+                    'is_guest_submission': not request.user.is_authenticated,
+                },
+            )
+    else:
+        form = PostForm()
+        _lock_post_form_status(form)
+
+    return render(
+        request,
+        'blog/blog_start_writing.html',
+        {
+            'form': form,
+            'requires_login': not request.user.is_authenticated,
         },
     )
 

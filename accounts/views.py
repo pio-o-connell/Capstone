@@ -19,6 +19,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            messages.success(request, "Welcome back! You have successfully logged in.")
             return redirect('home')
     else:
         form = AuthenticationForm(request)
@@ -42,11 +43,11 @@ def register_view(request):
             try:
                 send_verification_email(request, user)
                 messages.success(request, "Registration successful! Please check your email to verify your account.")
-                return render(request, 'registration/check_email.html')
+                return redirect('home')
             except Exception as e:
                 print(f"Email send error: {str(e)}")
                 messages.error(request, f"Registration created but email failed to send: {str(e)}")
-                return render(request, 'registration/check_email.html')
+                return redirect('home')
     else:
         form = CustomUserCreationForm()
 
@@ -55,4 +56,5 @@ def register_view(request):
 
 def logout_view(request):
     logout(request)
+    messages.info(request, "You have been logged out.")
     return redirect('home')

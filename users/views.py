@@ -38,7 +38,7 @@ def register_view(request):
             print(f"Sending verification email...")
             send_verification_email(request, user)
             messages.success(request, "Registration successful! Please check your email to verify your account.")
-            return render(request, "registration/check_email.html")
+            return redirect("home")
         else:
             print(f"Form errors: {form.errors}")
     else:
@@ -52,8 +52,12 @@ def send_verification_email(request, user):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         domain = get_current_site(request).domain
         verify_url = f"http://{domain}/users/verify/{uid}/{token}/"
+        home_url = f"http://{domain}/"
         subject = "Verify your email address"
-        message = render_to_string("email/verify_email.html", {"user": user, "verify_url": verify_url})
+        message = render_to_string(
+            "email/verify_email.html",
+            {"user": user, "verify_url": verify_url, "home_url": home_url}
+        )
         
         from django.conf import settings
         from_email = settings.EMAIL_HOST_USER if hasattr(settings, 'EMAIL_HOST_USER') else "noreply@example.com"
@@ -83,8 +87,9 @@ def verify_email(request, uidb64, token):
         user.email_verified = True
         user.save()
         login(request, user)
-        messages.success(request, "Your email has been verified!")
-        return redirect("customer_dashboard")
+        messages.success(request, "Your email has been verified! Welcome back.")
+        messages.success(request, "You are now logged in.")
+        return redirect("home")
     return render(request, "registration/invalid_token.html")
 
 

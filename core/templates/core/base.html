@@ -29,11 +29,24 @@
     <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
 
     <style>
-    /* Ensure anchor target for messages is visible below a fixed header.
-       Uses the --header-height CSS variable set by header-offset.js. */
+     /* Ensure anchor target for messages is visible below a fixed header.
+         Uses the header-offset CSS variable (header-height) set by header-offset.js. */
     #messages {
         scroll-margin-top: calc(var(--header-height, 0px) + 0.5rem);
     }
+
+    /* Custom in-page modal styles matching site theme */
+    .site-modal{display:none;position:fixed;inset:0;z-index:1200;align-items:center;justify-content:center}
+    .site-modal.open{display:flex}
+    .site-modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.45)}
+    .site-modal-dialog{position:relative;background:#fff;border-radius:.5rem;max-width:560px;width:94%;box-shadow:0 0.5rem 1rem rgba(0,0,0,.28);overflow:hidden}
+    .site-modal-header{padding:.75rem 1rem; background: var(--secondary-color); color: #ffffff}
+    .site-modal-header .site-modal-close{color:#fff}
+    .site-modal-footer .btn-danger, #siteDeleteConfirm{background:var(--secondary-color);border-color:var(--secondary-color);color:#fff}
+    .site-modal-footer .btn-danger:hover, #siteDeleteConfirm:hover{opacity:0.92}
+    .site-modal-body{padding:1rem}
+    .site-modal-footer{padding:.75rem 1rem;border-top:1px solid rgba(0,0,0,.05)}
+    .site-modal-close{background:transparent;border:0}
     </style>
 
     {% block extra_head %}{% endblock %}
@@ -92,7 +105,7 @@
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/aa9af45995.js" crossorigin="anonymous"></script>
 
-    <!-- Header offset script: sets --header-height to prevent content hiding under fixed header -->
+    <!-- Header offset script: updates the header height CSS variable to prevent content hiding under the fixed header -->
     <script src="{% static 'core/js/header-offset.js' %}"></script>
 
     <!-- Site session ID for anonymous users (stored in localStorage).
@@ -151,21 +164,6 @@
 <form id="delete-form-generic" method="post" style="display:none;">
         {% csrf_token %}
 </form>
-
-<style>
-/* Custom in-page modal styles matching site theme */
-.site-modal{display:none;position:fixed;inset:0;z-index:1200;align-items:center;justify-content:center}
-.site-modal.open{display:flex}
-.site-modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.45)}
-.site-modal-dialog{position:relative;background:#fff;border-radius:.5rem;max-width:560px;width:94%;box-shadow:0 0.5rem 1rem rgba(0,0,0,.28);overflow:hidden}
-.site-modal-header{padding:.75rem 1rem; background: var(--secondary-color); color: #ffffff}
-.site-modal-header .site-modal-close{color:#fff}
-.site-modal-footer .btn-danger, #siteDeleteConfirm{background:var(--secondary-color);border-color:var(--secondary-color);color:#fff}
-.site-modal-footer .btn-danger:hover, #siteDeleteConfirm:hover{opacity:0.92}
-.site-modal-body{padding:1rem}
-.site-modal-footer{padding:.75rem 1rem;border-top:1px solid rgba(0,0,0,.05)}
-.site-modal-close{background:transparent;border:0}
-</style>
 
 <script>
 // Site custom delete modal handling: open on .btn-delete click, submit hidden form on confirm.

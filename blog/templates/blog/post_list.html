@@ -45,7 +45,7 @@
     <div class="row">
         <div class="col-12 text-center">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-                <h1 id="blog-heading" class="display-6 mb-0">Blog Posts</h1>
+                <h2 id="blog-heading" class="display-6 mb-0">Articles</h2>
                 {% if is_blogger or user.is_staff %}
                     <a href="{% url 'blogger_dashboard' %}" class="btn btn-primary btn-sm w-100 w-md-auto px-4">Blog Dashboard</a>
                 {% else %}
@@ -57,7 +57,7 @@
 
     <div class="posts-grid">
         {% for post in posts %}
-        <article id="card-{{ forloop.counter }}" role="article">
+        <article id="card-{{ forloop.counter }}">
             <div class="card post-card mb-4">
                 <div class="image-wrapper">
                     {% if post.featured_image and 'placeholder' not in post.featured_image.url %}
@@ -89,7 +89,7 @@
                         {% endif %}
                     </div>
 
-                    <hr />
+                    <hr>
                     <p class="card-text text-muted small">{{ post.created_on|date:"F j, Y" }}</p>
                 </div>
             </div>

@@ -88,6 +88,11 @@ class CustomAdminSite(AdminSite):
             color = {'pending':'orange','approved':'green','rejected':'red','cancelled':'gray'}.get(status,'black')
             return f'<span style="color:{color}; font-weight:bold;">{status.capitalize()}</span>'
 
+        def booking_service_label(booking):
+            if booking and booking.service and getattr(booking.service, 'name', None):
+                return booking.service.name
+            return 'Unknown service'
+
         context['recent_items'] = format_html(
             """
             <div style="display:flex; gap:20px; margin-top:20px; flex-wrap:wrap;">
@@ -126,7 +131,7 @@ class CustomAdminSite(AdminSite):
             format_html(''.join(
                 f'<li style="padding:5px 0;" onmouseover="this.style.background=\'#e9ecef\'" onmouseout="this.style.background=\'transparent\'">'
                 f'{b.user.username if b.user else "Unknown"} - '
-                f'<a href="{reverse("admin:bookings_booking_change", args=[b.id])}">{b.service_name}</a> [{booking_status_label(b.status)}]</li>'
+                f'<a href="{reverse("admin:bookings_booking_change", args=[b.id])}">{booking_service_label(b)}</a> [{booking_status_label(b.status)}]</li>'
                 for b in recent_bookings
             ))
         )

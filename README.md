@@ -27,11 +27,19 @@ The temporary live project can be found here: <a href="https://pio-o-connell.git
   - [Improvements](#improvements)
   - [Deployment](#deployment)
   - [Testing and Validation](#testing-and-validation)
+    - [HTML Validation](#html-validation)
+    - [CSS Validation](#css-validation)
+    - [Python Validation](#python-validation)
+    - [JS Validation](#js-validation)
   - [AI Implementation](#ai-implementation)
   - [Database](#database)
   - [References](#references)
   - [Tech Employed](#tech-employed)
   - [Learning Points](#learning-points)
+    - [Lighthouse](#lighthouse)
+    - [Wave](#wave)
+    - [Unit Testing Scripting](#unit-testing-scripting)
+    - [Harmonia Application Testing Matrix](#harmonia-application-testing-matrix)
 
 ## UX Design Process
 <details>
@@ -275,29 +283,48 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 
 ## Testing and Validation
 ---
-<details>
-    <summary>Details</summary>
 
 
-        ### HTML Validation
+  
 
-        ### CSS Validation
-
-        ### Python Validation
-
-        ### JS Vsalidation
-
-        ### LightHouse
-
-        ### Wave
-
-        ### Unit Testing scripting
-
-
-      ### Harmonia Application Testing Matrix
-
-
+  ### HTML Validation
+ <details>
+  <summary>HTML</summary>
+   The HTML was checked using the w3C markup validation service 0 errors found on home page.<br><br>
+  <img src="README-images/Testing&Validation/html-validator/AdminHomepage.png" alt="HTML W3C Results" style="width:30%;">
+  <img src="README-images/Testing&Validation/html-validator/HTMLValidator-HomePage.png" alt="HTML W3C Results" style="width:30%;">
+  <img src="README-images/Testing&Validation/html-validator/HTMLValidator-BlogPage.png" alt="HTML W3C Results" style="width:30%;">
+  <img src="README-images/Testing&Validation/html-validator/HTMLValidator -Services.png" alt="HTML W3C Results" style="width:30%;">
+  <img src="README-images/Testing&Validation/html-validator/HTMLValidator-Bookings.png" alt="HTML W3C Results"" style="width:30%;">
+  <img src="README-images/Testing&Validation/html-validator/HTMLValidator-Register.png" alt="HTML W3C Results" style="width:30%;">
+  
 </details>
+
+  
+
+  ### CSS Validation
+  
+<details>
+  <summary>CSS</summary>
+  The CSS was checked using the W3C validation service 0 errors found (only vendor-prefix warnings for `-ms-flexbox`, `-webkit`, etc.).<br>
+  <img src="README-images/Testing&Validation/CSS/HomePage-stylesheet.png" alt="CSS Jigsaw Results" style="width:30%;">
+</details>
+
+  ### Python Validation
+ 
+ <details>
+  <summary>Python</summary>
+   All apps were checked using Flake8 tool to comply with PEP 8 standard<br><br>
+  <img src="README-images/Testing&Validation/Pep8-using-flake8/Pep9 results .png" alt="CSS Jigsaw Results" style="width:30%;">
+</details>
+
+  ### JS Validation
+ <details>
+  <summary>Javascript</summary>
+   All apps were checked using Flake8 tool to comply with PEP 8 standard<br><br>
+  <img src="README-images/Testing&Validation/Pep8-using-flake8/Pep9 results .png" alt="CSS Jigsaw Results" style="width:30%;">
+</details>
+
 
 
 [Back To Top](#harmonia)
@@ -420,3 +447,9 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 [Back To Top](#harmonia)
 
 
+
+  
+  ### Lighthouse
+  ### Wave
+  ### Unit Testing Scripting
+  ### Harmonia Application Testing Matrix

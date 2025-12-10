@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import importlib.util
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,15 +25,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECRET_KEY = 'django-insecure-c8=d-b8^&45w+zkj(*2i+h)o72q!h=v%n_ahlr$3n64novxsw2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-import os
-import importlib.util
 
 # Monkeypatch for bleach.clean compatibility: some versions of django_summernote
 # call bleach.clean(..., styles=...), which newer bleach versions don't accept.
 # Make a permissive wrapper during startup so migrations/management commands run.
 try:
     import bleach
+
     _bleach_clean = bleach.clean
+
     def _bleach_clean_compat(text, *args, **kwargs):
         # Some callers may pass None; coerce to empty string for sanitizer.
         if text is None:
@@ -40,7 +42,8 @@ try:
         return _bleach_clean(text, *args, **kwargs)
     bleach.clean = _bleach_clean_compat
 except Exception:
-    # If bleach isn't available or patching fails, continue — errors will surface later.
+    # If bleach isn't available or patching fails, continue gracefully.
+    # Any sanitizer issues will surface when bleach is actually invoked.
     pass
 
 # Load local env.py if present (developer convenience). Keep using os.path.isfile.
@@ -58,11 +61,7 @@ else:
     DEBUG = False
 
 # Secret key should come from env or environment variable in production
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-c8=d-b8^&45w+zkj(*2i+h)o72q!h=v%n_ahlr$3n64novxsw2')
-
-
-
-
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-c8=d-b8^&45w+zkj(*2i+h)o72q!h=v%n_ahlr$3n64novxsw2')  # noqa: E501
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -174,19 +173,28 @@ DATABASES = {
 _use_postgres_flag = os.environ.get('USE_POSTGRES', '')
 _db_url = os.environ.get('DATABASE_URL')
 
-if (_use_postgres_flag and str(_use_postgres_flag).lower() in ('1', 'true', 'yes')) or _db_url:
+use_postgres_flag = str(_use_postgres_flag).lower() in ('1', 'true', 'yes')
+
+if _db_url or use_postgres_flag:
     # Prefer full DATABASE_URL when available and use dj-database-url if installed.
     try:
         import dj_database_url
 
+        ssl_required = (
+            os.environ.get('DB_SSL_REQUIRE', '1').lower()
+            in ('1', 'true', 'yes')
+        )
+        conn_max_age = int(os.environ.get('DB_CONN_MAX_AGE', 600))
+
         DATABASES['default'] = dj_database_url.config(
             env='DATABASE_URL',
             default=_db_url,
-            conn_max_age=int(os.environ.get('DB_CONN_MAX_AGE', 600)),
-            ssl_require=os.environ.get('DB_SSL_REQUIRE', '1').lower() in ('1', 'true', 'yes'),
+            conn_max_age=conn_max_age,
+            ssl_require=ssl_required,
         )
     except Exception:
-        # Fallback: if DATABASE_URL present, parse it with urllib; otherwise use DB_* vars
+        # Fallback: if DATABASE_URL is present, parse it with urllib.
+        # Otherwise use the individual DB_* environment variables.
         if _db_url:
             from urllib.parse import urlparse
 
@@ -215,7 +223,10 @@ if (_use_postgres_flag and str(_use_postgres_flag).lower() in ('1', 'true', 'yes
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': (
+            'django.contrib.auth.password_validation.'
+            'UserAttributeSimilarityValidator'
+        ),
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
@@ -249,10 +260,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 
-# Whitenoise static file serving    
+# Whitenoise static file serving
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Default primary key field type    
+# Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

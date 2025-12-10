@@ -2,11 +2,12 @@
 
 from django.contrib.admin import AdminSite
 from django.urls import reverse
-from django.utils.html import format_html
+from django.utils.html import format_html, format_html_join
 from users.models import BloggerRequest, CustomUser
 from blog.models import Comment
 from bookings.models import Booking
 from django.utils.timezone import now, timedelta
+
 
 class CustomAdminSite(AdminSite):
     site_header = "Capstone Admin Dashboard"
@@ -22,58 +23,107 @@ class CustomAdminSite(AdminSite):
         total_users = CustomUser.objects.count()
         pending_bookings = Booking.objects.filter(status='pending').count()
 
+        blogger_request_url = (
+            f"{reverse('admin:users_bloggerrequest_changelist')}?approved__exact=0"
+        )
+        comment_review_url = (
+            f"{reverse('admin:blog_comment_changelist')}?approved__exact=0"
+        )
+        pending_booking_url = (
+            f"{reverse('admin:bookings_booking_changelist')}?status__exact=pending"
+        )
+
+        card_configs = [
+            {
+                'title': '👥 Number of Users',
+                'value': total_users,
+                'url': reverse('admin:users_customuser_changelist'),
+                'link_label': 'View Users',
+                'bg': '#6f42c1',
+                'text': 'white',
+                'link_color': 'white',
+            },
+            {
+                'title': '📝 Pending Blogger Requests',
+                'value': pending_bloggers,
+                'url': blogger_request_url,
+                'link_label': 'View Details',
+                'bg': '#007bff',
+                'text': 'white',
+                'link_color': 'white',
+            },
+            {
+                'title': '💬 Unapproved Comments',
+                'value': unapproved_comments,
+                'url': comment_review_url,
+                'link_label': 'View Details',
+                'bg': '#ffc107',
+                'text': 'black',
+                'link_color': 'black',
+            },
+            {
+                'title': '📅 Pending Bookings',
+                'value': pending_bookings,
+                'url': pending_booking_url,
+                'link_label': 'View Details',
+                'bg': '#28a745',
+                'text': 'white',
+                'link_color': 'white',
+            },
+            {
+                'title': '📝 All Posts with Comments',
+                'value': None,
+                'url': reverse('blog_with_comments'),
+                'link_label': 'View Posts & Comments',
+                'bg': '#17a2b8',
+                'text': 'white',
+                'link_color': 'white',
+                'show_value': False,
+            },
+        ]
+
+        def _card_html(card):
+            base_style = (
+                "padding:20px; background:{bg}; color:{text}; border-radius:10px; "
+                "flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); "
+                "transition: transform 0.2s;"
+            ).format(bg=card['bg'], text=card['text'])
+
+            value_block = ''
+            if card.get('show_value', True):
+                value_block = format_html(
+                    '<p style="font-size:28px; font-weight:bold;">{}</p>',
+                    card['value'],
+                )
+
+            return format_html(
+                (
+                    '<div style="{style}">'
+                    '<h3>{title}</h3>'
+                    '{value_block}'
+                    '<a href="{url}" '
+                    'style="color:{link_color}; text-decoration:underline;">'
+                    '{link_label}</a>'
+                    '</div>'
+                ),
+                style=base_style,
+                title=card['title'],
+                value_block=value_block,
+                url=card['url'],
+                link_color=card['link_color'],
+                link_label=card['link_label'],
+            )
+
+        cards_markup = format_html_join(
+            '',
+            '{}',
+            ((_card_html(card),) for card in card_configs),
+        )
+
         context['dashboard_cards'] = format_html(
-            """
-            <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px;">
-                <!-- Number of Users -->
-                <div style="padding:20px; background:#6f42c1; color:white; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;"
-                     onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                    <h3>👥 Number of Users</h3>
-                    <p style="font-size:28px; font-weight:bold;">{}</p>
-                    <a href="{}" style="color:white; text-decoration:underline;">View Users</a>
-                </div>
-
-                <!-- Pending Blogger Requests -->
-                <div style="padding:20px; background:#007bff; color:white; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;"
-                     onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                    <h3>📝 Pending Blogger Requests</h3>
-                    <p style="font-size:28px; font-weight:bold;">{}</p>
-                    <a href="{}" style="color:white; text-decoration:underline;">View Details</a>
-                </div>
-
-                <!-- Unapproved Comments -->
-                <div style="padding:20px; background:#ffc107; color:black; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;"
-                     onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                    <h3>💬 Unapproved Comments</h3>
-                    <p style="font-size:28px; font-weight:bold;">{}</p>
-                    <a href="{}" style="color:black; text-decoration:underline;">View Details</a>
-                </div>
-
-                <!-- Pending Bookings -->
-                <div style="padding:20px; background:#28a745; color:white; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;"
-                     onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                    <h3>📅 Pending Bookings</h3>
-                    <p style="font-size:28px; font-weight:bold;">{}</p>
-                    <a href="{}" style="color:white; text-decoration:underline;">View Details</a>
-                </div>
-
-                <!-- All Posts with Comments -->
-                <div style="padding:20px; background:#17a2b8; color:white; border-radius:10px; flex:1; box-shadow:0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s;"
-                     onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                    <h3>📝 All Posts with Comments</h3>
-                    <a href="{}" style="color:white; text-decoration:underline;">View Posts & Comments</a>
-                </div>
-            </div>
-            """,
-            total_users,
-            reverse('admin:users_customuser_changelist'),
-            pending_bloggers,
-            reverse('admin:users_bloggerrequest_changelist') + '?approved__exact=0',
-            unapproved_comments,
-            reverse('admin:blog_comment_changelist') + '?approved__exact=0',
-            pending_bookings,
-            reverse('admin:bookings_booking_changelist') + '?status__exact=pending',
-            reverse('blog_with_comments')      # New: All Posts with Comments
+            '<div style="{style}">{cards}</div>',
+            style='display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px;',
+            cards=cards_markup,
         )
 
         # --- Recent items panels ---
@@ -82,70 +132,137 @@ class CustomAdminSite(AdminSite):
         recent_bookings = Booking.objects.order_by('-created_at')[:5]
 
         def status_label(approved):
-            return '<span style="color:green; font-weight:bold;">Approved</span>' if approved else '<span style="color:red; font-weight:bold;">Pending</span>'
+            color = 'green' if approved else 'red'
+            label = 'Approved' if approved else 'Pending'
+            return format_html(
+                '<span style="color:{0}; font-weight:bold;">{1}</span>',
+                color,
+                label,
+            )
 
         def booking_status_label(status):
-            color = {'pending':'orange','approved':'green','rejected':'red','cancelled':'gray'}.get(status,'black')
-            return f'<span style="color:{color}; font-weight:bold;">{status.capitalize()}</span>'
+            booking_colors = {
+                'pending': 'orange',
+                'approved': 'green',
+                'rejected': 'red',
+                'cancelled': 'gray',
+            }
+            color = booking_colors.get(status, 'black')
+            return format_html(
+                '<span style="color:{0}; font-weight:bold;">{1}</span>',
+                color,
+                status.capitalize(),
+            )
 
         def booking_service_label(booking):
             if booking and booking.service and getattr(booking.service, 'name', None):
                 return booking.service.name
             return 'Unknown service'
 
-        context['recent_items'] = format_html(
-            """
-            <div style="display:flex; gap:20px; margin-top:20px; flex-wrap:wrap;">
-                <div style="flex:1; background:#f8f9fa; padding:15px; border-radius:10px; box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-                    <h4>Recent Blogger Requests</h4>
-                    <ul style="list-style:none; padding-left:0;">
-                        {}
-                    </ul>
-                </div>
-                <div style="flex:1; background:#f8f9fa; padding:15px; border-radius:10px; box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-                    <h4>Recent Comments</h4>
-                    <ul style="list-style:none; padding-left:0;">
-                        {}
-                    </ul>
-                </div>
-                <div style="flex:1; background:#f8f9fa; padding:15px; border-radius:10px; box-shadow:0 2px 4px rgba(0,0,0,0.1);">
-                    <h4>Recent Bookings</h4>
-                    <ul style="list-style:none; padding-left:0;">
-                        {}
-                    </ul>
-                </div>
-            </div>
-            """,
-            format_html(''.join(
-                f'<li style="padding:5px 0;" onmouseover="this.style.background=\'#e9ecef\'" onmouseout="this.style.background=\'transparent\'">'
-                f'{r.user.username if r.user else "Unknown"} - '
-                f'<a href="{reverse("admin:users_bloggerrequest_change", args=[r.id])}">{r.reason[:40]}</a> [{status_label(r.approved)}]</li>'
+        item_style = 'padding:5px 0;'
+        list_style = 'list-style:none; padding-left:0;'
+        section_style = (
+            'flex:1; background:#f8f9fa; padding:15px; border-radius:10px; '
+            'box-shadow:0 2px 4px rgba(0,0,0,0.1);'
+        )
+
+        blogger_items = format_html_join(
+            '',
+            (
+                '<li style="{0}">{1} - <a href="{2}">{3}</a> '
+                '[{4}]</li>'
+            ),
+            (
+                (
+                    item_style,
+                    r.user.username if r.user else 'Unknown',
+                    reverse('admin:users_bloggerrequest_change', args=[r.id]),
+                    r.reason[:40],
+                    status_label(r.approved),
+                )
                 for r in recent_bloggers
-            )),
-            format_html(''.join(
-                f'<li style="padding:5px 0;" onmouseover="this.style.background=\'#e9ecef\'" onmouseout="this.style.background=\'transparent\'">'
-                f'{c.author.username if c.author else "Anonymous"} - '
-                f'<a href="{reverse("admin:blog_comment_change", args=[c.id])}">{c.content[:40]}</a> [{status_label(c.approved)}]</li>'
+            ),
+        )
+
+        comment_items = format_html_join(
+            '',
+            (
+                '<li style="{0}">{1} - <a href="{2}">{3}</a> '
+                '[{4}]</li>'
+            ),
+            (
+                (
+                    item_style,
+                    c.author.username if c.author else 'Anonymous',
+                    reverse('admin:blog_comment_change', args=[c.id]),
+                    c.content[:40],
+                    status_label(c.approved),
+                )
                 for c in recent_comments
-            )),
-            format_html(''.join(
-                f'<li style="padding:5px 0;" onmouseover="this.style.background=\'#e9ecef\'" onmouseout="this.style.background=\'transparent\'">'
-                f'{b.user.username if b.user else "Unknown"} - '
-                f'<a href="{reverse("admin:bookings_booking_change", args=[b.id])}">{booking_service_label(b)}</a> [{booking_status_label(b.status)}]</li>'
+            ),
+        )
+
+        booking_items = format_html_join(
+            '',
+            (
+                '<li style="{0}">{1} - <a href="{2}">{3}</a> '
+                '[{4}]</li>'
+            ),
+            (
+                (
+                    item_style,
+                    b.user.username if b.user else 'Unknown',
+                    reverse('admin:bookings_booking_change', args=[b.id]),
+                    booking_service_label(b),
+                    booking_status_label(b.status),
+                )
                 for b in recent_bookings
-            ))
+            ),
+        )
+
+        context['recent_items'] = format_html(
+            (
+                '<div style="display:flex; gap:20px; margin-top:20px; flex-wrap:wrap;">'
+                '<div style="{section_style}">'
+                '<h4>Recent Blogger Requests</h4>'
+                '<ul style="{list_style}">{blogger_items}</ul>'
+                '</div>'
+                '<div style="{section_style}">'
+                '<h4>Recent Comments</h4>'
+                '<ul style="{list_style}">{comment_items}</ul>'
+                '</div>'
+                '<div style="{section_style}">'
+                '<h4>Recent Bookings</h4>'
+                '<ul style="{list_style}">{booking_items}</ul>'
+                '</div>'
+                '</div>'
+            ),
+            section_style=section_style,
+            list_style=list_style,
+            blogger_items=blogger_items,
+            comment_items=comment_items,
+            booking_items=booking_items,
         )
 
         # --- Charts data ---
         today = now().date()
-        dates = [(today - timedelta(days=i)) for i in range(6, -1, -1)]
-        labels = [d.strftime('%b %d') for d in dates]
+        dates = [today - timedelta(days=delta) for delta in range(6, -1, -1)]
+        labels = [day.strftime('%b %d') for day in dates]
 
         context['charts_data'] = {
             'labels': labels,
-            'bookings': [Booking.objects.filter(created_at__date=d).count() for d in dates],
-            'blogger_requests': [BloggerRequest.objects.filter(created_at__date=d).count() for d in dates],
-            'comments': [Comment.objects.filter(created_at__date=d).count() for d in dates],
+            'bookings': [
+                Booking.objects.filter(created_at__date=day).count()
+                for day in dates
+            ],
+            'blogger_requests': [
+                BloggerRequest.objects.filter(created_at__date=day).count()
+                for day in dates
+            ],
+            'comments': [
+                Comment.objects.filter(created_at__date=day).count()
+                for day in dates
+            ],
         }
 
         return context

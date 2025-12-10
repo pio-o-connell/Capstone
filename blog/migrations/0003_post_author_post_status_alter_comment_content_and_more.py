@@ -16,12 +16,21 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='post',
             name='author',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
             model_name='post',
             name='status',
-            field=models.CharField(choices=[('draft', 'Draft'), ('published', 'Published')], default='draft', max_length=10),
+            field=models.CharField(
+                choices=[('draft', 'Draft'), ('published', 'Published')],
+                default='draft',
+                max_length=10,
+            ),
         ),
         migrations.AlterField(
             model_name='comment',
@@ -31,6 +40,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='comment',
             name='post',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='blog.post'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to='blog.post',
+            ),
         ),
     ]

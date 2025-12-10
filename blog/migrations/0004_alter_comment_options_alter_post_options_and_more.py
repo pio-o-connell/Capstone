@@ -31,7 +31,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='comment',
             name='author',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='comments_made', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name='comments_made',
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
             model_name='post',
@@ -41,7 +47,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='post',
             name='featured_image',
-            field=cloudinary.models.CloudinaryField(default='placeholder', max_length=255, verbose_name='image'),
+            field=cloudinary.models.CloudinaryField(
+                default='placeholder',
+                max_length=255,
+                verbose_name='image',
+            ),
         ),
         migrations.AddField(
             model_name='post',
@@ -61,7 +71,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='comment',
             name='post',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='blog.post'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='comments',
+                to='blog.post',
+            ),
         ),
         migrations.AlterField(
             model_name='post',

@@ -1,7 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import BloggerProfile, BloggerRequest, CustomUser, CustomerProfile
+from .models import (
+    BloggerProfile,
+    BloggerRequest,
+    CustomUser,
+    CustomerProfile,
+    UserNotification,
+)
 
 
 @admin.action(description='Promote selected users to Bloggers')
@@ -25,9 +31,20 @@ class CustomUserAdmin(UserAdmin):
 
 
 class BloggerRequestAdmin(admin.ModelAdmin):
-    list_display = ('user', 'approved', 'created_at')
+    list_display = ('user', 'post', 'approved', 'created_at')
     list_filter = ('approved',)
-    search_fields = ('user__username', 'user__email')
+    search_fields = (
+        'user__username',
+        'user__email',
+        'post__title',
+    )
+
+
+@admin.register(UserNotification)
+class UserNotificationAdmin(admin.ModelAdmin):
+    list_display = ('user', 'message', 'delivered', 'created_at')
+    list_filter = ('delivered',)
+    search_fields = ('user__username', 'user__email', 'message')
 
 
 admin.site.register(CustomUser, CustomUserAdmin)

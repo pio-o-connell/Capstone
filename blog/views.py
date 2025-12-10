@@ -5,15 +5,32 @@ from django.http import HttpResponseNotAllowed, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib import messages
+from django.utils.text import Truncator
 
 from .models import Post, Comment
 from .forms import PostForm
+from users.models import BloggerRequest
+
+def _queue_blogger_request(user, post):
+    if not user or not user.is_authenticated:
+        return
+    if getattr(user, 'is_blogger', False):
+        return
+
+    reason = Truncator(post.content or '').chars(300)
+    BloggerRequest.objects.get_or_create(
+        user=user,
+        post=post,
+        defaults={'reason': reason},
+    )
 
 
 def _lock_post_form_status(post_form):
     if 'status' in post_form.fields:
-        post_form.fields['status'].initial = 'draft'
-        post_form.fields['status'].widget = forms.HiddenInput()
+        status_field = post_form.fields['status']
+        status_field.initial = 'draft'
+        status_field.required = False
+        status_field.widget = forms.HiddenInput()
 
 
 def post_list(request):
@@ -65,8 +82,17 @@ def start_writing(request):
     if is_blogger:
         return redirect('blogger_dashboard')
 
+    if not request.user.is_authenticated:
+        messages.info(
+            request,
+            'Please create a customer account before submitting a draft.',
+        )
+        return redirect('register')
+
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
+        form_data = request.POST.copy()
+        form_data.setdefault('status', 'draft')
+        form = PostForm(form_data, request.FILES)
         _lock_post_form_status(form)
         if form.is_valid():
             new_post = form.save(commit=False)
@@ -74,6 +100,7 @@ def start_writing(request):
                 new_post.author = request.user
             new_post.status = 'draft'
             new_post.save()
+            _queue_blogger_request(request.user, new_post)
             return render(
                 request,
                 'blog/blog_submission_confirmation.html',
@@ -302,6 +329,8 @@ def blog_edit(request, slug=None):
             if not post:
                 new_post.author = request.user
             new_post.save()
+            if not post:
+                _queue_blogger_request(request.user, new_post)
             action = 'updated' if post else 'created'
             messages.success(request, f"Post {action} successfully.")
             return redirect("blogger_dashboard")

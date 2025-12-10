@@ -184,11 +184,12 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 <details>
     <summary>Details
     </summary>
-    Similar to colour, the font should be easy to read. Thus one font is only necessary i.e. for titles, body, and a call to actiob(CTA). These were implemnted through Google Fonts using a direct import code within the style.css file.
+    Similar to colour, the font should be easy to read.<br> 
+    Thus one font i.e. Inter is only necessary i.e. for titles, body, and a call to actiob(CTA).<br>    
+    These were implemented through Google Fonts using a direct import code within the style.css file.<br>
 
-/_ Google fonts import _/ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Macondo&display=swap');
+    /_ Google fonts import _/ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Macondo&display=swap');
 
-Inter was used everywhere.
 </details>
 
 [Back To Top](#harmonia)

@@ -42,9 +42,31 @@ class BloggerProfile(models.Model):
 
 class BloggerRequest(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    post = models.ForeignKey(
+        'blog.Post',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='blogger_requests',
+    )
     reason = SummernoteTextField()
     approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return f"Blogger request by {self.user.username}"
+
+
+class UserNotification(models.Model):
+    user = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        related_name='notifications',
+    )
+    message = models.TextField()
+    delivered = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        status = 'sent' if self.delivered else 'pending'
+        return f"Notification for {self.user.username} ({status})"

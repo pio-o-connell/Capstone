@@ -7,4 +7,5 @@ class UsersConfig(AppConfig):
     name = 'users'
 
     def ready(self):
-        pass
+        # Import signal handlers when Django starts
+        from . import signals  # noqa: F401

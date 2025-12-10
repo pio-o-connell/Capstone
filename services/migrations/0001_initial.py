@@ -14,12 +14,44 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Service',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID',
+                    ),
+                ),
                 ('name', models.CharField(max_length=100)),
                 ('description', models.TextField(blank=True)),
-                ('small_price', models.DecimalField(blank=True, decimal_places=2, max_digits=7, null=True)),
-                ('medium_price', models.DecimalField(blank=True, decimal_places=2, max_digits=7, null=True)),
-                ('large_price', models.DecimalField(blank=True, decimal_places=2, max_digits=7, null=True)),
+                (
+                    'small_price',
+                    models.DecimalField(
+                        blank=True,
+                        decimal_places=2,
+                        max_digits=7,
+                        null=True,
+                    ),
+                ),
+                (
+                    'medium_price',
+                    models.DecimalField(
+                        blank=True,
+                        decimal_places=2,
+                        max_digits=7,
+                        null=True,
+                    ),
+                ),
+                (
+                    'large_price',
+                    models.DecimalField(
+                        blank=True,
+                        decimal_places=2,
+                        max_digits=7,
+                        null=True,
+                    ),
+                ),
                 ('image', models.ImageField(blank=True, upload_to='services/')),
             ],
         ),

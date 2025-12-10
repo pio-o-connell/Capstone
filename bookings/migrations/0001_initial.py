@@ -14,21 +14,52 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Booking',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID',
+                    ),
+                ),
                 ('service_name', models.CharField(max_length=200)),
                 ('date', models.DateField()),
-                ('status', models.CharField(choices=[('pending', 'Pending'), ('approved', 'Approved'), ('rejected', 'Rejected'), ('cancelled', 'Cancelled')], default='pending', max_length=10)),
+                (
+                    'status',
+                    models.CharField(
+                        choices=[
+                            ('pending', 'Pending'),
+                            ('approved', 'Approved'),
+                            ('rejected', 'Rejected'),
+                            ('cancelled', 'Cancelled'),
+                        ],
+                        default='pending',
+                        max_length=10,
+                    ),
+                ),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
             ],
         ),
         migrations.CreateModel(
             name='CartItem',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID',
+                    ),
+                ),
                 ('service_name', models.CharField(max_length=200)),
                 ('date', models.DateField()),
                 ('added_at', models.DateTimeField(auto_now_add=True)),
-                ('session_id', models.CharField(blank=True, max_length=40, null=True)),
+                (
+                    'session_id',
+                    models.CharField(blank=True, max_length=40, null=True),
+                ),
             ],
         ),
     ]

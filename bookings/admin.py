@@ -1,8 +1,9 @@
 # bookings/admin.py
 from django.contrib import admin
+
 from .models import Booking
 
-# Bookings
+
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
     list_display = ('service', 'user', 'size', 'quantity', 'date', 'status')

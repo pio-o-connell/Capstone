@@ -1,129 +1,3 @@
-# # from django.shortcuts import render, redirect
-# # from django.contrib.auth.decorators import login_required
-# # from .models import CartItem, Booking
-# # from django.utils import timezone
-
-# # # Guest: Add to session cart
-# # def add_to_cart_guest(request):
-# #     if request.method == 'POST':
-# #         cart = request.session.get('cart', [])
-# #         cart.append({
-# #             'service_name': request.POST['service_name'],
-# #             'date': request.POST['date'],
-# #         })
-# #         request.session['cart'] = cart
-# #         return redirect('view_cart_guest')
-# #     # No dedicated add_guest template exists; redirect guests to the bookings services page
-# #     return redirect('booking_services')
-
-# # def view_cart_guest(request):
-# #     cart = request.session.get('cart', [])
-# #     # Template is located under bookings/templates/booking/guest_cart.html
-# #     return render(request, 'booking/guest_cart.html', {'cart': cart})
-
-# # def confirm_guest_booking(request):
-# #     cart = request.session.get('cart', [])
-# #     for item in cart:
-# #         Booking.objects.create(
-# #             user=None,
-# #             service_name=item['service_name'],
-# #             date=item['date'],
-# #             status='pending'
-# #         )
-# #     request.session['cart'] = []
-# #     return redirect('view_cart_guest')
-
-# # # Registered users
-# # @login_required
-# # def add_to_cart(request):
-# #     if request.method == 'POST':
-# #         CartItem.objects.create(
-# #             user=request.user,
-# #             service_name=request.POST['service_name'],
-# #             date=request.POST['date']
-# #         )
-# #         return redirect('view_cart')
-# #     # No dedicated add_cart template; redirect to services landing inside bookings
-# #     return redirect('booking_services')
-
-# # @login_required
-# # def view_cart(request):
-# #     cart = CartItem.objects.filter(user=request.user)
-# #     # Template files live under bookings/templates/booking/, so render that path
-# #     return render(request, 'booking/cart.html', {'cart': cart})
-
-# # @login_required
-# # def confirm_cart(request):
-# #     cart_items = CartItem.objects.filter(user=request.user)
-# #     for item in cart_items:
-# #         Booking.objects.create(
-# #             user=request.user,
-# #             service_name=item.service_name,
-# #             date=item.date,
-# #             status='pending'
-# #         )
-# #     cart_items.delete()
-# #     return redirect('view_cart')
-
-
-# # def booking_home(request):
-# #     """Render the bookings home page."""
-# #     return render(request, 'booking/booking_home.html')
-
-
-# # def services_home(request):
-# #     """Render a copy of the services landing page inside bookings."""
-# #     return render(request, 'booking/services_home.html')
-
-# from django.shortcuts import render, redirect, get_object_or_404
-# from django.contrib.auth.decorators import login_required
-# from .models import CartItem, Booking
-# from services.models import Service  # <- import Service
-# from django.http import JsonResponse
-# import json
-
-
-# def add_to_cart_guest(request):
-#     if request.method == 'POST':
-#         service_id = request.POST.get('service_id')
-#         size = request.POST.get('size', 'small')
-#         quantity = int(request.POST.get('quantity', 1))
-#         date = request.POST.get('date')
-
-#         service = get_object_or_404(Service, id=service_id)
-
-#         cart = request.session.get('cart', [])
-#         cart.append({
-#             'service_id': service.id,
-#             'service_name': service.name,
-#             'size': size,
-#             'quantity': quantity,
-#             'date': date,
-#             'price': float(service.get_price(size))
-#         })
-#         request.session['cart'] = cart
-#         return redirect('view_cart_guest')
-
-#     return redirect('services_home')  # redirect guests to services page
-
-# def view_cart_guest(request):
-#     cart = request.session.get('cart', [])
-#     total = sum(item['price'] * item['quantity'] for item in cart)
-#     return render(request, 'booking/guest_cart.html', {'cart': cart, 'total': total})
-
-# def confirm_guest_booking(request):
-#     cart = request.session.get('cart', [])
-#     for item in cart:
-#         Booking.objects.create(
-#             user=None,
-#             service_id=item['service_id'],
-#             size=item['size'],
-#             quantity=item['quantity'],
-#             date=item['date'],
-#             status='pending'
-#         )
-#     request.session['cart'] = []
-#     return redirect('view_cart_guest')
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
@@ -226,15 +100,26 @@ def _serialize_cart(cart_items):
         price_value = float(price or 0)
         subtotal = round(price_value * item.quantity, 2)
         total += subtotal
-        items.append({
-            "id": item.id,
-            "service": service.name if service else "Service unavailable",
-            "size": item.get_size_display() if hasattr(item, "get_size_display") else item.size.title(),
-            "quantity": item.quantity,
-            "price": round(price_value, 2),
-            "subtotal": subtotal,
-            "image": service.image.url if service and service.image else None,
-        })
+        size_label = (
+            item.get_size_display()
+            if hasattr(item, "get_size_display")
+            else item.size.title()
+        )
+        image_url = None
+        if service and getattr(service, "image", None):
+            image_url = service.image.url
+
+        items.append(
+            {
+                "id": item.id,
+                "service": service.name if service else "Service unavailable",
+                "size": size_label,
+                "quantity": item.quantity,
+                "price": round(price_value, 2),
+                "subtotal": subtotal,
+                "image": image_url,
+            }
+        )
 
     return {
         "items": items,
@@ -265,7 +150,7 @@ def booking_home(request):
     """Render the bookings landing page."""
     return render(request, 'booking/booking_home.html')
 
-# Guest Cart
+
 def add_to_cart_guest(request):
     if request.method == 'POST':
         service_id = request.POST.get('service_id') or request.POST.get('service')
@@ -284,14 +169,29 @@ def add_to_cart_guest(request):
         return redirect('view_cart_guest')
     return redirect('services:services_home')
 
+
 def view_cart_guest(request):
     session_key = request.session.session_key
     if not session_key:
         cart_items = CartItem.objects.none()
     else:
-        cart_items = CartItem.objects.filter(session_id=session_key, user__isnull=True).select_related('service')
+        cart_items = (
+            CartItem.objects.filter(
+                session_id=session_key,
+                user__isnull=True,
+            )
+            .select_related('service')
+        )
     total = sum(item.total_price() for item in cart_items)
-    return render(request, 'booking/guest_cart.html', {'cart': cart_items, 'total': total})
+    return render(
+        request,
+        'booking/guest_cart.html',
+        {
+            'cart': cart_items,
+            'total': total,
+        },
+    )
+
 
 def confirm_guest_booking(request):
     if request.method != 'POST':
@@ -301,20 +201,34 @@ def confirm_guest_booking(request):
     if not session_key:
         return redirect('view_cart_guest')
 
-    cart_items = CartItem.objects.filter(session_id=session_key, user__isnull=True).select_related('service')
+    cart_items = (
+        CartItem.objects.filter(
+            session_id=session_key,
+            user__isnull=True,
+        )
+        .select_related('service')
+    )
     if not cart_items.exists():
-        return render(request, 'booking/booking_confirmation.html', {
-            'bookings': [],
-            'booking_count': 0,
-            'is_guest': True,
-        })
+        return render(
+            request,
+            'booking/booking_confirmation.html',
+            {
+                'bookings': [],
+                'booking_count': 0,
+                'is_guest': True,
+            },
+        )
 
     bookings_created = _finalize_cart_items(cart_items, user=None)
-    return render(request, 'booking/booking_confirmation.html', {
-        'bookings': bookings_created,
-        'booking_count': len(bookings_created),
-        'is_guest': True,
-    })
+    return render(
+        request,
+        'booking/booking_confirmation.html',
+        {
+            'bookings': bookings_created,
+            'booking_count': len(bookings_created),
+            'is_guest': True,
+        },
+    )
 
 
 # Registered Users
@@ -337,11 +251,13 @@ def add_to_cart(request):
         return redirect('view_cart')
     return redirect('services:services_home')
 
+
 @login_required
 def view_cart(request):
     cart_items = _cart_queryset(request)
     total = sum(item.total_price() for item in cart_items)
     return render(request, 'booking/cart.html', {'cart': cart_items, 'total': total})
+
 
 @login_required
 def confirm_cart(request):
@@ -372,7 +288,8 @@ def add_to_cart_ajax(request):
     if isinstance(raw_items, dict):
         raw_items = [raw_items]
     if not raw_items:
-        raw_items = [payload] if (payload.get("service_id") or payload.get("service_name")) else []
+        has_service = payload.get("service_id") or payload.get("service_name")
+        raw_items = [payload] if has_service else []
 
     added = 0
     for entry in raw_items:
@@ -415,11 +332,5 @@ def add_to_cart_ajax(request):
 @require_GET
 def cart_summary(request):
     """Return a lightweight JSON summary of the current cart."""
-    items = []
-    total = 0
-
-    cart_items = _cart_queryset(request)
-    summary = _serialize_cart(cart_items)
+    summary = _serialize_cart(_cart_queryset(request))
     return JsonResponse(summary)
-
-

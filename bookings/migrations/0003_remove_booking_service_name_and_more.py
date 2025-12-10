@@ -30,12 +30,24 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='booking',
             name='service',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='services.service'),
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to='services.service',
+            ),
         ),
         migrations.AddField(
             model_name='booking',
             name='size',
-            field=models.CharField(choices=[('small', 'Small'), ('medium', 'Medium'), ('large', 'Large')], default='small', max_length=10),
+            field=models.CharField(
+                choices=[
+                    ('small', 'Small'),
+                    ('medium', 'Medium'),
+                    ('large', 'Large'),
+                ],
+                default='small',
+                max_length=10,
+            ),
         ),
         migrations.AddField(
             model_name='cartitem',
@@ -45,17 +57,35 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='cartitem',
             name='service',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='services.service'),
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to='services.service',
+            ),
         ),
         migrations.AddField(
             model_name='cartitem',
             name='size',
-            field=models.CharField(choices=[('small', 'Small'), ('medium', 'Medium'), ('large', 'Large')], default='small', max_length=10),
+            field=models.CharField(
+                choices=[
+                    ('small', 'Small'),
+                    ('medium', 'Medium'),
+                    ('large', 'Large'),
+                ],
+                default='small',
+                max_length=10,
+            ),
         ),
         migrations.AlterField(
             model_name='booking',
             name='user',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='bookings', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name='bookings',
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterField(
             model_name='cartitem',
@@ -65,6 +95,12 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='cartitem',
             name='user',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='cart_items', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='cart_items',
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

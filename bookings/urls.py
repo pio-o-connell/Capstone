@@ -6,7 +6,6 @@ from .views import (
 
 urlpatterns = [
     path('', views.booking_home, name='booking_home'),
-    
     path('guest/add/', views.add_to_cart_guest, name='add_to_cart_guest'),
     path('guest/cart/', views.view_cart_guest, name='view_cart_guest'),
     path('guest/confirm/', views.confirm_guest_booking, name='confirm_guest_booking'),

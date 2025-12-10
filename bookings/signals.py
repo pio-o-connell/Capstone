@@ -1,7 +1,9 @@
 # bookings/signals.py
 from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
+
 from .models import CartItem
+
 
 @receiver(user_logged_in)
 def migrate_cart_on_login(sender, request, user, **kwargs):

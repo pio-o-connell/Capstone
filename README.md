@@ -291,7 +291,6 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
  <details>
   <summary>HTML</summary>
    The HTML was checked using the w3C markup validation service 0 errors found on home page.<br><br>
-  <img src="README-images/Testing&Validation/html-validator/AdminHomepage.png" alt="HTML W3C Results" style="width:30%;">
   <img src="README-images/Testing&Validation/html-validator/HTMLValidator-HomePage.png" alt="HTML W3C Results" style="width:30%;">
   <img src="README-images/Testing&Validation/html-validator/HTMLValidator-BlogPage.png" alt="HTML W3C Results" style="width:30%;">
   <img src="README-images/Testing&Validation/html-validator/HTMLValidator -Services.png" alt="HTML W3C Results" style="width:30%;">
@@ -315,14 +314,21 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
  <details>
   <summary>Python</summary>
    All apps were checked using Flake8 tool to comply with PEP 8 standard<br><br>
-  <img src="README-images/Testing&Validation/Pep8-using-flake8/Pep9 results .png" alt="CSS Jigsaw Results" style="width:30%;">
+  <img src="README-images/Testing&Validation/Pep8-using-flake8/Pep9 results .png" alt="PEP 8 conformance" style="width:30%;">
 </details>
 
   ### JS Validation
  <details>
   <summary>Javascript</summary>
-   All apps were checked using Flake8 tool to comply with PEP 8 standard<br><br>
-  <img src="README-images/Testing&Validation/Pep8-using-flake8/Pep9 results .png" alt="CSS Jigsaw Results" style="width:30%;">
+   All Main page was checked using JSHint tool <br>
+   JSHint conforms to configurable JavaScript rules and ECMAScript versions rather than a single standard<br>
+  <img src="README-images/Testing&Validation/JSHint/AdminPage-JSHint.jpg" alt="Javascript conformance" style="width:30%;">
+  <img src="README-images/Testing&Validation/JSHint/BlogPage-JSHinr.jpg" alt="Javascript conformance" style="width:30%;">
+  <img src="README-images/Testing&Validation/JSHint/Services-JSLint.jpg" alt="Javascript conformance" style="width:30%;">
+  <img src="README-images/Testing&Validation/JSHint/Bookings-JSHint.jpg" alt="Javascript conformance" style="width:30%;">
+  <img src="README-images/Testing&Validation/JSHint/Login-JSHint.jpg" alt="Javascript conformance" style="width:30%;">
+  <img src="README-images/Testing&Validation/JSHint/register-jshint.jpg" alt="Javascript conformance" style="width:30%;">
+
 </details>
 
 

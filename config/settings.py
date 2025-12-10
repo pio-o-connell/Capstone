@@ -60,6 +60,9 @@ if _env_path.is_file():
 else:
     DEBUG = False
 
+
+DEBUG = False
+
 # Secret key should come from env or environment variable in production
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-c8=d-b8^&45w+zkj(*2i+h)o72q!h=v%n_ahlr$3n64novxsw2')  # noqa: E501
 
@@ -134,6 +137,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'core.middleware.CustomErrorPageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 

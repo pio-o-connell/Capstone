@@ -26,19 +26,23 @@
 from django.contrib.auth.signals import user_logged_in
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .models import CustomUser, CustomerProfile, BloggerProfile, BloggerRequest
+
 from bookings.utils import migrate_guest_cart_to_user
+from .models import BloggerProfile, BloggerRequest, CustomUser, CustomerProfile
+
 
 # 1. Migrate guest cart to user on login
 @receiver(user_logged_in)
 def migrate_cart_on_login(sender, request, user, **kwargs):
     migrate_guest_cart_to_user(request, user)
 
+
 # 2. Auto-create CustomerProfile on user registration
 @receiver(post_save, sender=CustomUser)
 def create_customer_profile(sender, instance, created, **kwargs):
     if created:
         CustomerProfile.objects.create(user=instance)
+
 
 # 3. Create BloggerProfile when BloggerRequest is approved
 @receiver(post_save, sender=BloggerRequest)

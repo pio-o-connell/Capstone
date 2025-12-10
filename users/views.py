@@ -1,16 +1,16 @@
-from django.shortcuts import render
-from django.contrib.auth import get_user_model, login
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes
-from django.template.loader import render_to_string
-from django.core.mail import send_mail
-from django.contrib.sites.shortcuts import get_current_site
-from django.shortcuts import redirect
+from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
+from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
-from .forms import RegistrationForm, BloggerRequestForm
+from .forms import BloggerRequestForm, RegistrationForm
 from .models import BloggerRequest
 
 User = get_user_model()
@@ -19,9 +19,6 @@ User = get_user_model()
 # def register_view(request):
 #     # Adjust the template path to where your HTML actually is
 #      return render(request, 'registration/registration.html')
-
-
-
 
 # --------------------------
 # Register + Email verification
@@ -34,13 +31,15 @@ def register_view(request):
             user.is_active = False
             user.email_verified = False
             user.save()
-            print(f"User created: {user.username} ({user.email})")
-            print("Sending verification email...")
             send_verification_email(request, user)
-            messages.success(request, "Registration successful! Please check your email to verify your account.")
+            messages.success(
+                request,
+                (
+                    "Registration successful! Please check your email to "
+                    "verify your account."
+                ),
+            )
             return redirect("home")
-        else:
-            print(f"Form errors: {form.errors}")
     else:
         form = RegistrationForm()
     return render(request, "registration/register.html", {"form": form})
@@ -56,22 +55,26 @@ def send_verification_email(request, user):
         subject = "Verify your email address"
         message = render_to_string(
             "email/verify_email.html",
-            {"user": user, "verify_url": verify_url, "home_url": home_url}
+            {
+                "user": user,
+                "verify_url": verify_url,
+                "home_url": home_url,
+            },
         )
-        
-        from django.conf import settings
-        from_email = settings.EMAIL_HOST_USER if hasattr(settings, 'EMAIL_HOST_USER') else "noreply@example.com"
-        
+        from_email = (
+            settings.EMAIL_HOST_USER
+            if hasattr(settings, 'EMAIL_HOST_USER')
+            else "noreply@example.com"
+        )
+
         send_mail(
-            subject, 
-            message, 
-            from_email, 
-            [user.email], 
-            fail_silently=False
+            subject,
+            message,
+            from_email,
+            [user.email],
+            fail_silently=False,
         )
-        print(f"✓ Verification email sent to {user.email}")
-    except Exception as e:
-        print(f"✗ Email send failed: {str(e)}")
+    except Exception:
         raise
 
 
@@ -114,7 +117,11 @@ def resend_verification(request):
 def customer_dashboard(request):
     profile = request.user.customerprofile
     can_request_blogger = profile.approved and not request.user.is_blogger
-    return render(request, "dashboard/customer_dashboard.html", {"can_request_blogger": can_request_blogger})
+    return render(
+        request,
+        "dashboard/customer_dashboard.html",
+        {"can_request_blogger": can_request_blogger},
+    )
 
 
 # --------------------------
@@ -124,13 +131,19 @@ def customer_dashboard(request):
 def submit_blogger_request(request):
     profile = request.user.customerprofile
     if not profile.approved:
-        messages.error(request, "You must be an approved customer to request blogger access.")
+        messages.error(
+            request,
+            "You must be an approved customer to request blogger access.",
+        )
         return redirect("customer_dashboard")
 
     if request.method == "POST":
         form = BloggerRequestForm(request.POST)
         if form.is_valid():
-            BloggerRequest.objects.create(user=request.user, reason=form.cleaned_data["reason"])
+            BloggerRequest.objects.create(
+                user=request.user,
+                reason=form.cleaned_data["reason"],
+            )
             messages.success(request, "Your blogger request has been submitted.")
             return redirect("customer_dashboard")
     else:

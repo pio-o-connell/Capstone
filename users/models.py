@@ -1,9 +1,9 @@
-
 # users/models.py
 from django.contrib.auth.models import AbstractUser, Group
 from django.db import models
 from cloudinary.models import CloudinaryField
 from django_summernote.fields import SummernoteTextField
+
 
 class CustomUser(AbstractUser):
     is_customer = models.BooleanField(default=True)
@@ -38,6 +38,7 @@ class BloggerProfile(models.Model):
 
     def __str__(self):
         return f"BloggerProfile for {self.user.username}"
+
 
 class BloggerRequest(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

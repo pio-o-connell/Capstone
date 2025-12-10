@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser, BloggerRequest
+
+from .models import BloggerRequest, CustomUser
+
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)

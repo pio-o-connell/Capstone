@@ -42,12 +42,12 @@ The temporary live project can be found here: <a href="https://pio-o-connell.git
     - [CSS Validation](#css-validation)
     - [Python Validation](#python-validation)
     - [JS Validation](#js-validation)
+    - [Lighthouse](#lighthouse)
   - [AI Implementation](#ai-implementation)
   - [Database](#database)
   - [References](#references)
   - [Tech Employed](#tech-employed)
   - [Learning Points](#learning-points)
-    - [Lighthouse](#lighthouse)
     - [Wave](#wave)
     - [Unit Testing Scripting](#unit-testing-scripting)
     - [Harmonia Application Testing Matrix](#harmonia-application-testing-matrix)
@@ -399,26 +399,20 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 ---
 
 
-  
-
   ### HTML Validation
  <details>
-  <summary>HTML</summary>
+  <summary>Details</summary>
    The HTML was checked using the w3C markup validation service 0 errors found on home page.<br><br>
   <img src="README-images/Testing&Validation/html-validator/HTMLValidator-HomePage.png" alt="HTML W3C Results" style="width:30%;">
   <img src="README-images/Testing&Validation/html-validator/HTMLValidator-BlogPage.png" alt="HTML W3C Results" style="width:30%;">
   <img src="README-images/Testing&Validation/html-validator/HTMLValidator -Services.png" alt="HTML W3C Results" style="width:30%;">
   <img src="README-images/Testing&Validation/html-validator/HTMLValidator-Bookings.png" alt="HTML W3C Results"" style="width:30%;">
   <img src="README-images/Testing&Validation/html-validator/HTMLValidator-Register.png" alt="HTML W3C Results" style="width:30%;">
-  
 </details>
 
-  
-
   ### CSS Validation
-  
 <details>
-  <summary>CSS</summary>
+  <summary>Details</summary>
   The CSS was checked using the W3C validation service 0 errors found (only vendor-prefix warnings for `-ms-flexbox`, `-webkit`, etc.).<br>
   <img src="README-images/Testing&Validation/CSS/HomePage-stylesheet.png" alt="CSS Jigsaw Results" style="width:30%;">
 </details>
@@ -426,14 +420,14 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
   ### Python Validation
  
  <details>
-  <summary>Python</summary>
+  <summary>Details</summary>
    All apps were checked using Flake8 tool to comply with PEP 8 standard<br><br>
   <img src="README-images/Testing&Validation/Pep8-using-flake8/Pep9 results .png" alt="PEP 8 conformance" style="width:30%;">
 </details>
 
   ### JS Validation
  <details>
-  <summary>Javascript</summary>
+  <summary>Details</summary>
    All Main page was checked using JSHint tool <br>
    JSHint conforms to configurable JavaScript rules and ECMAScript versions rather than a single standard<br>
   <img src="README-images/Testing&Validation/JSHint/AdminPage-JSHint.jpg" alt="Javascript conformance" style="width:30%;">
@@ -442,10 +436,21 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
   <img src="README-images/Testing&Validation/JSHint/Bookings-JSHint.jpg" alt="Javascript conformance" style="width:30%;">
   <img src="README-images/Testing&Validation/JSHint/Login-JSHint.jpg" alt="Javascript conformance" style="width:30%;">
   <img src="README-images/Testing&Validation/JSHint/register-jshint.jpg" alt="Javascript conformance" style="width:30%;">
+ </details>
 
+ ### Lighthouse
+
+<details>
+  <summary>Details</summary>
+  <img src="README-images/Testing&Validation/Lighthouse/MainPage-LighthouseResults.jpg" alt="Lighhouse Results" style="width:40%;">
+  <img src="README-images/Testing&Validation/Lighthouse/BlogPage-Lighthouse-Results.jpg" alt="Lighhouse Results" style="width:40%;">
+  <img src="README-images/Testing&Validation/Lighthouse/BlogPageCard-LighthouseResults.jpg" alt="Lighhouse Results" style="width:40%;">
+  <img src="README-images/Testing&Validation/Lighthouse/Services-LightHouseResults.jpg" alt="Lighhouse Results" style="width:40%;">
+  <img src="README-images/Testing&Validation/Lighthouse/Bookings-LighthouseResults.jpg" alt="Lighhouse Results" style="width:40%;">
+  <img src="README-images/Testing&Validation/Lighthouse/Register-LighthoouseResults.jpg" alt="Lighhouse Results" style="width:40%;">
+  <img src="README-images/Testing&Validation/Lighthouse/Dashboard-LightHouseReport.jpg" alt="Lighhouse Results" style="width:40%;"> <br><br>
+   All apps were checked using Lighthous4etool to comply with PEP 8 standard<br><br>
 </details>
-
-
 
 [Back To Top](#harmonia)
 
@@ -475,12 +480,11 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 <details>
     <summary>Details
     </summary>
-    The database is a Postgres database hosted by Code institute
-
-    ![alt text](documentation\images\databaseImage.png)
-  <img src="documentation\images\databaseImage.png" alt="Colour contrast results" style="width:40%;">
-   
+    <img src="documentation\images\databaseImage.png" alt="HTML W3C Results" style="width:40%;"><br>
+    The database is a Postgres database hosted by Code institute <br><br>
 </details>
+
+
 
 
 [Back To Top](#harmonia)
@@ -569,7 +573,6 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 
 
   
-  ### Lighthouse
   ### Wave
   ### Unit Testing Scripting
   ### Harmonia Application Testing Matrix

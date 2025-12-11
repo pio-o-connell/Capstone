@@ -116,22 +116,56 @@
     <script>
     (function(){
         var storageKey = 'site_session';
+        var cookieName = 'site_session_id';
         function makeId(){
             try{ if(window.crypto && crypto.randomUUID) return crypto.randomUUID(); }catch(e){}
             return 's-' + Math.random().toString(36).slice(2,12);
         }
         function nowISO(){ return new Date().toISOString(); }
+        function readCookie(name){
+            if(!document || !document.cookie) return null;
+            try{
+                var parts = document.cookie.split(';');
+                for(var i=0; i<parts.length; i++){
+                    var part = parts[i].trim();
+                    if(part.indexOf(name + '=') === 0){
+                        return decodeURIComponent(part.substring(name.length + 1));
+                    }
+                }
+            }catch(e){}
+            return null;
+        }
+        function syncCookie(id){
+            if(!id || typeof document === 'undefined') return;
+            var existing = readCookie(cookieName);
+            if(existing === id) return;
+            var maxAge = 60 * 60 * 24 * 365; // 1 year
+            try{
+                document.cookie = cookieName + '=' + encodeURIComponent(id) + '; path=/; max-age=' + maxAge + '; SameSite=Lax';
+            }catch(e){}
+        }
 
         var isAuthenticated = {{ user.is_authenticated|yesno:"true,false" }};
 
         var sess = null;
         try{ sess = JSON.parse(localStorage.getItem(storageKey) || 'null'); }catch(e){ sess = null; }
 
+        // If a cookie exists but localStorage was cleared, restore it so we stay consistent.
+        if(!sess && !isAuthenticated){
+            var cookieSession = readCookie(cookieName);
+            if(cookieSession){
+                sess = { id: cookieSession, created_at: nowISO() };
+            }
+        }
+
         // Ensure a persistent site_session exists for anonymous visitors only.
-        // Create one if missing and the user is not authenticated.
         if(!sess && !isAuthenticated){
             sess = { id: makeId(), created_at: nowISO() };
+        }
+
+        if(sess && !isAuthenticated){
             try{ localStorage.setItem(storageKey, JSON.stringify(sess)); }catch(e){}
+            syncCookie(sess.id);
         }
 
         // Expose to other scripts. If no session (e.g. logged-in user), these will be null.

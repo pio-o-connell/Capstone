@@ -31,6 +31,10 @@ The temporary live project can be found here: <a href="https://pio-o-connell.git
     - [Register](#register)
     - [Logout](#logout)
     - [Blog CRUD](#blog-crud)
+    - [Comment CRUD](#comment-crud)
+    - [Services \\ Add To Cart](#services--add-to-cart)
+    - [Booking](#booking)
+    - [Administrator Page](#administrator-page)
   - [Improvements](#improvements)
   - [Deployment](#deployment)
   - [Testing and Validation](#testing-and-validation)
@@ -283,22 +287,65 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 ### Blog CRUD
 <details>
   <summary>Blog Page</summary>
-  A guest becomes a blogger by firstly submitting a test blog, <br>
-  After creating the test blog, and to submit the guest must register as a registered customer <br>
+  A guest can create a blog by firstly submitting a test blog, <br>
+  After creating the test blog, and to submit for approval the guest must register as a registered customer <br>
   There is no onus to purchase anything.<br>
   Subsequently if administrator approves, a customer becomes a registered blogger <br><br>
+  A customer can create a blog but again requires Administrator approval before it is displayed <br>
+  An administrator can (create,edit,delet) a blog<br>
+  Only the admin can delete any blog, a blogger may (create,edit,delete) their own blogs <br>
 
   <img src="README-images/Features/BlogPage-Guest.jpg" alt="Guest\Customer Blog Page" style="width:30%;">
   <img src="README-images/Features/BlogPageBlogger.jpg" alt="Blogger Page" style="width:30%;">
   <img src="README-images/Features/MyBlogPostsBlogger.jpg" alt="Logged Out home page image" style="width:30%;">
 </details>
 
+### Comment CRUD
+<details>
+  <summary>Comment Page</summary>
+  A guest can comment (create,edit,delete) on their comments  <br>
+  A customer,fellow blogger and indeed the Admin can comment(create,edit,delete) on the blogs.<br>
+   <br><br>
 
+  <img src="README-images/Features/GuestAddCommentBefore.jpg" alt="Guest\Customer Blog Page" style="width:30%;">
+  <img src="README-images/Features/GuestAddcommentAfter.jpg" alt="Blogger Page" style="width:30%;">
+  <img src="README-images/Features/RegisteredAddComment.jpg" alt="Logged Out home page image" style="width:30%;">
+</details>
 
+### Services \ Add To Cart
+<details>
+  <summary>Services</summary>
+  A guest, customer,blogger and admin can add 4 types of services to the cart  <br>
+   <br><br>
 
+  <img src="README-images/Features/Services-guest.jpg" alt="Guest Service Page" style="width:30%;">
+  <img src="README-images/Features/Services-Shoppingcart-Guest.jpg" alt="Guest Services with shopping cart Page" style="width:30%;">
+  <img src="README-images/Features/Services-Cart-Customer.jpg" alt="Customer Services with shopping cart" style="width:30%;">
+</details>
 
+### Booking
+<details>
+  <summary>Booking</summary>
+  A guest, customer,blogger and admin perform a booking  <br>
+  The guest will have to become a customer before the booking is complete >br> 
+   <br><br>
 
+  <img src="README-images/Features/BookingServicesGuest.jpg" alt="Guest completes transaction" style="width:40%;">
+  <img src="README-images/Features/BookingCompleteGuest.jpg" alt="Guest confirmation" style="width:40%;">
+  <img src="README-images/Features/BookingCustomer.jpg" alt="Customer completes transaction" style="width:40%;">
+  <img src="README-images/Features/BookingCompleteCustomer.jpg" alt="Customer confirmation" style="width:40%;">
+</details>
 
+### Administrator Page
+<details>
+  <summary>Administation</summary>
+  Administaror can monitor users, blogs & comments, services & bookings <br>
+  This is veru useful for monitoring the site
+
+  <img src="README-images/Features/AdminScreen.jpg" alt="Guest completes transaction" style="width:30%;">
+  <img src="README-images/Features/AdminDashboard1.jpg" alt="Guest confirmation" style="width:60%;">
+  
+</details>
 
 
 

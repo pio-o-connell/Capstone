@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseNotAllowed, HttpResponseForbidden
@@ -10,6 +11,9 @@ from django.utils.text import Truncator
 from .models import Post, Comment
 from .forms import PostForm
 from users.models import BloggerRequest
+
+SITE_SESSION_COOKIE = 'site_session_id'
+SITE_SESSION_COOKIE_MAX_AGE = 60 * 60 * 24 * 365  # 1 year
 
 def _queue_blogger_request(user, post):
     if not user or not user.is_authenticated:
@@ -31,6 +35,70 @@ def _lock_post_form_status(post_form):
         status_field.initial = 'draft'
         status_field.required = False
         status_field.widget = forms.HiddenInput()
+
+
+def _ensure_session_key(request):
+    """Guarantee the request has a usable session key and return it."""
+    session_key = request.session.session_key
+    if not session_key:
+        request.session.save()
+        session_key = request.session.session_key
+    return session_key
+
+
+def _get_site_session_cookie(request):
+    return request.COOKIES.get(SITE_SESSION_COOKIE)
+
+
+def _set_site_session_cookie(response, session_token):
+    if not session_token:
+        return response
+    response.set_cookie(
+        SITE_SESSION_COOKIE,
+        session_token,
+        max_age=SITE_SESSION_COOKIE_MAX_AGE,
+        samesite='Lax',
+        secure=getattr(settings, 'SESSION_COOKIE_SECURE', False),
+    )
+    return response
+
+
+def _guest_session_tokens(request):
+    tokens = []
+    cookie_token = _get_site_session_cookie(request)
+    if cookie_token:
+        tokens.append(cookie_token)
+
+    session_key = request.session.session_key
+    if not session_key:
+        session_key = _ensure_session_key(request)
+    if session_key:
+        tokens.append(session_key)
+
+    if request.method == 'POST':
+        anon_field = request.POST.get('anon_session_id')
+    else:
+        anon_field = request.GET.get('anon_session_id')
+    if anon_field:
+        tokens.append(anon_field)
+
+    return [token for token in tokens if token]
+
+
+def _can_manage_comment(request, comment):
+    """
+    Determine whether the current request is allowed to edit/delete the comment.
+    Authenticated users can manage their own comments (or any comment if staff).
+    Guests can manage comments tied to their session key.
+    """
+    if request.user.is_authenticated:
+        return request.user.is_staff or comment.author == request.user
+
+    if not comment.session_id:
+        return False
+
+    session_tokens = _guest_session_tokens(request)
+    return any(comment.session_id == token for token in session_tokens)
 
 
 def post_list(request):
@@ -130,6 +198,15 @@ def post_detail(request, slug):
         status='published',
     )
 
+    session_key = request.session.session_key
+    if not session_key:
+        session_key = _ensure_session_key(request)
+
+    site_session_cookie = _get_site_session_cookie(request)
+    guest_session_id = None
+    if not request.user.is_authenticated:
+        guest_session_id = site_session_cookie or session_key
+
     if request.method == 'POST':
         action = request.POST.get('action', 'add_comment')
         if action == 'add_comment':
@@ -147,40 +224,61 @@ def post_detail(request, slug):
                 )
                 if request.user.is_authenticated:
                     comment.author = request.user
-                    comment.approved = True
-                else:
-                    comment.approved = False
+                comment.approved = True
 
-                if anon_session and hasattr(comment, 'anon_session_id'):
-                    setattr(comment, 'anon_session_id', anon_session)
+                if request.user.is_authenticated:
+                    session_identifier = session_key
+                else:
+                    session_identifier = (
+                        anon_session
+                        or site_session_cookie
+                        or session_key
+                    )
+                if session_identifier and hasattr(comment, 'session_id'):
+                    comment.session_id = session_identifier
 
                 comment.save()
 
                 is_xhr = (
                     request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
                 )
+                if not request.user.is_authenticated:
+                    guest_session_id = session_identifier or guest_session_id
+
                 if is_xhr:
-                    return render(
+                    response = render(
                         request,
                         'blog/_comment_item.html',
                         {
                             'comment': comment,
                             'post': post,
                             'user': request.user,
+                            'guest_session_id': guest_session_id,
                         },
                     )
+                else:
+                    response = redirect(post.get_absolute_url() + '#comments')
 
-                return redirect(post.get_absolute_url() + '#comments')
+                if not request.user.is_authenticated:
+                    response = _set_site_session_cookie(response, guest_session_id)
+                return response
 
     comments = post.comments.filter(approved=True).order_by('-created_at')
-    return render(
+    response = render(
         request,
         'blog/post_detail.html',
         {
             'post': post,
             'comments': comments,
+            'guest_session_id': guest_session_id,
         },
     )
+    if not request.user.is_authenticated:
+        response = _set_site_session_cookie(
+            response,
+            guest_session_id or site_session_cookie or session_key,
+        )
+    return response
 
 
 def comment_edit(request, slug, pk):
@@ -190,11 +288,7 @@ def comment_edit(request, slug, pk):
         status='published',
     )
     comment = get_object_or_404(Comment, pk=pk, post=post)
-    user = request.user
-    if not (
-        user.is_authenticated
-        and (comment.author == user or user.is_staff)
-    ):
+    if not _can_manage_comment(request, comment):
         return HttpResponseForbidden(
             'You do not have permission to edit this comment.',
         )
@@ -203,8 +297,6 @@ def comment_edit(request, slug, pk):
         content = request.POST.get('content', '').strip()
         if content:
             comment.content = content
-            if not user.is_staff:
-                comment.approved = False
             comment.save()
         try:
             anchor = f"{post.get_absolute_url()}#comment-{comment.pk}"
@@ -232,11 +324,7 @@ def comment_delete(request, slug, pk):
     if request.method != 'POST':
         return HttpResponseNotAllowed(['POST'])
 
-    user = request.user
-    if not (
-        user.is_authenticated
-        and (comment.author == user or user.is_staff)
-    ):
+    if not _can_manage_comment(request, comment):
         return HttpResponseForbidden(
             'You do not have permission to delete this comment.',
         )

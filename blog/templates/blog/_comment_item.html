@@ -15,7 +15,10 @@
     {# approval notice removed: do not show "awaiting approval" text #}
 
     <div class="mt-2">
-        {% if user.is_authenticated and comment.author == user %}
+        {% if user.is_staff or user.is_authenticated and comment.author == user %}
+            <button class="btn btn-delete" comment_id="{{ comment.pk }}" data-delete-url="{% url 'comment_delete' post.slug comment.pk %}">Delete</button>
+            <button class="btn btn-edit" type="button" data-edit-url="{% url 'comment_edit' post.slug comment.pk %}" data-comment-pk="{{ comment.pk }}" onclick="startEdit('{{ comment.pk }}', this.getAttribute('data-edit-url'))">Edit</button>
+        {% elif not user.is_authenticated and guest_session_id and comment.session_id == guest_session_id %}
             <button class="btn btn-delete" comment_id="{{ comment.pk }}" data-delete-url="{% url 'comment_delete' post.slug comment.pk %}">Delete</button>
             <button class="btn btn-edit" type="button" data-edit-url="{% url 'comment_edit' post.slug comment.pk %}" data-comment-pk="{{ comment.pk }}" onclick="startEdit('{{ comment.pk }}', this.getAttribute('data-edit-url'))">Edit</button>
         {% endif %}

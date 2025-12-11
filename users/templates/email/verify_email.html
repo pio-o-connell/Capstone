@@ -1,7 +1,15 @@
-Hello {{ user.username }},
+<p>Hello {{ user.username }},</p>
 
-Please verify your account by visiting our homepage through the link below:
+<p>
+	Please verify your account by clicking the secure link below. Once verified,
+	you will be redirected back to Harmonia.
+</p>
 
-<a href="{{ verify_url }}">{{ home_url }}</a>
+<p>
+	<a href="{{ verify_url }}">{{ verify_url }}</a>
+</p>
 
-If you did not register, simply ignore this email.
+<p>
+	If you did not register for Harmonia, you can safely ignore this email,
+	or visit our homepage here: <a href="{{ home_url }}">{{ home_url }}</a>.
+</p>

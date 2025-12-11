@@ -8,6 +8,7 @@ from django.core.mail import send_mail
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
+from django.utils.html import strip_tags
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 from .forms import BloggerRequestForm, RegistrationForm
@@ -53,7 +54,7 @@ def send_verification_email(request, user):
         verify_url = f"http://{domain}/users/verify/{uid}/{token}/"
         home_url = f"http://{domain}/"
         subject = "Verify your email address"
-        message = render_to_string(
+        html_message = render_to_string(
             "email/verify_email.html",
             {
                 "user": user,
@@ -61,6 +62,7 @@ def send_verification_email(request, user):
                 "home_url": home_url,
             },
         )
+        plain_message = strip_tags(html_message)
         from_email = (
             settings.EMAIL_HOST_USER
             if hasattr(settings, 'EMAIL_HOST_USER')
@@ -69,10 +71,11 @@ def send_verification_email(request, user):
 
         send_mail(
             subject,
-            message,
+            plain_message,
             from_email,
             [user.email],
             fail_silently=False,
+            html_message=html_message,
         )
     except Exception:
         raise

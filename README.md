@@ -1,6 +1,8 @@
 # Harmonia
 
-<img src="Main-page.jpg" alt="Home page image" style="width:60%;">
+<img src="README-images/Features/HomePage-Part1.jpg" alt="Home page image" style="width:60%;">
+<img src="README-images/Features/HomePage-Part2.jpg" alt="Home page image" style="width:60%;">
+
 
 ## OverView
 <hr>
@@ -24,6 +26,11 @@ The temporary live project can be found here: <a href="https://pio-o-connell.git
     - [Colour Scheme](#colour-scheme)
     - [Fonts](#fonts)
   - [Features](#features)
+    - [Landing page](#landing-page)
+    - [Login](#login)
+    - [Register](#register)
+    - [Logout](#logout)
+    - [Blog CRUD](#blog-crud)
   - [Improvements](#improvements)
   - [Deployment](#deployment)
   - [Testing and Validation](#testing-and-validation)
@@ -239,6 +246,66 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 
 
 </details><br>
+
+ ### Landing page
+<details>
+  <summary>Home Page</summary>
+  There is a fold in the page by design <br>
+  <img src="README-images/Features/HomePage-Part1.jpg" alt="Home page image" style="width:40%;">
+  <img src="README-images/Features/HomePage-Part2.jpg" alt="Home page image" style="width:40%;">
+</details>
+
+
+ ### Login
+<details>
+  <summary>Login Page</summary>
+  Login Page - There are four  types of user Admin, Customer, Blogger and Guests can browse <br><br>
+  <img src="README-images/Features/CustomerLogin.jpg" alt="Login page image" style="width:40%;">
+  <img src="README-images/Features/AdminScreen.jpg" alt="Login page image" style="width:40%;">
+</details>
+
+### Register
+<details>
+  <summary>Registration Page</summary>
+  Login Page - A guest becomes a customer then a blogger after submitting a blog <br><br>
+  <img src="README-images/Features/RegistrationPage.jpg" alt="Register page image" style="width:40%;">
+  <img src="README-images/Features/email-sent.jpg" alt="Email page image" style="width:40%;">
+</details>
+
+### Logout
+<details>
+  <summary>Registration Page</summary>
+  Login Page - Confirmation Logged out return to home page <br><br>
+  <img src="README-images/Features/LoggedOut.jpg" alt="Guest\Customer Blog Page" style="width:30%;">
+ 
+</details>
+
+### Blog CRUD
+<details>
+  <summary>Blog Page</summary>
+  A guest becomes a blogger by firstly submitting a test blog, <br>
+  After creating the test blog, and to submit the guest must register as a registered customer <br>
+  There is no onus to purchase anything.<br>
+  Subsequently if administrator approves, a customer becomes a registered blogger <br><br>
+
+  <img src="README-images/Features/BlogPage-Guest.jpg" alt="Guest\Customer Blog Page" style="width:30%;">
+  <img src="README-images/Features/BlogPageBlogger.jpg" alt="Blogger Page" style="width:30%;">
+  <img src="README-images/Features/MyBlogPostsBlogger.jpg" alt="Logged Out home page image" style="width:30%;">
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 [Back To Top](#harmonia)
 

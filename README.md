@@ -27,6 +27,7 @@ The  live project can be found here: <a href="https://harmonia2-26315d699cf1.her
     - [Colour Scheme](#colour-scheme)
     - [Fonts](#fonts)
   - [Features](#features)
+    - [Responsivity](#responsivity)
   - [Improvements](#improvements)
   - [Deployment](#deployment)
   - [Testing and Validation](#testing-and-validation)
@@ -36,7 +37,6 @@ The  live project can be found here: <a href="https://harmonia2-26315d699cf1.her
       - [JS Validation](#js-validation)
       - [Lighthouse](#lighthouse)
       - [Automated Testing](#automated-testing)
-      - [Automated Testing](#automated-testing-1)
       - [Manual Testing](#manual-testing)
   - [AI Implementation](#ai-implementation)
     - [Code Creation](#code-creation)
@@ -227,6 +227,8 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 </details>
 
 
+
+
 ### Fonts
 <details>
   <summary>Details</summary>
@@ -373,6 +375,136 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 
 [Back To Top](#harmonia)
 
+### Responsivity 
+--- 
+<details>
+  <summary>Details</summary>
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Home Page</summary>
+      <br>
+      <img src="README-images/Responsiveness/Home-page/320px584px/320px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Home-page/375px/375px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Home-page/425px/425px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Home-page/768px/768px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Home-page/1024px/1024px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Home-page/1440px/1440px.jpg" alt="Home page image" width="25%">
+    </details>
+  </div>
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Guest or Customer Blog Page</summary>
+      <br>
+      <img src="README-images/Responsiveness/Blog-Page-Guest/320px584px/320px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Blog-Page-Guest/375px/375px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Blog-Page-Guest/425px/425px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Blog-Page-Guest/768px/768.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Blog-Page-Guest/1024px/1024px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Blog-Page-Guest/1440px/1440px.jpg" alt="Home page image" width="25%">
+    </details>
+  </div>
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Blogger Blog Page</summary>
+      <br>
+      <img src="README-images/Responsiveness/Blog-Page-Blogger/320px584px/320px.jpg " alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Blog-Page-Blogger/375px/375px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Blog-Page-Blogger/425px/425px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Blog-Page-Blogger/768px/768px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Blog-Page-Blogger/1024px/1024px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Blog-Page-Blogger/1440px/1440px.jpg" alt="Home page image" width="25%">
+    </details>
+  </div>
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Blogger DashBoard</summary>
+      <br>
+      <img src="README-images/Responsiveness/BlogPage-Dashboard/320px584px/320px.jpg " alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/BlogPage-Dashboard/375px/375px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/BlogPage-Dashboard/425px/425px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/BlogPage-Dashboard/768px/768px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/BlogPage-Dashboard/1024px/1024px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/BlogPage-Dashboard/1440px/1440px.jpg" alt="Home page image" width="25%">
+    </details>
+  </div>
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Services</summary>
+      <br>
+      <img src="README-images/Responsiveness/Services-Page-Guest/320px584px/320px-1.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Services-Page-Guest/375px/375px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Services-Page-Guest/425px/425px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Services-Page-Guest/768px/768px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Services-Page-Guest/1024px/1024px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Services-Page-Guest/1440px/1440px.jpg" alt="Home page image" width="25%">
+    </details>
+  </div>
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Bookings (as a guest) </summary>
+      <br>
+      <img src="README-images/Responsiveness/BookingPage-guest/320px584px/320px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/BookingPage-guest/375px/375px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/BookingPage-guest/425px/425px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/BookingPage-guest/768px/768px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/BookingPage-guest/1024px/1024px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/BookingPage-guest/1440px/1440px.jpg" alt="Home page image" width="25%">
+    </details>
+  </div>
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Bookings (as a customer) </summary>
+      <br>
+      <img src="README-images/Responsiveness/Bookings-Page-registered/320px584px/320px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Bookings-Page-registered/375px/375px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Bookings-Page-registered/425px/425px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Bookings-Page-registered/768px/768px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Bookings-Page-registered/1024px/1024px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Bookings-Page-registered/1440px/1440px.jpg" alt="Home page image" width="25%">
+    </details>
+  </div>
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Register (as a customer) </summary>
+      <br>
+      <img src="README-images/Responsiveness/Register-as-customer/320px584px/320px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Register-as-customer/375px/375px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Register-as-customer/425px/425px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Register-as-customer/768px/768px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Register-as-customer/1024px/1024px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Register-as-customer/1440px/1440px.jpg" alt="Home page image" width="25%">
+    </details>
+  </div>
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Register (as a blogger) </summary>
+      <br>
+      <img src="README-images/Responsiveness/Register-as-blogger/First page/320px584px/320px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Register-as-blogger/First page/375px/375px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Register-as-blogger/First page/425px/425px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Register-as-blogger/First page/768px/768.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Register-as-blogger/First page/1024px/1024px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Register-as-blogger/First page/1440px/1440px.jpg" alt="Home page image" width="25%">
+    </details>
+  </div>
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Admin </summary>
+      <br>
+      <img src="README-images/Responsiveness/Admin/320px584px/320px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Admin/375px/375px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Admin/425px/425px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Admin/768px/768px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Admin/1024px/1024px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Admin/1440px/1440.jpg" alt="Home page image" width="25%">
+    </details>
+  </div>
+
+
+</details>
+<br>
+
+[Back To Top](#harmonia)
 
 ## Improvements
 --- 
@@ -489,21 +621,6 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
     <img src="README-images/Testing&Validation/Lighthouse/Dashboard-LightHouseReport.jpg" alt="Lighthouse Results" style="width:40%;">
     <br><br>
     <p>All apps were checked using Lighthouse tool to comply with best practices and performance standards.</p>
-  </div>
-</details>
-
-#### Automated Testing 
-<details>
-  <summary>Details</summary>
-  <div style="margin-left: 20px;">
-  A lot of scripting was employed to generate data for the tables , 
-  These are located at both the  .\DB-scripts and .\scripts folder, notably 
-    python DB-scripts\create-postgres-users.py
-    python DB-scripts\create-postgres-post_comments_v2.py --posts-per-blogger 2 ...
-    python scripts\populate_services.py
-    python scripts\populate_bookings.py
-
-  It was also verified after tables creation using verify-users.py and verify_post_comments
   </div>
 </details>
 

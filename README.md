@@ -662,10 +662,10 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
     <p>A number of Python scripts were used to automatically generate large amounts of test data for the database. These scripts are located in the <code>DB-scripts</code> and <code>scripts</code> folders.</p>
     <p><strong>Data generation scripts:</strong></p>
     <ul>
-        python DB-scripts/create-postgres-users.py
-        python DB-scripts/create-postgres-post_comments_v2.py --posts-per-blogger 2 ...
-        python scripts/populate_services.py
-        python scripts/populate_bookings.py
+        python DB-scripts/create-postgres-users.py<br>
+        python DB-scripts/create-postgres-post_comments_v2.py --posts-per-blogger 2 <br>
+        python scripts/populate_services.py<br>
+        python scripts/populate_bookings.py<br>
     </ul>
     <p><strong>Verification scripts:</strong></p>
     <ul>

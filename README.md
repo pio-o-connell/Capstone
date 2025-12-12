@@ -4,22 +4,33 @@
 <img src="README-images/Features/HomePage-Part2.jpg" alt="Home page image" style="width:60%;">
 
 
-## OverView
-<hr>
+## Overview
+---
 
-"Harmonia" is my capstone assessed portfolio project, developed as part of the Code Institute Full Stack Software Developer Bootcamp. 
-This project showcases my skills in HTML5, CSS3, Bootstrap and Python with augmented AI to create a responsive, accessible website to -
- 1. Promoting chemical free gardening and services available locally.
- 2. A blog containing tips aimed at both amateur and professional to foster better practices and behaviours. 
-  The name Harmonia is actually co-pilot inspired.
- 3. Booking Services offered complete with costings 
+# Harmonia – Capstone Project
 
-The  live project can be found here: <a href="https://harmonia2-26315d699cf1.herokuapp.com/"> Harmonia</a>
+**Project Overview:**  
+"Harmonia" is my capstone assessed portfolio project, developed as part of the **Code Institute Full Stack Software Developer Bootcamp**. This project demonstrates my skills in **HTML5, CSS3, Bootstrap, and Python**, along with **augmented AI**, to create a **responsive and accessible website**.  
+
+**Project Purpose:**  
+- **Promote chemical-free gardening** and showcase locally available gardening services.  
+- Provide a **blog with tips and guidance** for both amateur and professional gardeners, fostering better practices and sustainable behaviors.  
+- Offer a **booking system** for services, complete with costings and user-friendly interaction.  
+
+**Project Highlights:**  
+- The name **Harmonia** was inspired by **GitHub Copilot**, reflecting the harmony between technology and user experience.  
+- Integration of **augmented AI tools** to enhance development speed and functionality.  
+- Fully **responsive design** with attention to accessibility and user experience.  
+
+**Live Project:** [Harmonia](#)  
+
+
 
 <h2 align="center" id="TOC">Index</h2>
 
 - [Harmonia](#harmonia)
-  - [OverView](#overview)
+  - [Overview](#overview)
+- [Harmonia – Capstone Project](#harmonia--capstone-project)
   - [UX Design Process](#ux-design-process)
     - [Project Board](#project-board)
     - [User Stories](#user-stories)
@@ -38,6 +49,7 @@ The  live project can be found here: <a href="https://harmonia2-26315d699cf1.her
       - [Lighthouse](#lighthouse)
       - [Automated Testing](#automated-testing)
       - [Manual Testing](#manual-testing)
+- [Manual Testing](#manual-testing-1)
   - [AI Implementation](#ai-implementation)
     - [Code Creation](#code-creation)
     - [Debugging](#debugging)
@@ -47,9 +59,6 @@ The  live project can be found here: <a href="https://harmonia2-26315d699cf1.her
   - [References](#references)
   - [Tech Employed](#tech-employed)
   - [Learning Points](#learning-points)
-    - [Wave](#wave)
-    - [Unit Testing Scripting](#unit-testing-scripting)
-    - [Harmonia Application Testing Matrix](#harmonia-application-testing-matrix)
 
 ## UX Design Process
 ---
@@ -258,7 +267,7 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
     <details>
       <summary>Home Page</summary>
       There is a fold in the page by design.  
-      <br>
+      <br><br>
       <img src="README-images/Features/HomePage-Part1.jpg" alt="Home page image" width="40%">
       <img src="README-images/Features/HomePage-Part2.jpg" alt="Home page image" width="40%">
     </details>
@@ -489,6 +498,18 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
   </div>
   <div style="margin-left: 20px;">
     <details>
+      <summary>Register (as a blogger) - Part 2 </summary>
+      <br>
+      <img src="README-images/Responsiveness/Register-as-blogger/First page/320px584px/2ndpart-320px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Register-as-blogger/First page/375px/2ndpart-375px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Register-as-blogger/First page/425px/2bdpart-425px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Register-as-blogger/First page/768px/2ndpart-768px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Register-as-blogger/First page/1024px/2ndpart-1024px.jpg" alt="Home page image" width="25%">
+      <img src="README-images/Responsiveness/Register-as-blogger/First page/1440px/2ndpart-1440px.jpg" alt="Home page image" width="25%">
+    </details>
+  </div>
+  <div style="margin-left: 20px;">
+    <details>
       <summary>Admin </summary>
       <br>
       <img src="README-images/Responsiveness/Admin/320px584px/320px.jpg" alt="Home page image" width="25%">
@@ -509,11 +530,20 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 ## Improvements
 --- 
 <details>
-    <summary>Details</summary>
-    
+    <summary>Details
+    </summary>
+
+- There are **outstanding media query adjustments** needed for each page to ensure full responsiveness on all screen sizes.  
+- Further **UI/UX refinements** could enhance user experience, including spacing, button sizes, and layout consistency.  
+- Optimization of **static files and media loading** could improve performance and reduce page load times.  
+- Implementing additional **form validations and error handling** would make the application more robust.  
+- Adding **unit tests and automated testing** could further ensure code reliability and maintainability.  
+
+<br>
+ <br>
+<br>
  
 </details>
-
 <br>
 
 [Back To Top](#harmonia)
@@ -651,8 +681,15 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 <details>
   <summary>Details</summary>
   <div style="margin-left: 20px;">
-    A lot of manual testing as well 
-  </div>
+ # Manual Testing
+
+- Conducted extensive **manual testing** throughout the project to ensure all features worked as expected.  
+- Tested **user registration, login, and role-based access** to verify correct behavior for different user types.  
+- Performed **form validation and error handling checks** to ensure proper feedback for invalid inputs.  
+- Verified **media uploads, file handling, and static files** to confirm correct storage and display.  
+- Checked **site functionality across different scenarios**, including edge cases and unexpected user behavior.  
+- Manual testing helped identify **bugs and usability issues** that automated tools might miss.  
+
 </details>
 
 <br>
@@ -767,16 +804,18 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 --- 
 <details>
     <summary>Details
-    </summary>
+    </summary><br>
 
+- I have previous experience in software development and testing, which helped in understanding the project requirements and workflow.
+
+- This project allowed me to experience designing and implementing an application from the top down, from planning the architecture to deploying the final product.
+
+- Using GitHub Copilot greatly accelerated development. It provides suggestions drawn from a large knowledge base, helping to quickly scaffold code and implement functionality.
+
+- However, Copilot has limitations: it cannot visually detect problems, and human logic and interaction remain essential for debugging, design decisions, and user experience considerations.
+
+- Application development with Python libraries is rapid and versatile, demonstrating the flexibility and power of the Python ecosystem for building web applications.
 </details>
 <br>
 
 [Back To Top](#harmonia)
-
-
-
-  
-  ### Wave
-  ### Unit Testing Scripting
-  ### Harmonia Application Testing Matrix

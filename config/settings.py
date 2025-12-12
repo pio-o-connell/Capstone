@@ -61,8 +61,9 @@ else:
     DEBUG = False
 
 
-# Secret key should come from env or environment variable in production
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-c8=d-b8^&45w+zkj(*2i+h)o72q!h=v%n_ahlr$3n64novxsw2')  # noqa: E501
+SECRET_KEY = os.environ.get("SECRET_KEY")
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY environment variable is not set!")
 
 ALLOWED_HOSTS = [
     'localhost',

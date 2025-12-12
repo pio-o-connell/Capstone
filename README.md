@@ -14,7 +14,7 @@ This project showcases my skills in HTML5, CSS3, Bootstrap and Python with augme
   The name Harmonia is actually co-pilot inspired.
  3. Booking Services offered complete with costings 
 
-The temporary live project can be found here: <a href="https://pio-o-connell.github.io/Individual/">Harmonia</a>
+The  live project can be found here: <a href="https://harmonia2-26315d699cf1.herokuapp.com/"> Harmonia</a>
 
 <h2 align="center" id="TOC">Index</h2>
 
@@ -35,6 +35,9 @@ The temporary live project can be found here: <a href="https://pio-o-connell.git
       - [Python Validation](#python-validation)
       - [JS Validation](#js-validation)
       - [Lighthouse](#lighthouse)
+      - [Automated Testing](#automated-testing)
+      - [Automated Testing](#automated-testing-1)
+      - [Manual Testing](#manual-testing)
   - [AI Implementation](#ai-implementation)
     - [Code Creation](#code-creation)
     - [Debugging](#debugging)
@@ -172,6 +175,19 @@ The temporary live project can be found here: <a href="https://pio-o-connell.git
 
 
 ### Colour Scheme
+
+There are a lot of colours in a garden already so I used , one PRIMARY colour for all text except a SECONDARY colour for a Call to Action and the use of whitespace where appropiate.
+The main page is using the design principle of thirds to create a more balanced and interesting composition.
+
+I used image picker website to choose a colour scheme https://imagecolorpicker.com/
+The image is
+<details>
+<summary>Click to image from which  colour palette generated
+</summary>
+<img src="core/static/core/images/winters/winters-2.jpg" alt="Image from which colour palette generated" style="width:60%;">
+</details><br>
+
+
 <div style="margin-left: 40px;">
   <img src="documentation/images/SWATCH.jpg" alt="Image from which colour palette generated" style="width:60%;"><br>
 </div>
@@ -194,20 +210,18 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 
 <details>
 <summary>Click to view Colour Contrast Checker results</summary>
-<img src="assets/documentation/images/testing/Color-contrast/Colorcontrastcc.jpg" alt="Colour contrast results" style="width:60%;">
-[View live responsiveness](https://ui.dev/amiresponsive?url=https://pio-o-connell.github.io/Individual/index.html)
+<img src="core/static/core/images/Color/Colorcontrastcc.jpg" alt="Colour contrast results" style="width:60%;">
 </details>
 
 <details>
 <summary>Click to view WebAIM results</summary>
-<img src="assets/documentation/images/testing/Color-contrast/web-aim.jpg" alt="WebAIM contrast results" style="width:60%;">
-[View live responsiveness](https://ui.dev/amiresponsive?url=https://pio-o-connell.github.io/Individual/index.html)
+<img src="core/static/core/images/Color/web-aim.jpg" alt="WebAIM contrast results" style="width:60%;">
+
 </details>
 
 <details>
 <summary>Click to view Adobe Color results</summary>
-<img src="assets/documentation/images/testing/Color-contrast/adobe-color-analyzer.jpg" alt="Adobe Color contrast results" style="width:60%;">
-[View live responsiveness](https://ui.dev/amiresponsive?url=https://pio-o-connell.github.io/Individual/index.html)
+<img src="core/static/core/images/Color/adobe-color-analyzer.jpg" alt="Adobe Color contrast results" style="width:60%;">
 </details>
 
 </details>
@@ -363,9 +377,9 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 ## Improvements
 --- 
 <details>
-    <summary>Details
-    <img src="assets/documentation/images/testing/Color-contrast/Colorcontrastcc.jpg" alt="Colour contrast results" style="width:60%;">
-    [Click to view live responsiveness](https://ui.dev/amiresponsive?url=https://pio-o-connell.github.io/Individual/index.html)  
+    <summary>Details</summary>
+    
+ 
 </details>
 
 <br>
@@ -475,6 +489,52 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
     <img src="README-images/Testing&Validation/Lighthouse/Dashboard-LightHouseReport.jpg" alt="Lighthouse Results" style="width:40%;">
     <br><br>
     <p>All apps were checked using Lighthouse tool to comply with best practices and performance standards.</p>
+  </div>
+</details>
+
+#### Automated Testing 
+<details>
+  <summary>Details</summary>
+  <div style="margin-left: 20px;">
+  A lot of scripting was employed to generate data for the tables , 
+  These are located at both the  .\DB-scripts and .\scripts folder, notably 
+    python DB-scripts\create-postgres-users.py
+    python DB-scripts\create-postgres-post_comments_v2.py --posts-per-blogger 2 ...
+    python scripts\populate_services.py
+    python scripts\populate_bookings.py
+
+  It was also verified after tables creation using verify-users.py and verify_post_comments
+  </div>
+</details>
+
+
+#### Automated Testing
+<details>
+  <summary>Details</summary>
+  <div style="margin-left: 20px;">
+    <p>A number of Python scripts were used to automatically generate large amounts of test data for the database. These scripts are located in the <code>DB-scripts</code> and <code>scripts</code> folders.</p>
+    <p><strong>Data generation scripts:</strong></p>
+    <ul>
+        python DB-scripts/create-postgres-users.py
+        python DB-scripts/create-postgres-post_comments_v2.py --posts-per-blogger 2 ...
+        python scripts/populate_services.py
+        python scripts/populate_bookings.py
+    </ul>
+    <p><strong>Verification scripts:</strong></p>
+    <ul>
+        python verify-users.py
+        python verify_post_comments.py
+    </ul>
+      <p>These scripts were used to ensure that all database tables populated correctly and that relationships between users, posts, services, and bookings were valid.</p>
+    </div>
+</details>
+
+
+#### Manual Testing 
+<details>
+  <summary>Details</summary>
+  <div style="margin-left: 20px;">
+    A lot of manual testing as well 
   </div>
 </details>
 
@@ -591,8 +651,7 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 <details>
     <summary>Details
     </summary>
-    <img src="assets/documentation/images/testing/Color-contrast/Colorcontrastcc.jpg" alt="Colour contrast results" style="width:60%;">
-    [Click to view live responsiveness](https://ui.dev/amiresponsive?url=https://pio-o-connell.github.io/Individual/index.html)  
+
 </details>
 <br>
 

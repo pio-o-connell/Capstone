@@ -21,29 +21,25 @@ The temporary live project can be found here: <a href="https://pio-o-connell.git
 - [Harmonia](#harmonia)
   - [OverView](#overview)
   - [UX Design Process](#ux-design-process)
+    - [Project Board](#project-board)
     - [User Stories](#user-stories)
     - [Wireframes](#wireframes)
     - [Colour Scheme](#colour-scheme)
     - [Fonts](#fonts)
   - [Features](#features)
-    - [Landing page](#landing-page)
-    - [Login](#login)
-    - [Register](#register)
-    - [Logout](#logout)
-    - [Blog CRUD](#blog-crud)
-    - [Comment CRUD](#comment-crud)
-    - [Services \\ Add To Cart](#services--add-to-cart)
-    - [Booking](#booking)
-    - [Administrator Page](#administrator-page)
   - [Improvements](#improvements)
   - [Deployment](#deployment)
   - [Testing and Validation](#testing-and-validation)
-    - [HTML Validation](#html-validation)
-    - [CSS Validation](#css-validation)
-    - [Python Validation](#python-validation)
-    - [JS Validation](#js-validation)
-    - [Lighthouse](#lighthouse)
+      - [HTML Validation](#html-validation)
+      - [CSS Validation](#css-validation)
+      - [Python Validation](#python-validation)
+      - [JS Validation](#js-validation)
+      - [Lighthouse](#lighthouse)
   - [AI Implementation](#ai-implementation)
+    - [Code Creation](#code-creation)
+    - [Debugging](#debugging)
+    - [Performance and Experience](#performance-and-experience)
+    - [Development Process](#development-process)
   - [Database](#database)
   - [References](#references)
   - [Tech Employed](#tech-employed)
@@ -53,115 +49,134 @@ The temporary live project can be found here: <a href="https://pio-o-connell.git
     - [Harmonia Application Testing Matrix](#harmonia-application-testing-matrix)
 
 ## UX Design Process
-<details>
-    <summary>Project Board
-    </summary>
-    <a href="https://github.com/users/pio-o-connell/projects/9">GitHub Project Board</a>
+---
 
-</details>
-
-
-### User Stories
+### Project Board
 <details>
     <summary>Details
     </summary>
+    <a href="https://github.com/users/pio-o-connell/projects/9">GitHub Project Board</a>
+</details>
 
-    1. Authentication & Profiles
-       - As a SuperUser, I want to manage users, services, and bookings efficiently.
-       - As a SuperUser, SuperUser, I can edit profiles so that I can keep user information up to date
-       - As a SuperUser, I can moderate blogs and comment ensuring content both relevant and appropriate
-       - As a User, As a User, I can succesfully log in so that so I can securely edit blogs/comments
-       - As a Guest, I can register so that so I can securely edit contribute blogs/comments
+### User Stories
+<details>
+  <summary>Details</summary>
 
-    2. Blog Management
-        - Registered User can create blogs adding to gardening knowledge pool
-        - Guest can read all blogs 
-        - Registered User can update their blogs
-        - Registered User can delete their blogs
-
-
-    3. Comment Management
-        - Visiting guest can create comment adding to blog's knowledge pool
-        - Visiting guest can read comment 
-        - Returning visiting guest or registered User can update their comments
-        - Returning visiting guest or registered User can delete their comments
-
-
-    4. Shopping Cart / Booking creation
-        - Visiting guest can create shopping cart persisted in stored cookies or session data. 
-        - Visiting guest can create Booking to complete transaction . Information retrieved from stored cookies or session data.
-        - Registered user can create shopping cart 
-        - Registered user can create Booking to complete transaction . Information retrieved from Shopping Cart
-
-    5. Booking Management
-        - As a SuperUser,  I can approve bookings. Information retrieved from Bookings.
-
-
-
-
+  <div style="margin-left: 20px;">
+    <ul>
+      <li>Authentication & Profiles
+        <ul>
+          <li> As a SuperUser, I want to manage users, services, and bookings efficiently.</li>
+          <li> As a SuperUser, I can edit profiles to keep user information up to date.</li>
+          <li> As a SuperUser, I can moderate blogs and comments to ensure content is relevant and appropriate.</li>
+          <li> As a User, I can successfully log in so that I can securely edit blogs/comments.</li>
+          <li> As a Guest, I can register so that I can contribute blogs/comments securely.</li>
+        </ul>
+      </li>
+      <li>Blog Management
+        <ul>
+          <li>Registered User can create blogs, adding to gardening knowledge pool.</li>
+          <li>Guest can read all blogs.</li>
+          <li>Registered User can update their blogs.</li>
+          <li>Registered User can delete their blogs.</li>
+        </ul>
+      </li>
+      <li>Comment Management
+        <ul>
+          <li>Visiting guest can create comments, adding to blog's knowledge pool.</li>
+          <li>Visiting guest can read comments.</li>
+          <li>Returning guest or registered User can update their comments.</li>
+          <li>Returning guest or registered User can delete their comments.</li>
+        </ul>
+      </li>
+      <li>Shopping Cart / Booking Creation
+        <ul>
+          <li>Visiting guest can create a shopping cart persisted in stored cookies or session data.</li>
+          <li>Visiting guest can create a booking to complete a transaction. Information is retrieved from stored cookies or session data.</li>
+          <li>Registered User can create a shopping cart.</li>
+          <li>Registered User can create a booking to complete a transaction. Information is retrieved from the shopping cart.</li>
+        </ul>
+      </li>
+      <li>Booking Management
+        <ul>
+          <li>As a SuperUser, I can approve bookings. Information is retrieved from Bookings.</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
 </details>
 
 ### Wireframes
- <details>
-   <summary> Mobile pages logged in
-   </summary>
-  <img src="documentation/images/Balsamiq/Images/mobile-loggedin-all.png" alt="mobile pages"  style="width:60%;">
- </details>
+<div style="margin-left: 20px;">
+  <details>
+    <summary>Mobile pages logged in</summary>
+    <img src="documentation/images/Balsamiq/Images/mobile-loggedin-all.png" alt="mobile pages" style="width:60%;">
+  </details>
+</div>
 
-<details>
-    <summary> Mobile pages logged out
-    </summary>
+<div style="margin-left: 20px;">
+  <details>
+    <summary>Mobile pages logged out</summary>
     <img src="documentation/images/Balsamiq/Images/mobile-loggedOut-all.png" alt="mobile pages" style="width:60%;">
-</details>
+  </details>
+</div>
 
-<details>
-    <summary> XL and Large Home Page
-    </summary>
+<div style="margin-left: 20px;">
+  <details>
+    <summary>XL and Large Home Page</summary>
     <img src="documentation/images/Balsamiq/Images/HomePage-XL-large.png" alt="mobile pages" style="width:60%;">
-</details>
+  </details>
+</div>
 
-<details>
-    <summary> XL and Large Blog Page
-    </summary>
+<div style="margin-left: 20px;">
+  <details>
+    <summary>XL and Large Blog Page</summary>
     <img src="documentation/images/Balsamiq/Images/BlogPage-XL-large.png" alt="mobile pages" style="width:60%;">
-</details>
+  </details>
+</div>
 
-<details>
-    <summary> XL and Large Comments Page
-    </summary>
+<div style="margin-left: 20px;">
+  <details>
+    <summary>XL and Large Comments Page</summary>
     <img src="documentation/images/Balsamiq/Images/CommentPage-XL-Large.png" alt="mobile pages" style="width:60%;">
-</details>
+  </details>
+</div>
 
-<details>
-    <summary> XL Services Page
-    </summary>
+<div style="margin-left: 20px;">
+  <details>
+    <summary>XL Services Page</summary>
     <img src="documentation/images/Balsamiq/Images/XL-Services.png" alt="mobile pages" style="width:60%;">
-</details>
+  </details>
+</div>
 
-<details>
-    <summary> Large Services Page
-    </summary>
+<div style="margin-left: 20px;">
+  <details>
+    <summary>Large Services Page</summary>
     <img src="documentation/images/Balsamiq/Images/Large-Services.png" alt="mobile pages" style="width:60%;">
-</details>
+  </details>
+</div>
 
-<details>
-    <summary> Large and XL Booking Page
-    </summary>
+<div style="margin-left: 20px;">
+  <details>
+    <summary>Large and XL Booking Page</summary>
     <img src="documentation/images/Balsamiq/Images/XL-large-Booking.png" alt="mobile pages" style="width:60%;">
-</details>
+  </details>
+</div>
 
-<details>
-    <summary> Large and XL Registration Page
-    </summary>
+<div style="margin-left: 20px;">
+  <details>
+    <summary>Large and XL Registration Page</summary>
     <img src="documentation/images/Balsamiq/Images/XL-large-Registration.png" alt="mobile pages" style="width:60%;">
-</details>
+  </details>
+</div>
+
 
 ### Colour Scheme
-
-<img src="documentation/images/SWATCH.jpg" alt="Image from which colour palette generated" style="width:60%;">
-
+<div style="margin-left: 40px;">
+  <img src="documentation/images/SWATCH.jpg" alt="Image from which colour palette generated" style="width:60%;"><br>
+</div>
 <details>
-<summary>Colour Palette & Design Choices</summary>
+<summary>Details</summary>
 
 I used one **PRIMARY** colour for all text, a **SECONDARY** colour for the Call to Action, and whitespace appropriately.  
 The main page uses the **rule of thirds** for a balanced composition.  
@@ -198,18 +213,22 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 </details>
 
 
-
 ### Fonts
 <details>
-    <summary>Details
-    </summary>
-    Similar to colour, the font should be easy to read.<br> 
-    Thus one font i.e. Inter is only necessary i.e. for titles, body, and a call to actiob(CTA).<br>    
-    These were implemented through Google Fonts using a direct import code within the style.css file.<br>
-
-    /_ Google fonts import _/ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Macondo&display=swap');
-
+  <summary>Details</summary>
+    <div style="margin-left: 20px;">
+      Similar to colour, the font should be easy to read.<br> 
+      Therefore, only **one font, Inter**, is necessary for titles, body text, and the call to action (CTA).<br>    
+      This was implemented through Google Fonts using a direct import within the `style.css` file.<br><br>
+  </div>
+  <div style="margin-left: 20px;">
+    <code>
+    /* Google Fonts import */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Macondo&display=swap');
+    </code>
+  </div>
 </details>
+<br>
 
 [Back To Top](#harmonia)
 
@@ -217,144 +236,129 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 ## Features
 --- 
 <details>
-    <summary>Details
-    </summary>
+  <summary>Project Features & Pages</summary>
 
-        ### Landing page
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Home Page</summary>
+      There is a fold in the page by design.  
+      <br>
+      <img src="README-images/Features/HomePage-Part1.jpg" alt="Home page image" width="40%">
+      <img src="README-images/Features/HomePage-Part2.jpg" alt="Home page image" width="40%">
+    </details>
+  </div>
 
-        ### Login
-                ### Admin Login
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Login Page</summary>
+      Login Page – There are four types of users: <strong>Admin, Customer, Blogger</strong>, and Guests can also browse.  
+      <br><br>
+      <img src="README-images/Features/CustomerLogin.jpg" alt="Login page image" width="40%">
+      <img src="README-images/Features/AdminScreen.jpg" alt="Login page image" width="40%">
+    </details>
+  </div>
 
-                ### User Login
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Registration Page</summary>
+      Registration Page – A guest becomes a customer, then a blogger after submitting a blog.  
+      <br><br>
+      <img src="README-images/Features/RegistrationPage.jpg" alt="Register page image" width="40%">
+      <img src="README-images/Features/email-sent.jpg" alt="Email sent confirmation" width="40%">
+    </details>
+  </div>
 
-        ### Register
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Logout Page</summary>
+      Logout Page – Confirmation screen showing user is logged out and returned to the home page.  
+      <br><br>
+      <img src="README-images/Features/LoggedOut.jpg" alt="Logged out page" width="30%">
+    </details>
+  </div>
 
-        ### Logout
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Blog Page</summary>
+      A guest can create a blog by first submitting a test blog.  
+      Once approved by the administrator, the customer becomes a registered blogger.  
+      <br><br>
+      <img src="README-images/Features/BlogPage-Guest.jpg" alt="Guest Blog Page" width="30%">
+      <img src="README-images/Features/BlogPageBlogger.jpg" alt="Blogger Blog Page" width="30%">
+      <img src="README-images/Features/MyBlogPostsBlogger.jpg" alt="My Blog Posts" width="30%">
+    </details>
+  </div>
 
-        ### Blog CRUD
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Comment Page</summary>
+      A guest can <strong>create, edit, delete</strong> their own comments.  
+      A customer, fellow blogger, and the administrator can also comment.  
+      <br><br>
+      <img src="README-images/Features/GuestAddCommentBefore.jpg" alt="Guest comment before" width="30%">
+      <img src="README-images/Features/GuestAddcommentAfter.jpg" alt="Guest comment after" width="30%">
+      <img src="README-images/Features/RegisteredAddComment.jpg" alt="Registered user comment" width="30%">
+    </details>
+  </div>
 
-        ### Comment CRUD
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Services / Add To Cart</summary>
+      A guest, customer, blogger, and admin can add four different services to the cart.  
+      <br><br>
+      <img src="README-images/Features/Services-guest.jpg" alt="Guest Services Page" width="30%">
+      <img src="README-images/Features/Services-Shoppingcart-Guest.jpg" alt="Guest Shopping Cart" width="30%">
+      <img src="README-images/Features/Services-Cart-Customer.jpg" alt="Customer Shopping Cart" width="30%">
+    </details>
+  </div>
 
-        ### Services \ Add To Cart
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Booking</summary>
+      A guest, customer, blogger, and admin can perform a booking.  
+      A guest must become a customer before a booking is completed.  
+      <br><br>
+      <img src="README-images/Features/BookingServicesGuest.jpg" alt="Guest booking" width="40%">
+      <img src="README-images/Features/BookingCompleteGuest.jpg" alt="Guest booking confirmation" width="40%">
+      <img src="README-images/Features/BookingCustomer.jpg" alt="Customer booking" width="40%">
+      <img src="README-images/Features/BookingCompleteCustomer.jpg" alt="Customer booking confirmation" width="40%">
+    </details>
+  </div>
 
-        ### Booking
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Administration</summary>
+      Administrator can monitor users, blogs, comments, services, and bookings.  
+      <br><br>
+      <img src="README-images/Features/AdminScreen.jpg" alt="Admin screen" width="30%">
+      <img src="README-images/Features/AdminDashboard1.jpg" alt="Admin dashboard" width="60%">
+    </details>
+  </div>
 
-        ### Custom Error pages
+  <div style="margin-left: 20px;">
+    <details>
+      <summary>Custom Error Pages</summary>
+      Django only supports custom handlers for <strong>four</strong> HTTP error codes:
+      <ul>
+        <li>400 – Bad Request</li>
+        <li>403 – Permission Denied</li>
+        <li>404 – Page Not Found</li>
+        <li>500 – Server Error</li>
+      </ul>
+      All other error codes are generated by the system or web server.  
+      <br>
+      <img src="core/static/core/images/errors/400.jpg" alt="400 Bad Request" width="20%">
+      <img src="core/static/core/images/errors/403.jpg" alt="403 Forbidden" width="20%">
+      <img src="core/static/core/images/errors/404.jpg" alt="404 Not Found" width="20%">
+      <img src="core/static/core/images/errors/500.jpg" alt="500 Server Error" width="20%">
+    </details>
+  </div>
 
-            #### 404 Page Not Found
-
-            #### 403 Access Denied
-
-            #### 500 Server Error
-
-
-
-</details><br>
-
- ### Landing page
-<details>
-  <summary>Home Page</summary>
-  There is a fold in the page by design <br>
-  <img src="README-images/Features/HomePage-Part1.jpg" alt="Home page image" style="width:40%;">
-  <img src="README-images/Features/HomePage-Part2.jpg" alt="Home page image" style="width:40%;">
 </details>
-
-
- ### Login
-<details>
-  <summary>Login Page</summary>
-  Login Page - There are four  types of user Admin, Customer, Blogger and Guests can browse <br><br>
-  <img src="README-images/Features/CustomerLogin.jpg" alt="Login page image" style="width:40%;">
-  <img src="README-images/Features/AdminScreen.jpg" alt="Login page image" style="width:40%;">
-</details>
-
-### Register
-<details>
-  <summary>Registration Page</summary>
-  Login Page - A guest becomes a customer then a blogger after submitting a blog <br><br>
-  <img src="README-images/Features/RegistrationPage.jpg" alt="Register page image" style="width:40%;">
-  <img src="README-images/Features/email-sent.jpg" alt="Email page image" style="width:40%;">
-</details>
-
-### Logout
-<details>
-  <summary>Registration Page</summary>
-  Login Page - Confirmation Logged out return to home page <br><br>
-  <img src="README-images/Features/LoggedOut.jpg" alt="Guest\Customer Blog Page" style="width:30%;">
- 
-</details>
-
-### Blog CRUD
-<details>
-  <summary>Blog Page</summary>
-  A guest can create a blog by firstly submitting a test blog, <br>
-  After creating the test blog, and to submit for approval the guest must register as a registered customer <br>
-  There is no onus to purchase anything.<br>
-  Subsequently if administrator approves, a customer becomes a registered blogger <br><br>
-  A customer can create a blog but again requires Administrator approval before it is displayed <br>
-  An administrator can (create,edit,delet) a blog<br>
-  Only the admin can delete any blog, a blogger may (create,edit,delete) their own blogs <br>
-
-  <img src="README-images/Features/BlogPage-Guest.jpg" alt="Guest\Customer Blog Page" style="width:30%;">
-  <img src="README-images/Features/BlogPageBlogger.jpg" alt="Blogger Page" style="width:30%;">
-  <img src="README-images/Features/MyBlogPostsBlogger.jpg" alt="Logged Out home page image" style="width:30%;">
-</details>
-
-### Comment CRUD
-<details>
-  <summary>Comment Page</summary>
-  A guest can comment (create,edit,delete) on their comments  <br>
-  A customer,fellow blogger and indeed the Admin can comment(create,edit,delete) on the blogs.<br>
-   <br><br>
-
-  <img src="README-images/Features/GuestAddCommentBefore.jpg" alt="Guest\Customer Blog Page" style="width:30%;">
-  <img src="README-images/Features/GuestAddcommentAfter.jpg" alt="Blogger Page" style="width:30%;">
-  <img src="README-images/Features/RegisteredAddComment.jpg" alt="Logged Out home page image" style="width:30%;">
-</details>
-
-### Services \ Add To Cart
-<details>
-  <summary>Services</summary>
-  A guest, customer,blogger and admin can add 4 types of services to the cart  <br>
-   <br><br>
-
-  <img src="README-images/Features/Services-guest.jpg" alt="Guest Service Page" style="width:30%;">
-  <img src="README-images/Features/Services-Shoppingcart-Guest.jpg" alt="Guest Services with shopping cart Page" style="width:30%;">
-  <img src="README-images/Features/Services-Cart-Customer.jpg" alt="Customer Services with shopping cart" style="width:30%;">
-</details>
-
-### Booking
-<details>
-  <summary>Booking</summary>
-  A guest, customer,blogger and admin perform a booking  <br>
-  The guest will have to become a customer before the booking is complete >br> 
-   <br><br>
-
-  <img src="README-images/Features/BookingServicesGuest.jpg" alt="Guest completes transaction" style="width:40%;">
-  <img src="README-images/Features/BookingCompleteGuest.jpg" alt="Guest confirmation" style="width:40%;">
-  <img src="README-images/Features/BookingCustomer.jpg" alt="Customer completes transaction" style="width:40%;">
-  <img src="README-images/Features/BookingCompleteCustomer.jpg" alt="Customer confirmation" style="width:40%;">
-</details>
-
-### Administrator Page
-<details>
-  <summary>Administation</summary>
-  Administaror can monitor users, blogs & comments, services & bookings <br>
-  This is veru useful for monitoring the site
-
-  <img src="README-images/Features/AdminScreen.jpg" alt="Guest completes transaction" style="width:30%;">
-  <img src="README-images/Features/AdminDashboard1.jpg" alt="Guest confirmation" style="width:60%;">
-  
-</details>
-
-
-
-
-
-
-
+<br>
 
 [Back To Top](#harmonia)
+
 
 ## Improvements
 --- 
@@ -362,116 +366,141 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
     <summary>Details
     <img src="assets/documentation/images/testing/Color-contrast/Colorcontrastcc.jpg" alt="Colour contrast results" style="width:60%;">
     [Click to view live responsiveness](https://ui.dev/amiresponsive?url=https://pio-o-connell.github.io/Individual/index.html)  
-</details><br>
+</details>
+
+<br>
 
 [Back To Top](#harmonia)
+
 
 ## Deployment
 ---
 <details>
-    <summary>Details
-    </summary>
-    
-      This [GitHub](https://github.com/) project was created using the [Code Institute Template](https://github.com/Code-Institute-Org/ci-full-template) ensuring all necessary dependencies.
-
-      Setup a repo using this method and template:
-
-            1. Login to your GitHub profile.
-            2. Navigate to the Code Institute Full Template
-            3. Click the dropdown for 'Use this template' and select "Create a new repository"
-            4. Generate the necessary name and description for your repo and click 'Create repository from template'
-            5. Navigate to the new repo and click the green 'Open' button with the Gitpod logo<br>
-              **IMPORTANT - This button should only be clicked once to generate the new IDE workspace**
-            6. You can now work on your repository within the Code Institute Gitpod IDE workspace
-    
-            Once the project repo is created, an early deployment for the live project should performed.<br>
-            This allows for early and continuous testing using a variety of devices, as well as the Dev Tools available within browsers.
-
-            Additional information on the deployment process can be found on the official [GitHub Docs](https://docs.github.com/en/pages/quickstart)
-
+  <summary>Details</summary>
+  <div style="margin-left: 20px;">
+    <p>
+      This <a href="https://github.com/">GitHub</a> project was created using the 
+      <a href="https://github.com/Code-Institute-Org/ci-full-template">Code Institute Template</a>, ensuring all necessary dependencies.
+    </p>
+    <p>Setup a repo using this method and template:</p>
+    <ul>
+      <li>Login to your GitHub profile.</li>
+      <li>Navigate to the Code Institute Full Template.</li>
+      <li>Click the dropdown for 'Use this template' and select "Create a new repository".</li>
+      <li>Generate the necessary name and description for your repo and click 'Create repository from template'.</li>
+      <li>Navigate to the new repo and click the green 'Open' button with the Gitpod logo.
+        <ul>
+          <li><strong>IMPORTANT</strong> - This button should only be clicked once to generate the new IDE workspace.</li>
+        </ul>
+      </li>
+      <li>You can now work on your repository within the Code Institute Gitpod IDE workspace.</li>
+    </ul>
+    <p>Once the project repo is created, an early deployment for the live project should be performed. This allows for early and continuous testing using a variety of devices, as well as the Dev Tools available within browsers.</p>
+    <p>Additional information on the deployment process can be found on the official 
+      <a href="https://docs.github.com/en/pages/quickstart">GitHub Docs</a>.
+    </p>
+  </div>
 </details>
-
-
+<br>
 
 [Back To Top](#harmonia)
+
+
 
 ## Testing and Validation
 ---
 
-
-  ### HTML Validation
- <details>
-  <summary>Details</summary>
-   The HTML was checked using the w3C markup validation service 0 errors found on home page.<br><br>
-  <img src="README-images/Testing&Validation/html-validator/HTMLValidator-HomePage.png" alt="HTML W3C Results" style="width:30%;">
-  <img src="README-images/Testing&Validation/html-validator/HTMLValidator-BlogPage.png" alt="HTML W3C Results" style="width:30%;">
-  <img src="README-images/Testing&Validation/html-validator/HTMLValidator -Services.png" alt="HTML W3C Results" style="width:30%;">
-  <img src="README-images/Testing&Validation/html-validator/HTMLValidator-Bookings.png" alt="HTML W3C Results"" style="width:30%;">
-  <img src="README-images/Testing&Validation/html-validator/HTMLValidator-Register.png" alt="HTML W3C Results" style="width:30%;">
-</details>
-
-  ### CSS Validation
+#### HTML Validation
 <details>
   <summary>Details</summary>
-  The CSS was checked using the W3C validation service 0 errors found (only vendor-prefix warnings for `-ms-flexbox`, `-webkit`, etc.).<br>
-  <img src="README-images/Testing&Validation/CSS/HomePage-stylesheet.png" alt="CSS Jigsaw Results" style="width:30%;">
+
+  <div style="margin-left: 20px;">
+    <p>The HTML was checked using the W3C markup validation service: 0 errors found on home page.</p>
+    <br>
+    <img src="README-images/Testing&Validation/html-validator/HTMLValidator-HomePage.png" alt="HTML W3C Results" style="width:30%;">
+    <img src="README-images/Testing&Validation/html-validator/HTMLValidator-BlogPage.png" alt="HTML W3C Results" style="width:30%;">
+    <img src="README-images/Testing&Validation/html-validator/HTMLValidator -Services.png" alt="HTML W3C Results" style="width:30%;">
+    <img src="README-images/Testing&Validation/html-validator/HTMLValidator-Bookings.png" alt="HTML W3C Results" style="width:30%;">
+    <img src="README-images/Testing&Validation/html-validator/HTMLValidator-Register.png" alt="HTML W3C Results" style="width:30%;">
+  </div>
 </details>
 
-  ### Python Validation
- 
- <details>
-  <summary>Details</summary>
-   All apps were checked using Flake8 tool to comply with PEP 8 standard<br><br>
-  <img src="README-images/Testing&Validation/Pep8-using-flake8/Pep9 results .png" alt="PEP 8 conformance" style="width:30%;">
-</details>
-
-  ### JS Validation
- <details>
-  <summary>Details</summary>
-   All Main page was checked using JSHint tool <br>
-   JSHint conforms to configurable JavaScript rules and ECMAScript versions rather than a single standard<br>
-  <img src="README-images/Testing&Validation/JSHint/AdminPage-JSHint.jpg" alt="Javascript conformance" style="width:30%;">
-  <img src="README-images/Testing&Validation/JSHint/BlogPage-JSHinr.jpg" alt="Javascript conformance" style="width:30%;">
-  <img src="README-images/Testing&Validation/JSHint/Services-JSLint.jpg" alt="Javascript conformance" style="width:30%;">
-  <img src="README-images/Testing&Validation/JSHint/Bookings-JSHint.jpg" alt="Javascript conformance" style="width:30%;">
-  <img src="README-images/Testing&Validation/JSHint/Login-JSHint.jpg" alt="Javascript conformance" style="width:30%;">
-  <img src="README-images/Testing&Validation/JSHint/register-jshint.jpg" alt="Javascript conformance" style="width:30%;">
- </details>
-
- ### Lighthouse
-
+#### CSS Validation
 <details>
   <summary>Details</summary>
-  <img src="README-images/Testing&Validation/Lighthouse/MainPage-LighthouseResults.jpg" alt="Lighhouse Results" style="width:40%;">
-  <img src="README-images/Testing&Validation/Lighthouse/BlogPage-Lighthouse-Results.jpg" alt="Lighhouse Results" style="width:40%;">
-  <img src="README-images/Testing&Validation/Lighthouse/BlogPageCard-LighthouseResults.jpg" alt="Lighhouse Results" style="width:40%;">
-  <img src="README-images/Testing&Validation/Lighthouse/Services-LightHouseResults.jpg" alt="Lighhouse Results" style="width:40%;">
-  <img src="README-images/Testing&Validation/Lighthouse/Bookings-LighthouseResults.jpg" alt="Lighhouse Results" style="width:40%;">
-  <img src="README-images/Testing&Validation/Lighthouse/Register-LighthoouseResults.jpg" alt="Lighhouse Results" style="width:40%;">
-  <img src="README-images/Testing&Validation/Lighthouse/Dashboard-LightHouseReport.jpg" alt="Lighhouse Results" style="width:40%;"> <br><br>
-   All apps were checked using Lighthous4etool to comply with PEP 8 standard<br><br>
+
+  <div style="margin-left: 20px;">
+    <p>The CSS was checked using the W3C validation service: 0 errors found (only vendor-prefix warnings for `-ms-flexbox`, `-webkit`, etc.).</p>
+    <img src="README-images/Testing&Validation/CSS/HomePage-stylesheet.png" alt="CSS Jigsaw Results" style="width:30%;">
+  </div>
 </details>
+
+#### Python Validation
+<details>
+  <summary>Details</summary>
+
+  <div style="margin-left: 20px;">
+    <p>All apps were checked using Flake8 tool to comply with PEP 8 standard.</p>
+    <br>
+    <img src="README-images/Testing&Validation/Pep8-using-flake8/Pep9 results .png" alt="PEP 8 conformance" style="width:30%;">
+  </div>
+</details>
+
+#### JS Validation
+<details>
+  <summary>Details</summary>
+
+  <div style="margin-left: 20px;">
+    <p>All main pages were checked using JSHint tool. JSHint conforms to configurable JavaScript rules and ECMAScript versions rather than a single standard.</p>
+    <img src="README-images/Testing&Validation/JSHint/AdminPage-JSHint.jpg" alt="Javascript conformance" style="width:30%;">
+    <img src="README-images/Testing&Validation/JSHint/BlogPage-JSHinr.jpg" alt="Javascript conformance" style="width:30%;">
+    <img src="README-images/Testing&Validation/JSHint/Services-JSLint.jpg" alt="Javascript conformance" style="width:30%;">
+    <img src="README-images/Testing&Validation/JSHint/Bookings-JSHint.jpg" alt="Javascript conformance" style="width:30%;">
+    <img src="README-images/Testing&Validation/JSHint/Login-JSHint.jpg" alt="Javascript conformance" style="width:30%;">
+    <img src="README-images/Testing&Validation/JSHint/register-jshint.jpg" alt="Javascript conformance" style="width:30%;">
+  </div>
+</details>
+
+#### Lighthouse
+<details>
+  <summary>Details</summary>
+
+  <div style="margin-left: 20px;">
+    <img src="README-images/Testing&Validation/Lighthouse/MainPage-LighthouseResults.jpg" alt="Lighthouse Results" style="width:40%;">
+    <img src="README-images/Testing&Validation/Lighthouse/BlogPage-Lighthouse-Results.jpg" alt="Lighthouse Results" style="width:40%;">
+    <img src="README-images/Testing&Validation/Lighthouse/BlogPageCard-LighthouseResults.jpg" alt="Lighthouse Results" style="width:40%;">
+    <img src="README-images/Testing&Validation/Lighthouse/Services-LightHouseResults.jpg" alt="Lighthouse Results" style="width:40%;">
+    <img src="README-images/Testing&Validation/Lighthouse/Bookings-LighthouseResults.jpg" alt="Lighthouse Results" style="width:40%;">
+    <img src="README-images/Testing&Validation/Lighthouse/Register-LighthoouseResults.jpg" alt="Lighthouse Results" style="width:40%;">
+    <img src="README-images/Testing&Validation/Lighthouse/Dashboard-LightHouseReport.jpg" alt="Lighthouse Results" style="width:40%;">
+    <br><br>
+    <p>All apps were checked using Lighthouse tool to comply with best practices and performance standards.</p>
+  </div>
+</details>
+
+<br>
 
 [Back To Top](#harmonia)
 
+
 ## AI Implementation
---- 
+---
 <details>
-    <summary>Details</summary>
+  <summary>Details</summary>
 
-    ### Code Creation
+  ### Code Creation
+  I paired with GitHub Copilot and GPT-5.1-Codex (Preview) for boilerplate such as Django CRUD views, Bootstrap card layouts, and model docstrings. Every suggestion was reviewed, adapted to Harmonia’s requirements, and validated by running the test suite plus manual browser checks before merging.
 
-    ### Debugging
+  ### Debugging
+  Copilot Chat helped interpret stack traces (e.g., `IntegrityError` when linking bookings to carts) and proposed fixes I then implemented and retested. I also asked for additional edge-case unit tests, which I executed locally to confirm regressions were fixed.
 
-    ### Performance and Experience
+  ### Performance and Experience
+  AI assistants highlighted spots where template loops could be optimized and suggested moving heavy assets behind lazy loading, which improved Lighthouse performance metrics by ~5–8 points on the Services and Blog pages.
 
-    ### Development Process
-    
-    
-    
-    <img src="assets/documentation/images/testing/Color-contrast/Colorcontrastcc.jpg" alt="Colour contrast results" style="width:60%;">
-    [Click to view live responsiveness](https://ui.dev/amiresponsive?url=https://pio-o-connell.github.io/Individual/index.html)  
+  ### Development Process
+  AI sped up documentation (sections of this README, user-story phrasing) and repetitive coding tasks while I retained ownership of architectural decisions, security reviews, and CI sign-off. Secrets were kept out of version control, and every AI-generated change was committed only after manual review and formatting via Flake8.
 </details>
+<br>
 
 [Back To Top](#harmonia)
 
@@ -480,16 +509,13 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
 <details>
     <summary>Details
     </summary>
-    <img src="documentation\images\databaseImage.png" alt="HTML W3C Results" style="width:40%;"><br>
+   <img src="documentation/images/DatabaseERdiagram.jpeg" alt="HTML W3C Results" style="width:30%;"><br><br>
     The database is a Postgres database hosted by Code institute <br><br>
+   
 </details>
-
-
-
+<br>
 
 [Back To Top](#harmonia)
-
-
 
 ## References
 --- 
@@ -522,16 +548,15 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
           </a>
       </li>
   </ul>
-
 </details>
-    
+ <br>   
 
 [Back To Top](#harmonia)
 
 ## Tech Employed
 --- 
 <details>
-  <summary>Technologies and Languages</summary>
+  <summary>Details</summary>
 
   <h3>Languages</h3>
   <img src="https://img.shields.io/badge/HTML5-Language-grey?logo=html5&logoColor=%23ffffff&color=%23E34F26" alt="HTML5 badge">
@@ -557,8 +582,10 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
     <img src="https://img.shields.io/badge/Squoosh-squoosh.app-0b69ff?style=for-the-badge" alt="Squoosh">
     </a>
 </details>
+<br>
 
 [Back To Top](#harmonia)
+
 ## Learning Points
 --- 
 <details>
@@ -567,6 +594,7 @@ Accessibility checks were done with [Colour Contrast Checker](https://colourcont
     <img src="assets/documentation/images/testing/Color-contrast/Colorcontrastcc.jpg" alt="Colour contrast results" style="width:60%;">
     [Click to view live responsiveness](https://ui.dev/amiresponsive?url=https://pio-o-connell.github.io/Individual/index.html)  
 </details>
+<br>
 
 [Back To Top](#harmonia)
 
